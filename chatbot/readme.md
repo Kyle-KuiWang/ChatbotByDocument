@@ -23,7 +23,7 @@
 演示视频：[戳这里获取](https://pan.baidu.com/s/1ahi69op1faTBL-vMGIUgHw?pwd=2609)
 #### 项目部署：
 
-按仓库的目录结构下载至本地，首先配置config.json文件（其中"GPT-API"和"SECRET_KEY"所对应的token值需自行前往百度智能云申请）。
+按仓库的目录结构下载至本地，首先配置config.json文件（其中"API-KEY"所对应的token值需自行前往百度智能云申请）。
 
 我们的问答机器人支持不同操作系统上的cmd命令行访问和web访问，可以部署至任何系统上。
 

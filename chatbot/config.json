@@ -2,9 +2,8 @@
   "data_path": "./data/",
   "embedding_path": "./embeddings.json",
   "model_embed": "./ch-BERT/",
-   "_comment": "这里是注释：GPT-API和SECRET_KEY的token在上传仓库时做掩码处理",
-  "GPT-API": "**********",
-  "SECRET_KEY": "*************",
+   "_comment": "这里是注释：API-KEY的token在上传仓库时做掩码处理",
+  "API-KEY": "**********************************************",
   "model_llm": "ErnieBot",
   "language": "zh"
 }
