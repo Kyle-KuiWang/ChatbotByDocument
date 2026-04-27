@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/06_%E5%B9%B3%E9%9D%A2%E6%88%96%E7%AB%8B%E4%BD%93%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/3D%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3/Blender
+简介
+Blender是一款三维动画制作软件，提供从建模、动画、材质、渲染到音频处理、视频剪辑等一系列动画短片制作解决方案。有了Blender后，喜欢3D绘图的玩家们不用花大钱，也可以制作出自己喜爱的3D模型。
+
+安装
+sudo apt-get install blender
+
+卸载
+sudo apt-get remove blender
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/b/blender/

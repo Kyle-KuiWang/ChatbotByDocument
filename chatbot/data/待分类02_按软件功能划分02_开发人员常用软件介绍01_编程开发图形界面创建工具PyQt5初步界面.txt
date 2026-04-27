@@ -1,0 +1,49 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%88%9B%E5%BB%BA%E5%B7%A5%E5%85%B7/PyQt5%E5%88%9D%E6%AD%A5%E7%95%8C%E9%9D%A2
+安装库
+在终端输入
+
+sudo apt install python3-pyqt5
+即可安装环境
+
+Tips
+不推荐使用 pip 安装 PyQt5，因为使用这种方式安装的 PyQt5 得不到系统的优化，而且还会干扰到 apt 安装的python3-pyqt5，如下：
+未用 pip 安装：
+用 pip 安装：
+而且还存在无法使用 fcitx 输入法输入等问题
+如果真这样操作了怎么办？只需要输入如下命令即可：
+
+pip3 uninstall pyqt5
+# 如果你安装到 root 目录下，可以加 sudo
+sudo pip3 uninstall pyqt5
+基础模板
+只供参考
+
+#!/usr/bin/env python3
+import sys
+import PyQt5.QtWidgets as QtWidgets
+app = QtWidgets.QApplication(sys.argv)
+widget = QtWidgets.QWidget()
+widget.show()
+sys.exit(app.exec_())
+高级点的示例
+#!/usr/bin/env python3
+import sys
+import PyQt5.QtWidgets as QtWidgets
+
+def HelloWorld():
+    QtWidgets.QMessageBox.information(widget, "Tips", "Hello World!")
+
+app = QtWidgets.QApplication(sys.argv)
+window = QtWidgets.QMainWindow()
+widget = QtWidgets.QWidget()
+widgetLayout = QtWidgets.QVBoxLayout()
+
+button = QtWidgets.QPushButton("Hello World!")
+button.clicked.connect(HelloWorld)
+widgetLayout.addWidget(button)
+
+widget.setLayout(widgetLayout)
+window.setCentralWidget(widget)
+window.show()
+sys.exit(app.exec_())
+可以实现按下按钮显示对话框的功能

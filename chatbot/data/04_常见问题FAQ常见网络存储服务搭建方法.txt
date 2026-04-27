@@ -1,0 +1,122 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%B8%B8%E8%A7%81%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E6%96%B9%E6%B3%95
+DeepinWiki
+常见网络存储服务搭建方法
+SFTP&NFS&FTP协议的服务器搭建方法
+Samba服务搭建
+Samba是在Linux系统上实现SMB协议的一个免费软件，由服务器及客户端程序构成。SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。
+
+¶安装服务
+sudo apt-get install samba-common samba
+创建共享文件夹
+sudo mkdir /opt/share
+编辑配置文件
+关于samba配置文件，smb.conf总共分为两大部分，分别为“全局设置（GIobal Settings）”和“共享定义（Share Definitions）”。全局设置定义于Samba服务器的整体行为，例如，工作组，主机名等方面。共享定义则用于设置的具体的共享目录或者设备中。
+配置文件绝对路径在：/etc/samba/smb.conf
+全局设置
+workgroup用于设置在windows中显示的工作组
+server string是Samba服务器的说明
+workgroup和server string字段后面的内容可以随便写
+通常来说，将Samba服务器的编码设置为UTF-8是比较好的，也能解决显示的问题：unix charset = UTF-8
+但是这样也会存在问题，UTF-8编码的中文文件名在某些系统下面会乱码，Samba提供了dos charset这个字段。下面这条配置命令为哪些不认识的Unicode的Windows系统使用GBK编码:dos charset = cp936
+security字段设置了用户登录的验证方式，share和user是最常用到的两种。share方式允许任何用户登录到系统，而不用提供用户名和口令,但是由于Samba是默认要使用验证方式的，所以这里就要讲到user方式。这种方式要求用户提供账户信息供服务器验证，但是要使用user验证，Samba的配置文件里面就应该包含这一行:security = user
+共享设置
+这个文件叫做smb.conf（位于/etc或者/etc/samba目录下面），可以用uos系统自带的文本编辑器打开，在末尾输入：
+
+[share] #"[]" 中的文字表示共享目录名字，可以随意设置
+    comment = Linux Share　 #comment字段用于设置这个共享目录的描述
+    path = /opt/share　　　　 #share指定了共享目录的路径
+    public = yes　　　　　　 #表示在windows的“网上邻居”中可见
+    writeable = no　　　　　 #writeable表示设置目录是否可写（yes是可写的意思）
+    browseable = yes　　　 #表示在windows的“网上邻居”中可见
+    guest ok = no 　　　　　#告诉Samba服务器这个共享目录允许匿名访问
+添加用户
+sudo useradd smbuser  # 新增一个叫smbuser的用户
+sudo smbpasswd -a smbuser  # 给这个新增用户创建samb共享密码
+New SMB password:
+Retype new SMB password:
+Added user smbuser
+后面就可以使用带-U参数的smbpasswd命令修改已经有用户的口令。如果用户希望本地修改服务器上自己的口令，可以使用-r参数。下面的命令用户修改在服务器smbserver上smbuser用户的口令了
+
+smbpasswd -r smbserver -U smbuser
+赋予权限
+smbuser对共享目录写权限,一下配置需要写成yes
+
+writeable = yes
+如果只写writeable = yes是远远不够的，如果服务器上的这么目录本身对smbuser不可写的话，就需要添加以下命令：
+
+sudo chown smbuser:smbuser /opt/share
+服务启动、停止、重启
+启动服务：service smbd start
+停止服务：service smbd stop
+重启服务：service smbd restart
+查看服务状态：service smbd status
+deepin@wh-k8snode-70:/etc/samba$ service smbd status
+● smbd.service - Samba SMB Daemon
+   Loaded: loaded (/lib/systemd/system/smbd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2022-06-20 11:50:46 CST; 1h 57min ago
+     Docs: man:smbd(8)
+           man:samba(7)
+           man:smb.conf(5)
+  Process: 20165 ExecStartPre=/usr/share/samba/update-apparmor-samba-profile (code=exited, status=0/SUCCESS)
+ Main PID: 20174 (smbd)
+   Status: "smbd: ready to serve connections..."
+    Tasks: 6 (limit: 4915)
+   Memory: 26.7M
+   CGroup: /system.slice/smbd.service
+           ├─ 8209 /usr/sbin/smbd --foreground --no-process-group
+           ├─10619 /usr/sbin/smbd --foreground --no-process-group
+           ├─20174 /usr/sbin/smbd --foreground --no-process-group
+           ├─20176 /usr/sbin/smbd --foreground --no-process-group
+           ├─20177 /usr/sbin/smbd --foreground --no-process-group
+           └─20178 /usr/sbin/smbd --foreground --no-process-group
+常见问题
+修改配置文件后，服务无法启动。
+在实际修改配置文件过程中，可能在参数后面有一些看不见的字符，会导致服务无法正常启动，最好检查每个修改的参数后面无一些空格或者其他特殊符号。
+
+创建了几个samba用户，想通过不同的用户来对不同的文件进行访问，但是出现了报错（内容是不允许一个用户使用一个以上用户名与服务器或者共享资源的多重连接）
+解决：
+先断开现有的samba连接：cmd命令行下执行net use * /del /X
+再重新选择你要使用的目录，使用对应的用户名进行登录就可以了
+
+配置好samba服务器，但是测试过程中会出现以下报错：
+主要原因是因为服务器的防火墙没有关，可以选择在文件/etc/security/limits.conf下输入*　- nofile 16384,然后shutdown -r now 重启一下就可以了
+
+samba服务器已经可以让windows通过网络来访问samba，但是没有办法写入，修改，删除，只能查看,出现这样的问题可能就是我们自己在配置的时候出现问题了，如果我的用户是deepin:
+#chmod 777 FileServer 　--这种操作就可以让组samba里的用户进行写操作了。
+[deepin]
+   create mode =0664
+   force create mode=0750   #文件新建的权限为750
+   directory mode=0750      　#新建文件夹的权限只有组里的用户查看，其他组里的用户都没有权限进入
+FTP服务搭建
+vsftpd配置使用
+vsftpd 是Linus上非常安全好用的ftp服务，只需要简单的安装后就可以搭建起ftp服务；
+该服务主要的配置文件就是vsftpd.conf ,在deepin/uos系统中的绝对路径是：/etc/vsftpd.conf
+
+安装
+只需要简单的进行安装配置即可，前提是你开启了开发者模式我们才能通过终端安装软件
+
+sudo apt install vsftpd
+如果提示没有找到对应安装包，则可能是没有进行仓库的更新连接，执行如下命令即可
+
+sudo apt update
+服务的启停配置
+启动服务
+service vsftpd start
+停止服务
+service vsftpd stop
+重启服务
+service vsftpd restart
+查看服务状态
+service vsftpd status
+#执行后结果如下：active则表示正常运行，如果失败了则可以通过提示信息查询对应问题
+babyfengfjx@babyfengfjx:~$ service vsftpd status
+● vsftpd.service - vsftpd FTP server
+   Loaded: loaded (/lib/systemd/system/vsftpd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2021-10-09 16:22:48 CST; 1s ago
+  Process: 18334 ExecStartPre=/bin/mkdir -p /var/run/vsftpd/empty (code=exited, status=0/SUCCESS)
+ Main PID: 18335 (vsftpd)
+    Tasks: 1 (limit: 4915)
+   Memory: 568.0K
+   CGroup: /system.slice/vsftpd.service
+           └─18335 /usr/sbin/vsftpd /etc/vsftpd.conf
+

@@ -1,0 +1,24 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/02_%E6%B7%B1%E5%85%A5/%E5%AD%97%E7%AC%A6%E9%9B%86%E5%AE%89%E8%A3%85
+字符集安装
+目录介绍
+/usr/share/i18n/charmaps
+这个目录下存放了该Linux操作系统可用字符集的安装包，如果你的操作系统上没有安装某个字符集可以到这个目录下寻找安装包。例如：GBK.gz为GBK字符集的包
+
+/usr/share/i18n/locales
+这个目录下存放了和所有语言包对应的locale信息。
+例如：zh_CN.GBK是一个完整的字符集，其中zh表示语言，CN表示这个语言使用的国家，GBK表示这个语言所对应的编码。
+
+安装GBK/中文字符集
+切换目录
+
+cd /usr/share/i18n/charmaps
+解压
+
+sudo gunzip GBK.gz
+安装
+
+localedef -f GBK -i zh_CN /usr/lib/locale/zh_CN.GBK
+查看字符集
+
+locale -a
+如果结果中存在zh_CN.GBK则安装成功。

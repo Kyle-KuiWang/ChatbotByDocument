@@ -1,0 +1,32 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/%E6%8E%A7%E5%88%B6%E4%B8%AD%E5%BF%83%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90
+DeepinWiki
+控制中心常见问题分析
+###查看帐户是否在线
+问题原因:不能移除在线帐户。
+分析过程:安装并打开D-Feet，选择System Bus。在左侧搜索com.deepin.daemon.Accounts，在右侧依次展开/com/deepin/daemon/Accounts->Interfaces->com.deepin.daemon.Accounts->Properties。双击UserList查看所有帐户，设定帐户为/com/deepin/daemon/Accounts/User1000，依次展开/com/deepin/daemon/Accounts/User1000->Interfaces->com.deepin.daemon.Accounts.User->Properties，双击UserName查看帐户名称，类似查看其它信息。在左侧搜索org.freedesktop.DisplayManager，再右侧依次展开/org/freedesktop/DisplayManager->Interfaces->org.freedesktop.DisplayManager->Properties。双击Sessions查看所有在线会话，设定在线会话为/org/freedesktop/DisplayManager/Session1，依次展开/org/freedesktop/DisplayManager/Session1->Interfaces->org.freedesktop.DisplayManager.Session->Properties，双击UserName查看在线会话对应的帐户名称。
+解决办法:查看所有帐户及在线帐户
+
+###控制中心无法启动、某个模块进入就闪退
+问题原因：dbus接口版本与控制中心版本不匹配+gesetting配置文件版本不匹配+代码逻辑问题（空指针、除零）。前两个为项目项目特性强关联的常见崩溃原因。
+分析过程：dbus版本问题--命令启动控制中心，查看输出报错信息，有类似symbol error，undefine symbol的字样，还会有一个运行函数名（和源码函数名有一定差异，熟悉接口大概可以看出对应代码函数名），这种状况根据控制中心版本去crp下载对应较新的dde-qt-dbus-factory版本安装可解。
+gsetting版本问题--命令启动控制中心，查看输出报错信息，有GLib-GIO-ERROR，Settings schema字样的报错，信息里描述了缺少哪个schema或者哪个字段，同样根据控制中心版本去crp下载对应较新deepin-desktop-schemas版本安装。另外也可以到gerrit下载代码上库编译出的包或者自己更新代码编译一个版本，这两种方法也适合第一类问题。
+代码逻辑导致崩溃--启动或进入就崩溃的代码逻辑问题，直接到对应模块的preInitialize(bool sync)、initialize()、active()、load(const QString &path)查看，崩溃就出在这几个函数中，可以加快定位崩溃代码点。
+控制中心命令启动：启动控制中心主界面 dde-control-center -s 启动指定模块 dde-control-center -m moduleName 启动指定模块页面 dde-control-center -m moduleName -p pageName
+模块名列表："accounts" "cloudsync" "display" "defapp" "personalization" "network" "notification" "sound" "bluetooth" "datetime" "power" "mouse" "wacom" "keyboard" "update" "systeminfo" "commoninfo"
+页面名繁多，不一一列举。
+
+###各部件窗口滚动条位置问题
+问题原因1：按住鼠标左键拖动滚动条，结果窗口部件移动方向与鼠标方向相反;
+分析过程：鼠标左键按下拖动，属于就是一个手指在屏幕上沿着一个固定的方向滑动，滑动一段距离时就产生了一个事件，这时需要调用QWidget::grabGesture方法来截获相应的手势类型。此时可以查看这个函数的声明，有2个重载函数：
+static Qt::GestureType grabGesture(QObject *target, ScrollerGestureType gestureType = TouchGesture);
+static Qt::GestureType grabbedGesture(QObject *target);
+第一个函数声明不仅定义了滑动手势目标对象还定义了滑动姿势。现在基本可以确定是滑动目标对象有问题导致QScroller::LeftMouseButtonGesture这个滑动姿势出现的现象不是期望的。
+问题原因2：各窗口部件的滚动条遮挡listview控件内容;
+分析过程：DTK提供的滚动条控件，但是他们只保证滚动条离滚动区域2像素，我们自己需要手动去添加，移动滚动条的位置通常在listview，即滚动条要滚动的区域加setContentsMargins(0, 0, 0, 0); setViewportMargins(12, 0, 12, 0);这个12像素可根据情况自行调整。为什么要调这个可参考https://blog.csdn.net/hyongilfmmm/article/details/83014405很详细的讲解了Qt滚动区域原理(QAbstractScrollArea)。
+
+###自定义模式下点击旋转屏幕未保存，屏幕由拆分变成合并
+问题原因是执行DisplayWorker的setMonitorRotate会导致monitor参数变化， worker会发信号通知model数据变了，这个过程是一个异步，CustomSettingDialog重新应用屏幕位置时， 有可能出现model数据没有获取对CustomSettingDialog判断屏幕的宽高不一致，就给设定为了拆分模式，在setMonitorRotate加一个m_model->isMerge() == false判断就好了。
+
+评论
+评论加载中...
+提供者 Wiki.js

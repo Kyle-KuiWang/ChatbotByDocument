@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_Office_%E7%BC%96%E8%BE%91%E5%99%A8_%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB%E7%AE%A1%E7%90%86/Office%E7%9B%B8%E5%85%B3/%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9/WPS%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98
+WPS表格显示问题
+感谢论坛用户 hotime 提供的解决方法
+
+1、问题描述
+如下图wps中，橫行ABCD...和数列1234...显示不全的问题：
+2、问题产生原因
+这是因为WPS表格的默认字体为宋体, 而deepin系统没有宋体, 所以导致的异常。
+
+3、问题解决思路
+你可以从Windows系统下拷贝宋体字体文件C:\Windows\Fonts\simsun.ttc以及simsunb.ttf到deepin，然后安装。
+或者修改wps表格的默认字体: 在WPS表格中点击 文件 - 选项 - 常规与保存 - 标准字体, 将默认的正文字体修改为deepin系统中自带的字体, 例如Noto Sans CJK SC Regular, 保存后重新新建wps表格, 就可以看到正常的显示效果了。

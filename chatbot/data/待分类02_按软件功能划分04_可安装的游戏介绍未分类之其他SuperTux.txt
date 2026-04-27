@@ -1,0 +1,11 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/04_%E5%8F%AF%E5%AE%89%E8%A3%85%E7%9A%84%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D/%E6%9C%AA%E5%88%86%E7%B1%BB%E4%B9%8B%E5%85%B6%E4%BB%96/SuperTux
+SuperTux是一款类似超级马里奥兄弟的游戏，在游戏中控制Tux企鹅通过跳起来顶砖块，吃到金币或雪球或者花，雪球可以使Tux企鹅长大，然后吃到花后可以发子弹。
+
+安装
+sudo apt-get install supertux
+
+卸载
+sudo apt-get remove supertux
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/s/supertux/

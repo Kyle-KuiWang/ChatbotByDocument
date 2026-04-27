@@ -1,0 +1,69 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/02_XDG%E8%A7%84%E8%8C%83/%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%BD%95%E7%9A%84Dbus%E6%8E%A5%E5%8F%A3
+what是“ shutdown”、“ sleep”、“ idle”、“ handle-power-key”、“ handle-suspend-key”、“ handle-hibernate-key” 、“ handle-lid-switch”中的一个或多个，用冒号分隔，用于禁止关机/重启、挂起/休眠、自动空闲逻辑或硬件密钥处理。
+who应该是一个简短的人类可读字符串，用于标识获取锁的应用程序, 若未设置， 则使用被执行的命令行字符串。
+why 应该是一个简短的人类可读字符串，用于标识锁定原因。
+mode是“ block”或“delay“它编码是否应将禁止视为强制性或是否应将操作延迟到某个最大时间。该方法返回一个文件描述符。在此文件描述符及其所有副本关闭时释放锁。有关更多信息关于抑制逻辑，请参见 Inhibitor Locks。
+信号
+每当禁止状态或空闲提示发生变化时，PropertyChanged 都会发送客户端可以订阅的信号。
+
+每次创建或删除会话、用户登录或注销或添加或删除seat时都会发送UserRemoved、SeatNew、SessionNew、SeatRemoved、SessionRemoved、 UserNew和信号 。它们每个都包含对象的 ID 和对象路径。
+
+PrepareForShutdown()和PrepareForSleep()信号在系统关闭之前（使用参数“ ” true）或之后（使用参数“ false”）发送，分别用于重新启动/关机和挂起/休眠。应用程序可以使用它来将数据保存在磁盘上、释放内存或执行其他应在关机/睡眠前不久完成的工作，以及延迟抑制锁。完成这项工作后，他们应该释放他们的抑制锁，以免进一步延迟操作。有关详细信息，请参阅 抑制器锁。
+
+属性
+大多数属性仅反映配置，请参阅 logind.conf (5)。这包括：NAutoVTs, KillOnlyUsers, KillExcludeUsers, KillUserProcesses, IdleAction, InhibitDelayMaxUSec, InhibitorsMax, UserStopDelayUSec, HandlePowerKey, HandleSuspendKey, HandleHibernateKey, HandleLidSwitch, HandleLidSwitchExternalPower, HandleLidSwitchDocked, IdleActionUSec, HoldoffTimeoutUSec, RemoveIPC, RuntimeDirectorySize, RuntimeDirectoryInodesMax, InhibitorsMax, 和 SessionsMax.
+
+IdleHint属性反映系统的空闲提示状态。如果系统空闲，它可能会根据配置进入自动挂起或关闭状态。
+IdleSinceHint并分别IdleSinceHintMonotonic编码空闲提示布尔值的最后一次更改的时间戳，inCLOCK_REALTIME和 CLOCK_MONOTONIC时间戳，以自uinx纪元以来的时间以微秒为单位。
+BlockInhibited和DelayInhibited属性对各个模式的当前活动锁进行编码。它们是冒号分隔的“ shutdown”、“ sleep”和“ idle”列表（见上文）。
+NCurrentSessions和NCurrentInhibitors包含当前注册的会话和抑制器的数量。
+BootLoaderEntries属性包含引导加载程序条目的列表。这包括配置中定义的引导加载程序条目以及引导加载程序报告的任何其他加载程序条目。有关更多信息，请参见 systemd-boot (7) 。
+PreparingForShutdown和PreparingForSleep布尔属性在两个PrepareForShutdown和PrepareForSleep信号的间隔期间分别为真。注意，这些属性不会发出PropertyChanged信号。
+RebootParameter属性显示使用上述 SetRebootParameter()方法设置的值。
+ScheduledShutdown显示了使用上述方法设置的值对 ScheduleShutdown()。
+当用SetRebootToFirmwareSetup、SetRebootToBootLoaderMenu或SetRebootToBootLoaderEntr选择了正确的重启后操作时，RebootToFirmwareSetup、RebootToBootLoaderMenu和RebootToBootLoaderEntr为真。
+WallMessage和EnableWallMessages属性反映了关机原因和墙面信息启用开关，可以通过上述SetWallMessage()方法进行设置。
+Docked如果机器连接到扩展坞/usbhub，则为真。
+LidClosed当（笔记本电脑的）盖子关闭时为真。
+OnExternalPower当机器连接到外部电源时为真。
+安全
+一些操作是通过polkit特权系统保护的。
+
+SetUserLinger() 需要 org.freedesktop.login1.set-user-linger 权限。
+AttachDevice() 需要 org.freedesktop.login1.attach-device
+FlushDevices() 需要 org.freedesktop.login1.flush-devices
+PowerOff()、Reboot()、Halt()、Suspend()、Hibernate()需要org.freedesktop.login1.power-off、org.freedesktop.login1.power-off-multiple-sessions、org.freedesktop.login1.power-off-ignore-inhibit freedesktop.login1.reboot, org.freedesktop.login1.reboot-multiple-sessions, org.freedesktop.login1.reboot-ignore-inhibit, org.freedesktop.login1.halt, org.freedesktop.login1.halt-multiple-sessions, org. freedesktop.login1.halt-ignore-inhibit, org.freedesktop.login1.suspend, org.freedesktop.login1.suspend-multiple-sessions, org.freedesktop.login1.suspend-ignore-inhibit, org.freedesktop.login1.hibernate freedesktop.login1.hibernate-multiple-sessions、org.freedesktop.login1.hibernate-ignore-inhibit， 分别取决于周围是否有其他会话或存在主动抑制。
+HybridSleep()和SuspendThenHibernate()使用与Hibernate()相同的权限。
+SetRebootParameter()需要org.freedesktop.login1.set-reboot-parameter。
+SetRebootToFirmwareSetup需要org.freedesktop.login1.set-reboot-to-firmware-setup。
+SetRebootToBootLoaderMenu需要org.freedesktop.login1.set-reboot-to-boot-loader-menu。
+SetRebootToBootLoaderEntry需要org.freedesktop.login1.set-reboot-to-boot-loader-entry。
+ScheduleShutdown和CancelScheduledShutdown需要与立即关机/重启/停止操作相同的权限（上面列出）。
+Inhibit()通过 org.freedesktop.login1.inhibit-block-shutdown、org.freedesktop.login1.inhibit-delay-shutdown、org.freedesktop.login1.inhibit-block-sleep、org.freedesktop.login1.inhibit-delay-sleep inhibit-block-idle, org.freedesktop.login1.inhibit-handle-power-key, org.freedesktop.login1.inhibit-handle-uspend-key, org.freedesktop.login1.inhibit-handle-hibernate-key, org.freedesktop.login1.inhibit-handle-lid-switch取决于采取的锁类型和方式。
+交互式布尔参数可用于控制 polkit 是否应在需要时以交互方式要求用户提供认证凭证。
+Seat 对象
+node /org/freedesktop/login1/seat/seat0 {
+  interface org.freedesktop.login1.Seat {
+    methods:
+      Terminate();
+      ActivateSession(in  s session_id);
+      SwitchTo(in  u vtnr);
+      SwitchToNext();
+      SwitchToPrevious();
+    properties:
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Id = '...';
+      readonly (so) ActiveSession = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly b CanTTY = ...;
+      readonly b CanGraphical = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("false")
+      readonly a(so) Sessions = [...];
+      readonly b IdleHint = ...;
+      readonly t IdleSinceHint = ...;
+      readonly t IdleSinceHintMonotonic = ...;
+  };
+  interface org.freedesktop.DBus.Peer { ... };
+  interface org.freedesktop.DBus.Introspectable { ... };
+  interface org.freedesktop.DBus.Properties { ... };
+};

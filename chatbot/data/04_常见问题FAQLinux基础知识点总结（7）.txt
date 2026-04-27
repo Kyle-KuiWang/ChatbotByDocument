@@ -1,0 +1,162 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93
+DeepinWiki
+Linux基础知识点总结
+学习创建链接之前，首先要理解链接是什么，我们先来看看 Linux 的文件是如何存储的：
+
+Linux 文件的存储方式分为 3 个部分，文件名、文件内容以及权限，其中文件名的列表是存储在硬盘的其它地方和文件内容是分开存放的，每个文件名通过 inode 标识绑定到文件内容。
+
+Linux 下有两种链接类型：硬链接和软链接。
+
+具体可以看文章：彻底明白 Linux 硬链接和软链接
+
+硬链接
+
+使链接的两个文件共享同样文件内容，就是同样的 inode ，一旦文件 1 和文件 2 之间有了硬链接，那么修改任何一个文件，修改的都是同一块内容，它的缺点是，只能创建指向文件的硬链接，不能创建指向目录的（其实也可以，但比较复杂）而软链接都可以，因此软链接使用更加广泛。
+
+ln file1 file2  --> 创建 file2 为 file1 的硬链接
+2023-4-11_5260.png
+
+如果我们用 rm file1 来删除 file1 ，对 file2 没有什么影响，对于硬链接来说，删除任意一方的文件，共同指向的文件内容并不会从硬盘上删除。只有同时删除了 file1 与 file2 后，它们共同指向的文件内容才会消失。
+
+软链接
+
+软链接就类似 windows 下快捷方式。
+
+ln -s file1 file2
+2023-4-11_56516.png
+
+执行ls -l命名查看当前目录下文件的具体信息
+
+total 0
+-rw-r--r-- 1 root root 0 Jan 14 06:29 file1
+lrwxrwxrwx 1 root root 5 Jan 14 06:42 file2 -> file1  # 表示file2 指向 file1
+其实file2只是file1的一个快捷方式，它指向的是file1，所以显示的是 file1 的内容，但其实file2的inode与file1并不相同。如果我们删除了 file2的话，file1是不会受影响的，但如果删除file1的话，file2就会变成死链接，因为指向的文件不见了。
+
+用户与权限
+
+用户
+
+Linux是一个多用户的操作系统。在 Linux中，理论上来说，我们可以创建无数个用户，但是这些用户是被划分到不同的群组里面的，有一个用户，名叫 root，是一个很特殊的用户，它是超级用户，拥有最高权限。
+
+2023-4-11_96201.png
+
+自己创建的用户是有限权限的用户，这样大大提高了 Linux系统的安全性，有效防止误操作或是病毒攻击，但是我们执行的某些命令需要更高权限时可以使用 sudo命令。
+
+sudo：以 root身份运行命令
+
+sudo date  --> 当然查看日期是不需要sudo的这里只是演示，sudo 完之后一般还需要输入用户密码的
+useradd + passwd
+
+useradd添加新用户
+passwd修改用户密码
+这两个命令需要 root 用户权限
+
+useradd lion --> 添加一个lion用户，添加完之后在 /home 路径下可以查看
+passwd lion --> 修改lion用户的密码
+userdel:删除用户，需要 root 用户权限
+
+userdel lion --> 只会删除用户名，不会从/home中删除对应文件夹
+userdel lion -r --> 会同时删除/home下的对应文件夹
+su：切换用户，需要 root 用户权限
+
+sudo su --> 切换为root用户（exit 命令或 CTRL + D 快捷键都可以使普通用户切换为 root 用户）
+su lion --> 切换为普通用户
+su - --> 切换为root用户
+群组的管理
+
+Linux 中每个用户都属于一个特定的群组，如果你不设置用户的群组，默认会创建一个和它的用户名一样的群组，并且把用户划归到这个群组。
+
+groupadd：创建群组，用法和 useradd 类似
+
+groupadd friends
+groupdel：删除一个已存在的群组
+
+groupdel foo  --> 删除foo群组
+groups：查看用户所在群组
+
+groups lion  --> 查看 lion 用户所在的群组
+usermod：用于修改用户的账户。
+
+【常用参数】
+
+-l对用户重命名。需要注意的是 /home中的用户家目录的名字不会改变，需要手动修改。
+-g修改用户所在的群组，例如 usermod -g friends lion 修改 lion 用户的群组为 friends 。
+-G一次性让用户添加多个群组，例如 usermod -G friends,foo,bar lion 。
+-a -G会让你离开原先的群组，如果你不想这样做的话，就得再添加 -a参数，意味着 append 追加的意思。
+chgrp：用于修改文件的群组。
+
+chgrp bar file.txt --> file.txt文件的群组修改为bar
+chown：改变文件的所有者，需要 root 身份才能运行。
+
+chown lion file.txt --> 把其它用户创建的file.txt转让给lion用户
+chown lion:bar file.txt --> 把file.txt的用户改为lion，群组改为bar
+【常用参数】
+
+-R递归设置子目录和子文件，chown -R lion:lion /home/frank把 frank文件夹的用户和群组都改为lion 。
+文件权限管理
+
+chmod：修改访问权限。
+
+chmod 740 file.txt
+【常用参数】
+
+-R可以递归地修改文件访问权限，例如chmod -R 777 /home/lion
+修改权限的确简单，但是理解其深层次的意义才是更加重要的。下面我们来系统的学习 Linux 的文件权限。
+
+[root@lion ~]# ls -l
+drwxr-xr-x 5 root root 4096 Apr 13  2020 climb
+lrwxrwxrwx 1 root root    7 Jan 14 06:41 hello2.c -> hello.c
+-rw-r--r-- 1 root root  149 Jan 13 06:14 hello.c
+其中drwxr-xr-x表示文件或目录的权限。让我们一起来解读它具体代表什么？
+
+d ：表示目录，就是说这是一个目录，普通文件是 - ，链接是 l 。
+r ：read表示文件可读。
+w ：write表示文件可写，一般有写的权限，就有删除的权限。
+x ：execute表示文件可执行。
+- ：表示没有相应权限。
+权限的整体是按用户来划分的，如下图所示：
+
+2023-4-11_46429.png
+
+现在再来理解这句权限drwxr-xr-x的意思：
+
+它是一个文件夹；
+它的所有者具有：读、写、执行权限；
+它的群组用户具有：读、执行的权限，没有写的权限；
+它的其它用户具有：读、执行的权限，没有写的权限。
+现在理解了权限，我们使用 chmod 来尝试修改权限。chmod 它不需要是 root 用户才能运行的，只要你是此文件所有者，就可以用 chmod 来修改文件的访问权限。
+
+数字分配权限
+
+权限 数字
+r 4
+w 2
+x 1
+
+因此要改变权限，只要做一些简单的加法就行：
+
+chmod 640 hello.c
+
+# 分析
+- 6 = 4 + 2 + 0 表示所有者具有 rw 权限
+- 4 = 4 + 0 + 0 表示群组用户具有 r 权限
+- 0 = 0 + 0 + 0 表示其它用户没有权限
+
+对应文字权限为：-rw-r-----
+用字母来分配权限
+
+u：user 的缩写，用户的意思，表示所有者。
+g ：group 的缩写，群组的意思，表示群组用户。
+o ：other 的缩写，其它的意思，表示其它用户。
+a ：all 的缩写，所有的意思，表示所有用户。
++ ：加号，表示添加权限。
+- ：减号，表示去除权限。
+= ：等于号，表示分配权限。
+chmod u+rx file --> 文件file的所有者增加读和运行的权限
+chmod g+r file --> 文件file的群组用户增加读的权限
+chmod o-r file --> 文件file的其它用户移除读的权限
+chmod g+r o-r file --> 文件file的群组用户增加读的权限，其它用户移除读的权限
+chmod go-r file --> 文件file的群组和其他用户移除读的权限
+chmod +x file --> 文件file的所有用户增加运行的权限
+chmod u=rwx,g=r,o=- file --> 文件file的所有者分配读写和执行的权限，群组其它用户分配读的权限，其他用户没有任何权限
+查找文件

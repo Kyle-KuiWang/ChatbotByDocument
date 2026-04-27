@@ -1,0 +1,22 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/02_%E7%BD%91%E7%9B%98%E7%A7%81%E6%9C%89%E4%BA%91_%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%90%8C%E6%AD%A5_%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/Filezilla/Deepin15%E5%AE%89%E8%A3%85FilezillaFTPServer
+简介
+Deepin15.4安装FTP服务器--FileZilla Server
+
+安装方法
+下载 FileZilla Server 的exe安装程序：https://filezilla-project.org/
+使用 Deepin 15.4 下的 CrossOver 安装上面的软件，默认XP-32容器即可。
+安装完成后，在启动器中点击图标可以启动管理界面
+像在 Windows 下的那样，配置服务器的组，用户，以及共享文件夹。
+在菜单栏的 Server 下，点击 Active，观察是否可以激活，若是激活的，前面有对号。
+如果有对号，说明服务器正常，客户端直接连接即可；否则可能会出现如下的错误：
+Failed to create listen socket on port 21
+Failed to create a listen socket on any of the specified ports. Server is not online!
+
+出现这个结果，说明监听21端口失败。
+
+更改默认的21端口为其他没有使用的端口，我的是改为2121 点击，菜单栏 Edit → Settings 或者界面上的齿轮图标，打开配置界面： general settings → connection settings → listen on these ports 将值由21改为2121或者其他没有使用的端口。
+在菜单栏的 Server 下，点击 Active，观察是否可以激活，结果正常了：
+Creating listen socket on port 2121...
+Server online
+
+接下来使用客户端连接即可。目前木有发现其他的问题。

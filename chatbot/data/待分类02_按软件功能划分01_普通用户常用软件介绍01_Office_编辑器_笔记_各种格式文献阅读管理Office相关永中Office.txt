@@ -1,0 +1,13 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_Office_%E7%BC%96%E8%BE%91%E5%99%A8_%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB%E7%AE%A1%E7%90%86/Office%E7%9B%B8%E5%85%B3/%E6%B0%B8%E4%B8%ADOffice
+
+简介
+永中Office是一款功能强大的办公软件，已经集成了文字处理、电子表格和简报制作三大应用。永中Office对微软Office文档实现双向精确兼容，其精确专业的排版、强大的数据透视表和丰富的插件机制，完全可以满足专业级用户的需求。
+
+安装
+sudo apt-get install yozo-office-zh-cn
+
+卸载
+sudo apt-get remove yozo-office-zh-cn
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/y/yozo-office-zh-cn/

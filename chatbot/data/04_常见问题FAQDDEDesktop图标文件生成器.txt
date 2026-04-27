@@ -1,0 +1,30 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/Desktop%E5%9B%BE%E6%A0%87%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90%E5%99%A8
+DeepinWiki
+搜索...
+
+/
+/
+/
+Desktop图标文件生成器
+¶Desktop图标文件生成器
+跳到导航跳到搜索
+
+由 zinface 制作的小工具，能用 GUI 界面制作 desktop 文件。
+
+目录
+1说明
+2仓库/分支
+3版本历史
+4参见
+说明
+desktop 图标生成器，提供基于Linux平台的desktop文件自动化生成工具
+
+仓库/分支
+https://gitee.com/zinface/z-tools/tree/desktop-dev
+版本历史
+Release desktop-generater v1.1
+参见
+https://bbs.deepin.org/post/231528
+评论
+评论加载中...
+提供者 Wiki.js

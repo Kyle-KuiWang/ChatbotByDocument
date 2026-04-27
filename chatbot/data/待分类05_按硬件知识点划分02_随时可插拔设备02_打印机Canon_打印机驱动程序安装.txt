@@ -1,0 +1,16 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/05_%E6%8C%89%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86%E7%82%B9%E5%88%92%E5%88%86/02_%E9%9A%8F%E6%97%B6%E5%8F%AF%E6%8F%92%E6%8B%94%E8%AE%BE%E5%A4%87/02_%E6%89%93%E5%8D%B0%E6%9C%BA/Canon_%E6%89%93%E5%8D%B0%E6%9C%BA%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%AE%89%E8%A3%85
+Canon_打印机驱动程序安装
+简介
+本文经验有深度论坛用户(springxcs)分享。
+原文地址
+
+本帖最后由 springxcs 于 2016-10-27 18:22 编辑
+
+目前使用的Deepin 15.3版本对部分Canon打印机尚不支持，但可以自行安装驱动，详见如下链接：
+
+Installing a Printer Driver for Canon UFR II printers. https://wiki.debian.org/PrinterDriver/Canon/UFR-II
+详细看该链接文档，对不同类型Canon打印机选择不同的打印程序，有详细的说明。
+UFR II/UFR II LT Printer Driver for Linux V3.20 http://support-asia.canon-asia.com/contents/ASIA/EN/0100270810.html
+支持最新Canon打印机的驱动程序下载地址，包含了V290版。
+Canon UFR II LT 120和130版，Deepin 15.3版本已经具备。
+希望能对Deepin的用户有所帮助。

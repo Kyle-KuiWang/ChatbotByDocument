@@ -1,0 +1,35 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/IDE/HTML5/Intel_XDK
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+/
+Intel_XDK
+页面内容
+讨论
+最后编辑
+Administrator
+02/22/2023
+简介
+Intel XDK是一款HTML5跨平台集成开发工具，利用HTML5的技术可以快速开发应用或者游戏，并快速打包成诸如安卓，IOS，WindowsPhone等平台上的应用并发布到应用商店，可谓是一条龙服务了，并有crosswalk做支持，在设备上运行起来也更流畅。
+
+安装
+sudo apt-get install intel-xdk
+
+卸载
+sudo apt-get remove intel-xdk
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/i/intel-xdk/
+
+常见问题
+相关链接
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

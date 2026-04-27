@@ -1,0 +1,25 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/04_%E6%8C%89%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%E5%88%92%E5%88%86/01_%E7%B3%BB%E7%BB%9F%E8%BD%BD%E5%85%A5%E4%B8%AD/%E5%90%AF%E5%8A%A8%E9%9F%B3%E6%95%88
+启动音效
+简介
+开关机音乐顾名思义就是电脑在开启的那一瞬间的音乐，不同的音乐可以带来不同的感觉。
+
+本篇文章介绍如何在深度操作系统中加入优美的开机启动音乐。
+
+原理
+在~/.config/autostart（特定用户）或 /etc/xdg/autostart（全局用户）目录下创建一个 .desktop 文件，以实现桌面环境启动的目的。
+
+方法
+首先要安装软件包gnome-session-canberra：
+
+sudo apt install gnome-session-canberra
+然后打开终端，在 ～/.config/autostart（推荐）或 /etc/xdg/autostart 目录下新建与编辑一个名为 loginsound.desktop 的文件：
+
+gedit $HOME/.config/autostart/loginsound.desktop
+其内容为：
+
+[Desktop Entry]
+Name=GNOME Login Sound
+Type=Application
+Exec=/usr/bin/canberra-gtk-play --file="XXX" --description="GNOME Login sound"
+Comment=Startup Sound
+把“XXX”换成需要播放的音频文件的路径即可。

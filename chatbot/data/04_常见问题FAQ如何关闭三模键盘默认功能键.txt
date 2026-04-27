@@ -1,0 +1,16 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%A6%82%E4%BD%95%E5%85%B3%E9%97%AD%E4%B8%89%E6%A8%A1%E9%94%AE%E7%9B%98%E9%BB%98%E8%AE%A4%E5%8A%9F%E8%83%BD%E9%94%AE
+DeepinWiki
+搜索...
+
+/
+/
+如何关闭三模键盘默认功能键
+如何关闭三模键盘默认功能键
+三模键盘默认会有功能键，用下面命令可以关闭
+
+echo options hid_apple fnmode=2 | sudo tee -a /etc/modprobe.d/hid_apple.conf
+
+sudo update-initramfs -u -k all
+评论
+暂时没有评论。
+提供者 Wiki.js

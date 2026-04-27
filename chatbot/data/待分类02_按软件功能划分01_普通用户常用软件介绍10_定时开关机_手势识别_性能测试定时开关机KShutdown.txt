@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/10_%E5%AE%9A%E6%97%B6%E5%BC%80%E5%85%B3%E6%9C%BA_%E6%89%8B%E5%8A%BF%E8%AF%86%E5%88%AB_%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/%E5%AE%9A%E6%97%B6%E5%BC%80%E5%85%B3%E6%9C%BA/KShutdown
+简介
+KShutDown是一个定时关机工具，使用它你可以在指定的时间实现对于系统的关闭、重启、锁屏、以及结束会话等操作。同时具有可配置的键盘快捷键、KDE Kiosk支持、命令行和DCOP支持等功能。
+
+安装
+sudo apt-get install kshutdown
+
+卸载
+sudo apt-get remove kshutdown
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/k/kshutdown/

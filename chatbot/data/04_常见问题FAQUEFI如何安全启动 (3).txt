@@ -1,0 +1,266 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/UEFI%E5%A6%82%E4%BD%95%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8
+DeepinWiki
+7.3 配置文件
+变量(/etc/default/grub):
+
+GRUB_DEFAULT 默认启动项
+GRUB_SAVEDEFAULT 保存启动项
+GRUB_TIMEOUT 选择倒计时
+GRUB_TIMEOUT_STYLE 是否展示菜单
+GRUB_DISTRIBUTOR 发行商
+GRUB_TERMINAL_INPUT 输入设备
+GRUB_TERMINAL_OUTPUT 输出设备
+GRUB_CMDLINE_LINUX 内核参数(全部)
+GRUB_CMDLINE_LINUX_DEFAULT 内核参数（标准）
+GRUB_DISABLE_LINUX_UUID 使用UUID
+GRUB_DISABLE_RECOVERY 禁用恢复
+GRUB_VIDEO_BACKEND 图形支持
+GRUB_GFXMODE 分辨率，vesa bios extensions
+GRUB_BACKGROUND 背景图像
+GRUB_THEME 主题
+GRUB_GFXPAYLOAD_LINUX 显示模式
+GRUB_DISABLE_OS_PROBER 是否调用grub-prober发现其他操作系统
+GRUB_OS_PROBER_SKIP_LIST 忽略空格
+GRUB_DISABLE_SUBMENU 是否使用二级菜单
+GRUB_ENABLE_CRYPTODISK 加密
+GRUB_INIT_TUNE 音效
+GRUB_BADRAM 过滤内存坏区
+GRUB_PRELOAD_MODULES 预载模块
+脚本语法：
+
+{} | & $ ; <> 元字符
+! [[ ]] {} case do done elif else esac fi for function if in menuentry select then time until while 关键字
+\ '' "" 转义序列
+$(变量) 得到变量的值,$1第一个参数
+#注释内容 注释
+for
+if
+while、until
+function
+menuentry: title --class --users --unrestricted --hotkey --id $2...{}
+submenu
+break
+continue
+return
+setparams
+shift
+serial: --unit --prot --speed --word --parity --stop
+terminal_input: --append|--remove 终端1 终端2...
+terminal_ouput
+terminfo -a|-u|-v
+menuentry “win10”{
+    insmod ntfs
+    search --set=root --label win10 --hint hd2,gpt2
+    configfile /boot/grub/grub.cfg
+}
+menuentry "winxp"{
+    insmod ntfs
+    search --set=root -fs-uuid {} winxp --hint hd0,msdos2
+    ntldr /ntldr
+}
+主题资源：
+
+颜色 #8899ff
+字体 pff2， 用loadfont命令
+title-text 标题
+title-font 标题字体
+title-color 标题颜色
+message-font
+message-color
+message-bg-color
+desktop-image 背景
+desktop-image-scale-method 缩放
+desktop-image-h-align 水平对齐
+desktop-image-v-align 垂直对齐
+desktop-color 背景颜色
+terminal-box 终端窗口外框
+terminal-border 终端窗口边框宽度
+terminal-left 终端窗口左坐标
+terminal-top 终端窗口顶坐标
+terminal-width 终端窗口宽度
+terminal-height 终端窗口高度
+label： id text font color align visible 组件和属性
+image： file
+progress_bar: id fg_color bg_color text_color bar_style highlight_style highlight_overlay font text
+circular_progress: id center_bitmap tick_disappear start_angle
+boot_menu: item_font selected_item_font item_color selected_item_color icon_width icon_height item_height item_padding item_icon_space item_spacing menu_pixmap_style item_pixmap_style selected_item_pixmap_style scrollbar scrollbar_frame scrollbar_thumb scrollbar_thumb_overlay scrollbar_slice scrollbar_left_pad scrollbar_right_pad scrollbar_top_pad scrollbar_bottom_pad visible
+canvas: id left top width height
+hbox:
+vbox:
+__timeout__ id值为这个将由grub更新
+cmd颜色名称：black，blue，green，cyan，red，magenta，brown，light-gray，dark-gray，light-blue，light-green，light-cyan，light-red，light-magenta，yellow，white
+对grub.cfg脚本的简单分析：
+
+操作环境块grubenv
+定义函数：加载视频模块
+用uuid搜索字体文件/usr/share/grub/unicode.pf2, 设置gfxpayload=auto，加载视频，加载字体，加载gfxterm图形终端，设置terminal
+_output gfxterm终端输出.
+设置菜单显示时间 ，颜色。然后进入实际菜单项
+linux菜单项：加载视频，加载解压缩gzio，判断是否xen模式，加载part_gpt分区模块，加载ext2文件系统，根据uuid搜索设置root位置，加载linux内核，内核参数root= ro quiet；加载linux启动映像盘initrd。
+其他模式的linux系统项就内核参数不同，root= ro single 或 recovery
+uefi系统安装菜单项：fwsetup
+windows菜单项：加载 part_gpt，加载fat文件系统，用uuid搜索设置root，用chainloader 链式加载 efi/microsoft/boot/bootmgfw.efi微软系统启动管理器。
+7.4 引导命令行
+默认的启动过程是：
+
+normal.mod 模块
+$prefix/grub.cfg 应先设置set root/set prefix变量
+引导进入grub命令行，即出现grub>可以输入grub 命令行工具，来修复引导。类似bash，可以使用TAB补全和上下按键寻找历史命令。
+
+ls 列出分区。
+ls (hd2,gpt1) 显示分区类型
+ls (hd2,gpt1)/ 显示分区内容
+set pager=1 设置信息滚动一屏暂停
+set 显示环境变量，重要信息
+set root=(hd2,gpt1) 设置根目录位置
+insmod 路径 装载模块，模块一般在/boot/grub/x86_64-efi/目录下，如果没有装载模块，很多命令都不能正常使用
+minicmd.mod 很多命令在这个模块
+normal.mod 基本模块，增加normal命令，进入正常模式。
+linux.mod linux内核装载模块
+congfigfile 路径 装载grub目录文件，确保首先正确加载了相关mod，否则启动菜单也无法引导系统
+linux 路径 装载linux内核
+linux16 路径 旧款linux内核
+initrd 路径 装载系统映像
+initrd16 路径 配合linux16使用
+set prefix=(hd2,gpt1)/boot/grub/ 设置grub目录位置
+boot 启动linux系统映像，多重引导规范
+chainloader (hd2,gpt2) +1 调到下一个引导管理器，链式引导
+chainloader /efi/microsoft/boot/bootmgfw.efi 启动gpt模式的windows引导管理器。
+drivemap -s (hd0) (hd1) 安装dos需要在第一个设备，drivemap交换映射
+parttool 隐藏分区，安装dos用
+可用命令列表：
+
+$? 返回值，0为true，非0为false
+[ : 检查表达式，[ -d 目录是否存在；[ -e 是否存在；[ -f 文件是否存在；[ -s 非空文件；[ -n 非空字符串；[ -z 空字符串；[ (布尔表达式)； -a 与； -o或； ==； !=； <; <=; >; >=； -eq 整数等；-ge 整数大于等于； -gt 整数大于； -le 整数小于等于； -lt整数小于； -ne 整数不等；-pgt; -plt; -nt;-ot
+acpi: 加载acpi表
+authenticate: 检查用户是否在用户列表中
+background_color: 设置活动终端背景颜色
+background_image: 活动终端的背景图
+badram: 过滤掉内存坏区
+blocklist: 块表
+boot: 启动
+cat: 显示内容 --dos
+chainloader: 链式加载引导管理器
+clear: 清屏
+cmosclean: 清CMOS
+cmosdump: 转储CMOS内容
+cmostest: CMOS测试
+cmp: 比较两文件不同
+configfile: 加载配置菜单文件
+cpuid: 检查cpu功能
+crc: 计算crc32校验和
+cryptomount: 挂载加密设备，luks.mod,geli.mod
+date: 时间
+devicetree: 加载设备树
+distrust: 不信任的公钥
+drivemap: 驱动器映射
+echo: 回显
+eval: 执行参数表示的命令
+export: 导出环境变量
+false: 假
+gettext: 翻译字符串,locale_dir/*.mod
+gptsync: 根据GPT填充MBR
+halt: 关机
+hashsum: 计算哈希校验和 --hash --keep-going --uncompress --check --prefix
+help: 显示帮助信息
+initrd: 加载linux映像包
+initrd16:
+insmod: 加载模块
+keystatus: 检查按键状态
+linux: 加载linux内核，其余参数作为内核参数添加
+linux16:
+list_env: 列出环境块中的变量
+list_trusted: 列出可信公钥
+load_env: 加载环境储存块
+loadfont: 加载字体
+loopback: 从映像中创建设备，-d删除设备
+ls: 列出设备或文件
+lsfonts: 列出加载的字体
+lsmod: 列出加载的模块
+md5sum: 计算md5哈希
+module: 多引导内核加载模块
+multiboot: 加载多引导兼容内核
+nativedisk: 本机磁盘驱动
+normal: 进入正常模式，自动执行脚本，装载模块
+normal_exit: 退出正常模式
+parttool: 修改分区表条目
+password: 密码
+password_pbkdf2: 哈希密码
+play: 播放曲子
+probe: 检索设备信息
+pxe_unload: 卸载PXE环境
+read: 读入用户输入
+reboot: 重启
+regexp: 测试正则表达式
+rmmod: 删除模块
+save_env: 保存变量到储存块
+search: 搜索设备，--file|--label|--fs-uuid --set --no-floppy
+sendkey: 模拟按键
+set: 设置环境变量
+sha1sum: 计算sha1哈希
+sha256sum: 计算sha256哈希
+sha512sum: 计算sha512哈希
+sleep: 暂停指定秒,--verbose 显示倒计时
+source: 读取配置文件
+test: 检查文件类型并比较值
+true: 真
+trust: 可信秘钥
+unset: 取消环境变量
+uppermem: 高端内存大小
+verify_detached: 验证分离的数字签名
+videoinfo: 列出可用的视频模式
+xen_hypervisor: 加载xen
+xen_linux: 加载xen
+xen_initrd: 加载xen
+xen_xsm: 加载xen
+特殊环境变量：
+
+biosnum: bios启动设备号
+check_signatures: 数字签名验证
+chosen: 选择的菜单项
+cmdpath: 定位于引导映像启动的路径
+color_highlight: 高亮时前景色/背景色
+color_normal: 前景色/背景色
+config_directory: 配置文件目录
+config_file: 配置文件
+debug: 启用调试信息输出
+default: 默认菜单项,参考grub-set-default/grub-reboot
+fallback: 备用菜单项
+gfxmode: 使用gfxterm图形终端
+gfxpayload: linux内核视频模式
+gfxterm_font: gfxterm字体
+grub_cpu: 构建的cpu类型
+grub_platform: pc/efi
+icondir: 图标目录
+lang: zh_CN
+locale_dir: 本地化目录/boot/grub/locale
+menu_color_highlight: 菜单项高亮模式前景色/背景色
+menu_color_normal: 菜单项前景色/背景色
+net_<interface>_boot_file:
+net_<interface>_dhcp_server_name:
+net_<interface>_domain:
+net_<interface>_extensionspath:
+net_<interface>_hostname:
+net_<interface>_ip:
+net_<interface>_mac:
+net_<interface>_next_server:
+net_<interface>_rootpath:
+net_default_interface:
+net_default_ip:
+net_default_mac:
+net_default_server:
+pager: 显示信息长度（/页）暂停
+prefix: /boot/grub
+pxe_blksize:
+pxe_default_gateway:
+pxe_default_server:
+root: 根目录所在位置
+superusers: 超级用户
+theme: 主题
+timeout: 倒计时
+timeout_style: 倒计时显示方式
+环境储存块：
+
+/boot/grub/grubenv 1k,load_env,save_env
+7.5 busyBox
+busyBox 是一个微型linux系统，一般用在救援系统。

@@ -1,0 +1,5 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/05_%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/FireFox
+火狐浏览器
+简介
+FireFox是一个兼容Linux，Windows,Mac,Android以及iOS的浏览器
+进入下载页面

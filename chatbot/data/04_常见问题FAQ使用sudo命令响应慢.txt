@@ -1,0 +1,22 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E4%BD%BF%E7%94%A8sudo%E5%91%BD%E4%BB%A4%E5%93%8D%E5%BA%94%E6%85%A2
+DeepinWiki
+搜索...
+
+/
+/
+使用sudo命令响应慢
+终端使用sudo命令时输入密码的提示出现的速度变慢
+sudo命令响应变慢
+问题描述
+用户在论坛中提出输入sudo命令后，输入密码的提示出现的速度变慢，相关的帖子链接：sudo的反应变慢了，不知道为什么
+
+解决办法
+论坛用户donaldsebleung提供的以下解决方案：
+
+修改/etc/hosts文件，使用命令sudo vi /etc/hosts
+文件中添加127.0.1.1 host_name（其中host_name为用户名），保存退出即可
+借鉴文档Network setup
+
+评论
+评论加载中...
+提供者 Wiki.js

@@ -1,0 +1,11 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/03_%E6%9C%8D%E5%8A%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%BB%8B%E7%BB%8D/04_%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Mono%E4%B8%8E%E7%82%B9NET/MonoDevelop
+MonoDevelop是个跨平台的集成开发环境，主要用来开发Mono与.NETFramework软件。MonoDevelop集成了很多Eclipse与MicrosoftVisual Studio的特性。
+
+安装
+sudo apt-get install monodevelop
+
+卸载
+sudo apt-get remove monodevelop
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/m/monodevelop/

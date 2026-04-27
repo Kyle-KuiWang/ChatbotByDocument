@@ -1,0 +1,17 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%97%AA%E9%80%80
+DeepinWiki
+搜索...
+
+/
+/
+浏览器闪退
+规避浏览器闪退问题
+浏览器闪退
+解决方式
+1.查看浏览器版本，确认是否有候选版本：apt policy uos-browser-stable
+2.如果已经是最新版本，输入命令~/.config/uosbrowser/Default 目录删除，再试一下
+3.输入命令：uos-browser --no-sandbox
+
+评论
+暂时没有评论。
+提供者 Wiki.js

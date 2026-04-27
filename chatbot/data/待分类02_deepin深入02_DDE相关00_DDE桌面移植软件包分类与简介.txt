@@ -1,0 +1,118 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_deepin%E6%B7%B1%E5%85%A5/02_DDE%E7%9B%B8%E5%85%B3/00_DDE%E6%A1%8C%E9%9D%A2%E7%A7%BB%E6%A4%8D/%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%88%86%E7%B1%BB%E4%B8%8E%E7%AE%80%E4%BB%8B
+开发库
+dtkcommon
+dtkcore
+dtkgui
+dtkwidget
+dtk 是基于 Qt 开发的一整套简单且实用的通用开发框架，目前所有的 dde 桌面软件都是使用 dtk 开发的，打包 dtk 是移植 dde 的第一步且必要的一步。
+
+移植好 dtk 就可以编译大多数 dde 桌面软件了，比如 deepin-draw。但是编译成功后，运行起来界面显示异常，原因是需要下面的两个库：
+
+qt5integration： Qt platform theme
+qt5platform-plugins: Qt platform plugin
+编译时使用 "CONFIG+=DISABLE_WAYLAND" 参数可以禁用 wayland
+如果目标系统qt版本非常新导致编译报错，可以从新版 qt 的源码中拷贝一份 libqt5xcbqpa-dev 向上游提交，示例 pr 。
+上述两个库是 qt 插件，必须安装到特殊路径让 qt 找到，比如 /usr/lib/x86_64-linux-gnu/qt5/plugins，如果目标发行版路径比较特殊，可能需要设置 QT_PLUGIN_PATH 环境变量。
+
+dde-qt-dbus-factory
+用来统一存放 dde 使用到的自动生成的 Qt DBus 代码的仓库。是多个项目的依赖，应尽早移植。
+
+需要注意，以后编译提示缺少 libdframeworkdbus 时就是指的此库。
+
+udisks2-qt5: UDisks2 D-Bus 接口的 qt 绑定
+disomaster ：对 libisoburn 的 qt 封装
+docparser：从 document2html 移植而来的文档解析器库
+gio-qt： 对 gio 的 qt 封装
+image-editor： deepin-image-viewer 和 deepin-album 使用的图像处理库
+上面几个库可以在需要的时候再打包，难度并不高。
+
+deepin-gettext-tools
+python/perl 库，处理 desktop 文件翻译的便捷工具
+
+dtkdeclarative： dtk 的 qml 组件
+正在开发的 deepin-tweak 使用此库。目前在开发前期，移植优先级非常低。
+
+应用软件
+deepin-draw
+deepin-calculator
+deepin-boot-maker
+deepin-terminal 改字体可能要 dde-daemon 移植好，不过无伤大雅，可以先打包。
+deepin-voice-note
+deepin-compressor
+deepin-reader
+deepin-picker 实时更新需要 dde-daemon
+deepin-image-viewer
+deepin-album
+deepin-downloader
+deepin-editor
+deepin-font-manager
+dde-file-manager 文件管理器
+deepin-music 播放音乐可能要等 dde-daemon 移植好
+deepin-screen-recorder
+目前 cmake 有点问题，请使用 qmake 构建
+deepin-movie-reborn
+deepin-camera
+dde-dock
+dde-launcher
+dde-calendar
+dde-clipboard
+有一个禁用 wayland 的 pr：https://github.com/linuxdeepin/dde-clipboard/pull/110
+deepin-shortcut-viewer
+deepin-system-monitor
+可以使用编译参数 “-DUSE_DEEPIN_WAYLAND=OFF” 禁用 wayland
+dde-control-center
+控制中心大多数组件是可拆卸的，可以参考 Arch 禁用一些 UOS/Deepin 特有功能
+dde-grand-search
+dde-network-core 控制中心的网络组件需要这个
+dde-polkit-agent
+dpa-ext-gnomekeyring dde-polkit-agent 的插件
+deepin-turbo
+deepin-anything 用于文件搜索，包含内核模块。
+dde-session-ui 包括 dde-shutdown 等系统 ui 组件。后期必须移植。
+dde-session-shell 包括 lightdm-deepin-greeter 等。后期必须移植。
+src/libdde-auth/deepinauthframework.cpp 写死了用 common-auth，只是 debain 系特有的，你可能需要换一个，看看 /etc/pam.d。不然锁屏无法解锁。
+dde-app-services 用来配置 dconfig，和 dconf 编辑器类似
+下面几项移植优先级低
+deepin-clone： 移植 dde-file-manager 后可以试试
+dde-device-formatter
+dde-introduction 欢迎程序
+deepin-devicemanager 5.8+ 依赖 apt，没有 apt 可以尝试打包 5.6+
+deepin-lianliankan
+deepin-gomoku
+deepin-screensaver
+deepin-deb-installer debian 系可选
+下面几项一般不移植
+deepin-plymouth deepin 的开机动画
+dde-network-utils 已废弃，请使用 networkmanager-qt
+dde-printer
+GO 语言包
+deepin-pw-check 验证密码有效性的工具，dde-control-center 需要
+go-x11-client 支持 go get
+go-lib 打包就是复制下源码，构建依赖它的软件包时把它加进 GOPATH 里。
+go-dbus-factory 同上
+go-gir-generator 为 GObject 生成 golang 绑定
+dde-api startdde，dde-daemon，deepin-wallpapers 需要
+dde-daemon dde 桌面守护进程，非常重要且关键的应用，中后期必须移植
+deepin-desktop-schemas：有大量 dde 需要的 gsettings schemas 文件，移植 dde 所必须
+startdde 移植的最后一步，提供 startdde 命令可以相继调起 dde 服务和应用(比如 dde-daemon，dde-dock)
+下面几项不移植
+deepin-network-proxy
+lastore-daemon
+deepin-ab-recovery
+go-gir （请用 go-gir-generator 生成）
+Artwork/杂项
+dde-account-faces ：本地帐户头像，仅仅是几个 icons
+deepin-icon-theme： 图标主题
+deepin-gtk-theme： gtk 主题，让 gtk 软件适配 dde 的风格。
+deepin-wallpapers： 桌面壁纸
+由于 deepin-wallpapers 包含非自由许可证，拆包请关注 https://github.com/orgs/linuxdeepin/discussions/3340。
+deepin-sound-theme ：声音主题
+deepin-cursor-theme : 鼠标图标
+deepin-desktop-base 还是需要移植的，其中的 distribution.info 文件可以自行修改。distribution 目录有三个文件，distribution_logo.svg 是控制中心显示的系统 logo，distribution_logo_light.svg 是 dtk 软件关于页面系统 logo，distribution_logo_transparent.svg 是锁屏页面左下角的 logo。 这个仓库还有一些其他系统用不到的文件，可以参考 Arch 的打包。
+窗管
+在 dde-kwin (kwin_no_scale) 正常工作前， 可以使用 kwin_x11 --replace 临时凑合一下。
+
+deepin-kwin: 目前（2022/8）缺少代码同步， deepin 上代码已经过时，不要移植
+dde-kwin： 请使用 kde 官方 kwin 打包 5.5.11-deepin 的 tag。
+https://github.com/linuxdeepin/developer-center/issues/3240
+https://github.com/linuxdeepin/developer-center/issues/3246

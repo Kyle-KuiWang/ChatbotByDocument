@@ -1,0 +1,11 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/06_%E5%B9%B3%E9%9D%A2%E6%88%96%E7%AB%8B%E4%BD%93%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/2D%E6%88%963D%E6%B8%B2%E6%9F%93API/OpenGL
+OpenGL是用于渲染2D、3D矢量图形的跨语言、跨平台的应用程序编程接口（API）。
+
+1、终端中输入命令：sudo apt install mesa-utils
+
+2、终端中输入命令：glxinfo | grep -i opengl
+
+若当前使用的为N卡，则输入命令后，截图信息如下：
+若当前使用的为A卡（AMD机型），则输入命令后，截图信息显示如下：
+若当前使用的为I卡（Intel机型），则输入命令后，截图信息显示如下：
+若显示有误，可能是mesa驱动版本不匹配，需做适配。

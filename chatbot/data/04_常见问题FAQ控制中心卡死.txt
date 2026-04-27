@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%8E%A7%E5%88%B6%E4%B8%AD%E5%BF%83%E5%8D%A1%E6%AD%BB
+DeepinWiki
+搜索...
+
+/
+/
+控制中心卡死问题解决
+控制中心卡死问题解决
+可以尝试重装安装deepin控制中心解决
+包名：dde-control-center
+sudo apt install dde-control-center
+
+评论
+暂时没有评论。
+提供者 Wiki.js

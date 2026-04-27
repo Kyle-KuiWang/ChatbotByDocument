@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/04_%E9%9F%B3%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7/%E9%9F%B3%E9%A2%91%E4%B9%90%E8%B0%B1%E7%9B%B8%E5%85%B3/Musescore
+简介
+MuseScore是一套作曲写乐谱工具，透过MuseScore的协助，您可以谱出属于您的五线谱，更可以输出包含PDF、PNG及MIDI等格式的文件，让您轻轻松松就可以制作与列印出漂亮美观的五线谱。除此之外，MuseScore 还具有混音器、段落抽取和装饰音等功能。
+
+安装
+sudo apt-get install musescore
+
+卸载
+sudo apt-get remove musescore
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/m/musescore/

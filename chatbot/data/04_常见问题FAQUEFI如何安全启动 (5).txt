@@ -1,0 +1,162 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/UEFI%E5%A6%82%E4%BD%95%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8
+DeepinWiki
+五、UEFI 做引导盘
+5.1 引导设备的文件系统
+有一点需要明确，u盘，光盘等即插即用设备，它的引导方式和硬盘有所区别。
+
+尤其是光盘，它使用的是专门的光盘格式，即.iso结尾的镜像，而硬盘的镜像是没有这种法则的。
+
+当然，现在（2019年）我们更加常见的设备是u盘。因此我们主要是和各种硬盘镜像，或者虚拟机硬盘镜像打交道。
+
+当然，我们下载的镜像，却经常是.iso结尾的。因此也要求我们对此有所掌握。
+
+硬盘分区结构有bmr和gpt两种，文件系统有windows 的 fat，ntfs；linux 的ext；苹果Mac OS的hfs。
+
+光盘文件格式：
+
+cdfs iso-9660 level 1 支持8.3短文件名
+cdfs iso-9660 level 2 支持长文件名
+udf ios官方改进
+joliet 微软对iso-9660的改进
+hfs 苹果的改进
+rock ridge 操作系统unix的改进
+5.2 用到的工具
+以linux为例：
+
+mkfs
+cp
+dd
+mount
+losetup
+mkisofs
+5.3 总体思路
+光盘也好，u盘也好，总的来说，只需要借助工具生成可引导格式便可。对u盘来说，基本就是复制硬盘启动的思路，只有细微差别。对于光盘来说，需要满足iso格式的特殊规定，启动区空间和容量有所限制。
+
+所谓可引导设备，说到底就是让uefi能够在特定位置读取里面的引导管理器，如bootx64.efi等文件，所做的必要布局而已。
+
+准备数据文件
+准备引导文件
+镜像制作工具
+写入设备
+对不同文件系统之间的数据操作过程是：
+
+加载镜像a
+加载镜像b
+文件从a复制到b
+整体来说，数据操作就是简单的复制文件，而启动镜像的制作在准备数据文件的基础上，使用特定的制作工具，加特定的引导文件即可。
+
+5.4 u盘启动镜像
+其实可以直接对u盘进行操作。如第三节演示的那样。但这里还是按照 先准备数据，启动文件，然后制作镜像，然后写入u盘这个思路进行演练。
+
+以debian linux 最小镜像mini.iso为例，下载地址：http://ftp.nl.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/ 。
+
+
+
+这是一个可以启动的光盘镜像，里面的内容是这样的：
+
+
+
+当然，我们可以简单的提取文件，但是linux支持挂载iso文件系统，先挂载了再操作也是挺方便的。
+
+sudo apt install udftools #安装udf光盘文件系统工具套件，安装完就有mkfs.udf了
+
+sudo apt install mkisofs #安装通用光盘制作工具，比上一个强大，建议使用
+file mini.iso 显示这个镜像并非光盘镜像，而是一个硬盘镜像，很多时候下载的镜像，虽然是iso结尾，但是却并不一定是光盘文件系统的，这有点奇葩。
+
+
+
+为了提取里面的引导文件，我想提取里面的启动数据，因此就必须要挂载这个硬盘镜像，根据信息，是这个硬盘有三个分区，如果你用mount直接挂载它，是挂载第一个分区，其他两个分区需要使用losetup命令。
+
+这里需要了解一下linux的设备和文件系统基本知识。
+
+linux中的设备被虚拟成一个文件，放在/dev/目录下，通过一个/dev/loop# （#是数字）的设备，可以将一个普通文件模拟成硬盘，然后对该文件进行读写，分区，格式化文件系统等操作。
+
+因此，通过这个手段，可以不刻录到实际设备上，也能够装载镜像文件。但是如何读取镜像中的分区信息，并挂载其中一个分区呢？这就是losetup工具的能力。
+
+losetup -f # 查看还没有被使用的loop设备
+
+fdisk -l mini.iso #fdisk是一个分区工具，这命令列出镜像的分区情况
+
+sudo losetup -o 122880 /dev/loop0 mini.iso #根据信息，扇区240开始是efi分区，每个扇区512字节，240*512=122880 ，设置装载的偏移开始点在这里。然后这个loop0就是建立在该分区上的虚拟设备了
+
+sudo mount /dev/loop0 mini #将设备装载入本地文件系统中的mini目录，mini目录内的内容就是分区的内容。然后就能通过普通的文件操作，执行数据任务了。
+这个分区只有一个文件：efi/boot/bootx64.efi . 接下来就是准备好我们要建立的镜像的内容。
+
+总结一下，因为这部分的操作细节和顺序很重要！很容易出错。如果你想打开镜像的某一个分区：
+
+用fdisk 或者gdisk查看分区类型，分区起始扇区，扇区大小，计算好偏移量（字节）
+用losetup装载指定偏移位置（字节）的镜像到设备/dev/loop#
+用mount装载设备内容到指定的目录下
+卸载过程正好相反，umount-》losetup -d
+如果你想制作镜像：
+
+用dd 建立一个大文件，可以装载整个文件系统大小的。
+用fdisk 或者 gdisk 分区，设置好分区类型（注意），记住每个分区的起始位置，和计算偏移量（字节）
+用losetup 装载指定偏移位置（字节）的镜像到设备/dev/loop#，记住这个设备和分区的对应关系
+用mkfs -t 文件系统格式化设备，即是格式化了对应分区
+用mount装载设备内容到指定的目录下，然后就可以复制到这个分区了。
+卸载过程相反顺序进行。
+六、UEFI shell
+EDK（EFI开发工具包）子项目。shell即命令行。uefi shell很重要，因为不需要启动进入系统，它就可以让你执行很多命令，从而可以修复引导程序。
+
+Shell.efi 精简版
+Shell_full.efi 全功能版
+shellenv.efi 扩展nshell
+memmap 1> Foo.txt #标准输出重定向，unicode编码
+memmap >a Foo.txt #标准输出重定向，ASCII编码
+memmap 2>> Foo.txt #错误输出追加，unicode编码
+shell 命令：
+dmen drivers dh dmpstore devtree help ? err 错误级别 devices map 映射 guid 显示guid connect mount 块设备安装文件系统 pci 配置pci disconnect load 加载驱动 mm 设置mem/io/pci openinfo unload 卸载映像 reset 重置系统 reconnect loadbmp stall 停顿 drvcfg nshell getmtc drvdiag ver 版本 hexedit loadpcirom memmap 内存映射 Setsize bcfg 显示配置 Set 设置环境变量 Dblk 显示块设备 alias 别名
+
+shell 内部命令：
+help dh 显示句柄 map guid alias set exit cd 进入目录 type
+
+shell 外部命令：
+
+类dos：
+attrib 属性 date 时间 edit time break cls 清屏 mode vol
+类Unix：
+ls 列出文件 rm 删除 cp 复制 mv 移动 mkdir 新建文件夹 type alias set touch
+.nsh 批处理命令：
+echo 回显 exit 退出 for goto if pause 暂停
+startup.nsh 自动运行批处理
+
+6.1 efi shell环境使用
+技巧：
+
+向上箭头 ： 上一个命令
+向下箭头 ： 下一个命令
+TAB ：补全
+PgUp ： 向上滚动屏幕
+pgDown： 向下滚动屏幕
+-b 参数： 分页显示信息
+-q 参数： 取消确认
+help 命令： 命令的使用帮助
+: 匹配任意字符串
+cls 7：清屏，并设置背景色为浅灰
+-sfo 参数： 标准格式化输出信息
+mode 80 25 : 将控制台设置为80×25大小。
+reset： 重启
+set ： 查看和设置环境变量
+命令：
+
+ver 显示shell的版本
+文件管理：cp复制/rm删除/del删除/ls显示文件列表/comp比较文件内容/edit编辑/eficompress压缩/efidecompress解压缩/mkdir新建文件夹/mv 移动/parse检索内容/setsize设置文件大小/touch跟新文件时间/type显示内容/
+map -r：刷新识别的fat文件系统
+BLK0: :进入BLK0盘
+cd： 进入目录
+connect 17 19 将19驱动连接到17设备
+dblk blk0 2 1 打印块设备第2块的1块内容
+devices 输出设备列表：1.设备编号/2.设备类型(R.控制器、B.总控制器、D.设备控制器)/3.配置协议/4.诊断协议/5.父控制器数/6.设备数量/7.子控制器数/8.设备名称
+devtree 树状图输出设备
+dh 52 显示52号设备信息。-p 协议，-d 显示驱动， -v 详细信息。
+disconnect 断开驱动
+dmem 2 1 显示内存地址2的1byte内容
+drivers 驱动列表：1.驱动编号/2.版本/3.类型/4.配置协议/5.驱动协议/6.设备数/7.子设备数/8.驱动名称/9.设备路径
+ifconfig -l列出网络配置
+load file 加载驱动，-nc 不自动连接设备。
+memmap 内存信息
+openinfo 90 显示和句柄关联的信息
+pci 列出pci信息：1.段号/2.总线号/3.设备号/4.功能号/名称-类别 设备
+smbiosview 显示smbios信息
+vol 文件系统的卷信息

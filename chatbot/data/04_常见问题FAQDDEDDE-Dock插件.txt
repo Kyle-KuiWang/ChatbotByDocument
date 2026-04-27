@@ -1,0 +1,70 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/DDE-Dock%E6%8F%92%E4%BB%B6
+DDE-Dock 插件
+跳到导航跳到搜索
+
+本页面收集了用于 DDE-Dock 的插件。
+dde-top-panel 等由 dde-dock 衍生的 dock/panel 同样支持这些插件。
+
+目录
+1使用方法
+2开发文档
+3插件列表
+3.1dde-mpris2-plugin
+3.2dde-sys-monitor-plugin
+3.3lfxspeed
+3.4NetPlugin
+使用方法
+下载、解压后，将 .so 文件拷贝至 ~/.local/lib/dde-top-panel/plugins 或者 ~/.local/lib/dde-dock/plugins，后重启 panel 或 dock 即可。
+
+开发文档
+官方文档
+
+插件列表
+dde-mpris2-plugin
+支持音乐控制及歌词显示。
+
+论坛：https://bbs.deepin.org/zh/post/220429
+repo：https://github.com/SeptemberHX/dde-mpris2-plugin
+
+dde-sys-monitor-plugin
+deepin系统监控dock插件，可监控CPU使用率、内存使用率、swap使用率、上传下载总量、实时网速和电池放电功率，有文字模式和图表模式可选。
+
+论坛：https://bbs.deepin.org/zh/post/179425
+repo：https://gitee.com/q77190858/dde-sys-monitor-plugin/
+
+lfxspeed
+网速插件。
+
+论坛：https://bbs.deepin.org/zh/post/206895
+repo：https://github.com/xmuli/lfxspeed
+
+NetPlugin
+网速插件，lfxspeed 的重构版本。
+
+blog：https://xmuli.blog.csdn.net/article/details/113573870
+论坛：https://github.com/xmuli/NetSpeed
+
+导航菜单
+创建账户
+登录
+页面
+讨论
+阅读
+查看源代码
+查看历史
+搜索
+首页
+最近更改
+随机页面
+MediaWiki帮助
+工具
+链入页面
+相关更改
+特殊页面
+[打印版本](javascript:print()😉
+固定链接
+页面信息
+引用本页
+评论
+暂时没有评论。
+提供者 Wiki.js

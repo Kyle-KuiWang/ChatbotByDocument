@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/GitKraken
+简介
+GitKraken是一款Git客户端，它使用图形化的界面，以减少命令行操作，安装使用不需要任何依赖，可以在界面上查看和移动窗口，还可以进行搜索；gitkraken还可以连接到你的GitHub或者bitbucket账户并帮助你找到项目，支持SSH加密。
+
+安装
+sudo apt-get install gitkraken
+
+卸载
+sudo apt-get remove gitkraken
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/g/gitkraken/

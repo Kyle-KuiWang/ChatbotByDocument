@@ -1,0 +1,46 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/05_%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7/%E6%98%BE%E7%A4%BA%E5%99%A8/Xrandr%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95
+概述
+xrandr用来设置和查询屏幕相关信息配置
+
+查询
+xrandr 查看当前所连接的屏幕通用信息
+xrandr -q 命令可以查询当前的显示器状态
+xrandr --verbose 将会显示更详细的信息
+
+设置分辨率
+设置分辨率时需要指定设置的 ouput 以及 mode, 如将 eDP1 的分辨率改为 1920x1080:
+
+xrandr --output eDP1 --mode 1920x1080（1920x1080此处不可用1920*1080替代）
+
+设置屏幕亮度
+xrandr --output eDP1 --brightness 0.5 将eDP1的屏幕亮度设置为0.5
+
+设置屏幕刷新率
+xrandr --output eDP1 --mode 1920x1080 --rate 75 将eDP1的屏幕的刷新率设置为75（注意，不同的分辨率可用刷新率不同，用xrandr可查询）
+
+设置屏幕角度
+xrandr --output eDP1 --rotate left ( left 向左旋转90度,right 向右旋转90度, inverted 上下翻转,normal 回到正常角度)
+
+指定主屏
+如现在有两个 output, 分别是 eDP1 和 VGA1.通过指定 --primary 参数来设置主屏, 如设置 eDP1 为主屏:
+
+xrandr --auto --output eDP1 --primary ，--auto 可以自动启用关闭的屏幕.
+
+复制模式
+复制模式最好使用两个显示器都有的 mode 作为默认的 mode
+
+xrandr --auto --output eDP1 --pos 0x0 --mode 1440x900 --output VGA1 --same-as eDP1
+
+扩展模式
+xrandr --auto --output eDP1 --pos 0x0 --mode 1920x1080 --primary --output VGA1 --mode 1440x900 --right-of eDP1
+
+将 VGA1 会在 eDP1 的右边, eDP1 为主屏, 另外位置的参数还有 left-of, --above, --below 等.
+
+xrandr --auto --output eDP1 --pos 0x0 --mode 1920x1080 --primary --output VGA1 --mode 1440x900 --pos 1920x0 eDP1
+
+xrandr --output eDP1 --mode 1920x1080 --rate 60 --pos 0x0 --output VGA1 --mode 1440x900 --rate 75 --pos 1000x1080 --brightness 0.5 --auto
+
+单屏模式
+这个模式是只显示某一个屏幕, 如只显示 eDP1
+
+xrandr --output eDP1 --pos 0x0 --mode 1920x1080 --primary --output VGA1 --off

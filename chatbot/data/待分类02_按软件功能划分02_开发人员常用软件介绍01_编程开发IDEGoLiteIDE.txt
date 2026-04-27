@@ -1,0 +1,42 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/IDE/Go/LiteIDE
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+/
+LiteIDE
+LiteIDE 是一款简单，开源，跨平台的 Go IDE。
+页面内容
+讨论
+最后编辑
+风暴猪猪侠
+02/22/2023
+介绍
+LiteIDE 是一款简单，开源，跨平台的 Go IDE。
+
+ 
+
+¶安装
+下载
+LiteIDE官网为：http://liteide.org/，进入官网后，下载LiteIDE，下面以 liteidex38.0.linux64-qt5.5.1-system.tar.gz 为例。
+
+解压
+tar -zxvf liteidex38.0.linux64-qt5.5.1-system.tar.gz
+
+运行
+进入解压的目录，在/bin/目录下，找到 liteide 文件，双击运行即可
+
+ 
+
+注意
+LiteIDE只是一个IDE，如果使用该IDE开发Go语言，请先下载Go语言软件
+
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

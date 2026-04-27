@@ -1,0 +1,11 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/02_%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/unixbench
+Unix Bench测试
+简介
+Unix Bench是一个知名的Linux硬件性能测试软件，它适用于Unix-Like系统，测试完成后可以到这个网站来查看硬件的详细信息https://code.google.com/p/byte-unixbench/
+
+运行测试
+wget https://github.com/kdlucas/byte-unixbench/archive/v5.1.3.tar.gz
+tar zxf UnixBench5.1.3.tgz
+cd byte-unixbench-5.1.3
+make all
+Run

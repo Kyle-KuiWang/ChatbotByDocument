@@ -1,0 +1,32 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/00_%E5%85%BC%E5%AE%B9%E9%80%82%E9%85%8D(wine)/x86%E6%A8%A1%E6%8B%9F/Bochs
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+Bochs
+一款开源的x86模拟器和调试软件
+简介
+Bochs（发音：box）是以GNU宽通用公共许可证发放的开放源代码的x86、x86-64 IBM PC兼容机模拟器和调试工具，支持处理器（包括保护模式）、内存、硬盘、显示器、以太网、BIOS、IBM PC兼容机的常见硬件外设的仿真。
+Bochs主要用于操作系统开发（当模拟操作系统崩溃，它不崩溃主机操作系统，所以可以调试仿真操作系统）和在主机操作系统运行其他来宾操作系统。它也可以用来运行不兼容的旧的软件（如电脑游戏）。
+它的优点在于能够模拟跟主机不同的机种，例如在SPARC系统里模拟x86，但缺点是它的速度却慢得多。
+
+安装
+sudo apt install bochs
+卸载
+sudo apt remove --purge bochs
+仓库地址
+http://packages.deepin.com/deepin/pool/main/b/bochs/
+
+相关链接
+维基百科：https://zh.wikipedia.org/zh-cn/Bochs
+Bochs 官方网站：https://bochs.sourceforge.io/
+
+评论
+评论加载中...
+提供者 Wiki.js

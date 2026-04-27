@@ -1,0 +1,112 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/deepin%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86V4
+DeepinWiki
+deepin 常用资源整理 · V4.1.4
+六、更多
+6.1 测评感受
+deepin生产环境下的使用体会：https://bbs.deepin.org/zh/post/222880
+Deepin 20.2.2软件深度体验：https://bbs.deepin.org/zh/post/223513
+深度向左，优麒麟向右-- Ubuntu Kylin 20.04 LTS Pro 体验测评：https://bbs.deepin.org/zh/post/220515
+DEEPIN20.3升级和体验：https://bbs.deepin.org/post/228774
+【deepin 20.3】使用心得和未来改进的建议：https://bbs.deepin.org/post/228812
+首次体验deepin是什么感觉？ https://bbs.deepin.org/zh/post/229071
+强大的深度截图：https://bbs.deepin.org/zh/post/229378
+深度操作系统deepin体验分享：（一） （二） （三）
+从零开始的构想：https://bbs.deepin.org/post/240603
+deepin 深度系统20.6安装使用感受：https://bbs.deepin.org/post/240729
+deepin V23 Preview 带来的变化！：https://bbs.deepin.org/post/241071
+聊聊 V23 体验：https://bbs.deepin.org/post/241118
+成功入坑，使用一周，略有体会，闲聊一会：https://bbs.deepin.org/post/241286
+三款最新国产cpu同时使用UOS专业版体验对比视频：https://bbs.deepin.org/post/245393
+给 deepin 的问题、建议与期许……：https://bbs.deepin.org/post/246414
+你从什么时候知道deepin（深度）的？ ：https://bbs.deepin.org/post/246376
+必须要给deepin20.8赞一个了：https://bbs.deepin.org/post/247770
+从windows到deepin的迁移图：https://bbs.deepin.org/post/247414
+deepin os: 温柔且闪光：https://bbs.deepin.org/zh/post/248320
+办公学习两不误，长期deepin使用手记：https://bbs.deepin.org/post/250158
+华为MateBook X Pro安装Deepin小记：https://bbs.deepin.org/post/249878
+[每天一感] V23 有感！：https://bbs.deepin.org/post/253773
+老电脑后续：2013年老台式机上deepin 20.8成功：https://bbs.deepin.org/post/253918
+6.1.1 V23日更版体验
+此部分记录deepin第一个根社区理念的系统——deepin 23的成长之路
+由于各种原因，只能收录自20230112开始的体验帖，欢迎论坛私信补充。
+下载体验日更版（请不要用于生产环境）：https://cdimage.deepin.com/daily/
+
+关于V23日构建版本的定位：https://bbs.deepin.org/post/246310
+12号日构建包体验：https://bbs.deepin.org/post/248349
+V23 0113日更版感受（很略）：https://bbs.deepin.org/post/248424
+安装14号日更版，没有太大变化。新安装程序能否排在前面：https://bbs.deepin.org/post/248464
+1.15日更版体验与建议：https://bbs.deepin.org/post/248502
+V23 16号开发版本使用体验：https://bbs.deepin.org/post/248562
+0117，高效模式任务栏也要这样显示了：https://bbs.deepin.org/post/248564
+deepin V23 beta日更版，最新内容：https://bbs.deepin.org/post/248584
+2023年1月22日v23最新日更版虚拟机体验：https://bbs.deepin.org/post/248930
+deepin-23-beige-amd64-20230124-030357.iso---实机览：https://bbs.deepin.org/post/248985
+v23 1月28日更版 体验加建议：https://bbs.deepin.org/post/249263
+live下----v23/0130日构版一览：https://bbs.deepin.org/post/249639
+deepin V23 2月2号日更版实体机运行正常测试，流畅度还需加油：https://bbs.deepin.org/post/250361
+2月4日的日更版，界面有改进：https://bbs.deepin.org/post/250489
+日更版2.4体验与建议（UI）：https://bbs.deepin.org/post/250538
+deepin v23 beta最新日更版，其系统控制中心开关与MacOS相同：https://bbs.deepin.org/post/250690
+6.2 其他系统的资源
+UOS各版本系统说明：http://bbs.chinauos.com/post/6514
+在其他发行版使用Deepin-Wine的终级方案：https://zhuanlan.zhihu.com/p/379196410
+嫁接Deepin到一个兼容你设备的Linux系统：https://bbs.deepin.org/zh/post/206117
+在ubuntu上完美使用deepin-wine5：https://bbs.deepin.org/zh/post/204884
+关于 Deepin 桌面移植到 Gentoo Linux 发行版：https://bbs.deepin.org/zh/post/221216
+Deepin鼠标指针：https://bbs.deepin.org/zh/post/199527
+从deepin迁移到其他Linux： https://www.yuque.com/pzm9012/ct5ume/ohlxhr
+CutefishOS 0.5 安装搜狗输入法教程：https://bbs.cutefishos.com/d/283-cutefishos-05 （Cutefish OS网站关闭，此资源过时）
+移植deepin-contacts到其他Debian系发行版：https://bbs.deepin.org/zh/post/229606
+用 Nix 制作自定义的 live 镜像：https://bbs.deepin.org/zh/post/236303
+dde-nixos 现在可以在虚拟机中预览了：https://bbs.deepin.org/post/246672
+Yoyo OS（基于Ubuntu，使用Cutefish DE）：https://www.deepinos.org/t/yoyo-os
+【GTK小技巧】GTK远程显示：https://bbs.deepin.org/post/244218
+Arch Linux中用于包管理的图形化应用：https://bbs.deepin.org/post/244569（不知道官方为什么发这个……难道是因为里面有 dde-store？）
+NixOS 22.11 Raccoon ISO with DDE：https://bbs.deepin.org/post/247663
+nixos-dde-iso 浣熊纪念版成品发布：https://bbs.deepin.org/zh/post/248519
+深度操作系统 V23 Alpha 2 Arm64民间版 ！：https://bbs.deepin.org/post/252589
+6.2.1 阅读其他系统的Wiki
+deepin 20 是 Debian Linux 的一个分支。尽管其他的 Linux 发行版与 deepin 有所不同，它们的 Wiki 仍有值得学习的知识。
+
+Debian Wiki：https://wiki.debian.org/zh_CN/FrontPage?action=show&redirect=%E9%A6%96%E9%A1%B5
+ArchWiki：https://wiki.archlinux.org/title/Main_page_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+openSUSE Wiki：https://zh.opensuse.org/%E9%A6%96%E9%A1%B5
+6.3 PPT SHOW 系列
+此部分作品由社区用户 @PossibleVing 设计。
+
+第一期：新论坛的 UI ？我觉得这样很 OK：https://bbs.deepin.org/zh/post/191168
+第二期：deepin V20 社区概念版正式发布！（？）：https://bbs.deepin.org/zh/post/191489
+第三期：最新版启动器尝鲜体验！（不是）：https://bbs.deepin.org/zh/post/197545
+第四期：这次是 deepin-greeter 和 dde-dock ~：https://bbs.deepin.org/zh/post/197602
+第五期：腾讯不可能做出这样的 Linux QQ，除非……：https://bbs.deepin.org/zh/post/197633
+第六期：DDE，FILE，MANAGER！：https://bbs.deepin.org/zh/post/197723
+第七期：星星之火，可以燎原！：https://bbs.deepin.org/zh/post/197824
+第八期：星火应用商店更新好快啊！：https://bbs.deepin.org/zh/post/198986
+第九期：PPT 自制 deepin 壁纸（和星火壁纸）分享~：https://bbs.deepin.org/zh/post/199297
+第十期：多屏协同就看它了~：https://bbs.deepin.org/zh/post/199838
+第十一期：又双叒叕是星火商店官网……：https://bbs.deepin.org/zh/post/200999
+第十二期：这次……真的是个 PPT ！：https://bbs.deepin.org/zh/post/203159
+第十三期：你多久没在安装 deepin 时“喝咖啡”了 ：https://bbs.deepin.org/post/240142
+第十四期：deepin 的新官网好看，但不是完全好看……：https://bbs.deepin.org/post/240602
+第十五期：真 · V23 壁纸来啦~快来 Pick 你的最爱~：https://bbs.deepin.org/post/241690
+第十六期：你管这玩意儿叫宣传视频？：https://bbs.deepin.org/post/241824
+第十七期：深度定制，deepin 由你掌控：https://bbs.deepin.org/post/243975
+第十八期：你这浏览器太假了。你再说，假吗？：https://bbs.deepin.org/post/245176
+观【PPT SHOW】有感，大致弄了一套偏向行云设计风格的浏览器：https://bbs.deepin.org/post/245213
+
+第十九期：这，是你想象中的 DDE 吗？：https://bbs.deepin.org/post/245770
+6.4 其他
+网页版deepin：https://bbs.deepin.org/zh/post/219792
+盘点 23 款国产桌面发行版：https://bbs.deepin.org/zh/post/231369
+深度科技论坛的小浣熊表情包提取分享：https://bbs.deepin.org/post/190838
+回去体验了一下15.7：https://bbs.deepin.org/zh/post/237403
+使用网易邮箱大师注册Gmail邮箱账号：https://bbs.deepin.org/post/240523
+废旧 Android 设备打造 linux 服务器【愿意折腾的可以玩玩】 ：https://bbs.deepin.org/zh/post/233447
+星火网页分享 国产架构应用分享：https://bbs.deepin.org/post/241363
+【视频分享】有关 Linux 桌面的问题的分析及解决方案：https://bbs.deepin.org/post/245503
+ChatGPT是如何评价deepin的：https://bbs.deepin.org/post/247475
+感谢论坛所有支持深度的朋友们：https://bbs.deepin.org/post/247734
+尝试一下ChatGPT如何理解Unilang的：https://bbs.deepin.org/post/250930
+评论
+评论加载中...
+提供者 Wiki.js

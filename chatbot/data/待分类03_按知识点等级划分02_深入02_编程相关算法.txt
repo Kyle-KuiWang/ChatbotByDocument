@@ -1,0 +1,276 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/02_%E6%B7%B1%E5%85%A5/02_%E7%BC%96%E7%A8%8B%E7%9B%B8%E5%85%B3/%E7%AE%97%E6%B3%95
+算法
+前言
+算法是一个程序员的内功。算法内功是否扎实，视作专业程序员和业余程序员的分水岭。
+
+学习方法
+分解知识点（基础）
+针对性训练
+一个知识点重复多次(五次以上)
+多角度处理同一个课题
+跳出舒适区，针对没掌握的课题进行训练
+获得反馈
+尝试自己做题，没思路直接看答案（目的并非创造，目的是学习）
+看别人的优秀解法
+和别人交流
+算法复杂度
+判断一个算法是否优秀的标准。
+
+当规模达到 N, 解法复杂度（执行步骤次数或空间占用大小）和规模的关系：
+
+O(1): 常数复杂度。常数系数不考虑，都写做 1
+O(log(N)):对数复杂度。
+O(N)：线性复杂度。
+O(N*log(N))：线性对数复杂度。
+O(N^2)：二次方复杂度
+O(2^N)：指数复杂度
+O(N!)：阶乘复杂度
+比如当 N = 100：
+
+O(1) = 1
+O(log(N)) = 2
+O(N) = 100
+O(N*log(N)) = 200
+O(N^2) = 10000
+O(2^N) = 1.26765060023e+30
+O(N!) = 9.33262154439e+157
+可见后两个复杂度基本算作无效的算法，因为计算机算不出来（除非规模很小的时候）。
+
+N 和执行次数相关的叫时间复杂度（一般看重这个），和空间占用相关的叫空间复杂度。
+
+编程技巧
+自顶向下编程，关注顶层逻辑，然后逐层深入。（适合工程性代码）
+想着怎么把问题规模缩小，而不是扩大。
+空间换时间
+升维
+分而治之
+找到重复子问题，用递归或者递推解决
+逻辑片段命名，归纳，代码表达逻辑要尽可能清晰
+先找到问题相似的数据结构，用其来描述问题事半功倍
+算法认知过程是：先掌握正确写法（机械式），然后通过做题训练才能掌握运用的场合（形成思维模式），所以初期的机械化模仿是有必要的。
+方法
+枚举法（暴力法）：枚举所有的可能组合
+双指针夹逼法
+堆栈法：最近相关时
+双向队列：处理滚动窗口问题
+状态树：处理包含重复子问题的类型
+贪心法：当下最优 == 全局最优（或可接受）。即存在最优子结构。
+动态规划（动态递推）：具有最优子结构，递推公式。
+二分查找：满足单调性，且有上下界的索引结构。
+递归和递推
+递归函数的特点：
+
+参数（规模）逐渐缩小，所以会收敛。
+如果不缩小，可能是想获得中间迭代的值。
+递归是基于当前参数（规模）的整体处理方案，避免局部的过程性思维。
+当前项和次小项之间有分割方法，难以分割的整体，难以做成递归。
+树这种数据结构很擅长作为递归处理，因为拥有简易的分割方法
+所谓分割即次小项函数结果是否可以作为当前解的一部分
+思维理论参考：数学归纳法
+有特定小规模的平凡解（和次小项无关的解法）作为终止条件。
+递归函数构成部分：
+
+平凡解（退出条件）
+计算任务
+进入下一层（缩减规模）
+如果严格按照以上顺序编写，那么就属于尾递归，即这层状态和下一层无关（即所有状态都通过参数传递到下一层），优化的时候可以丢弃当前层的调用栈帧。也可以较为简单的转化为递推模型，只要建立对应参数的变量即可。
+
+但是很多时候，第三步和第二步是相互混合的。
+
+递推和递归的异同
+递推和递归思想上非常接近，都是去归纳重复子问题。不同点：递归是函数方法，递推是循环方法。
+
+递推：
+
+思维理论参考：数列的递推公式
+递推是正向推导，即从基础的已知平凡解，逐步推导到未知的 n
+递归是逆向推导，即从未知的 n，展开到已知的平凡解
+直觉上，递推易于理解，但大多数情况，递归更易于编程。
+递归容易保存当前环境参数，而递推要自己维护。
+当每一层多于一个分支的时候尤其复杂。
+正向推导和递向推导的难易程度，和问题本身有关。
+逆递归：指用正向推导来写递归代码。
+递推公式（例）： a[n] = a[n-1] + a[n-2]
+前驱已知： a[n-1]，a[n-2]
+平凡解： a[0,1] = 0,1
+后驱可以算出： a[n-1] + a[n-2] => a[n]
+如果问题的前驱难以确定其值，如在树中找到某个值，它的父亲节点究竟是谁，难以确定。这种问题就不宜使用递推解决。
+
+它的父节点有多个可能，递归判断其中一个不是，就能很方便的回溯到另一条路径。所以这种问题比较适合用递归来解决。
+
+示例
+// 斐波那契数列：0,1,1,2,3,5,8,13,21...
+// 递归
+// 实践中需要用 Map 保存子项的结果值，避免重复计算。
+function fib(n){
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return fib(n - 1) + fib(n - 2);
+}
+// 递推
+// n = n-1 + n-2
+function fibRecursion(n){
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    let n1 = 1; // n-1
+    let n2 = 0; // n-2
+    for (let i = 2; i < n; ++i){
+        [n1, n2] = [n1 + n2, n1]; //更新 i 位置的正确值
+    }
+    return n1 + n2;
+}
+// 逆递推
+// 实际等于手动维护调用栈，不如递归清晰
+function fibReverseRecursion(n){
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    let st = [];
+    for (let i = n ; i > 1; --i){
+        st.push(i); // 保存当前 n 的状态
+    }
+    st.push(1);
+    st.push(0);
+    while(1){
+        let n2 = st.pop();
+        let n1 = st.pop();
+        let n = st.pop();//使用当前 n 的状态
+        n = n1 + n2; // 这里 n 的状态完全没有价值，但很多时候是有用的
+        st.push(n, n1);
+        if (st.length == 2){
+            st.pop();
+            return st.pop();
+        }
+    }
+}
+递归模板代码
+这套模板代码包含四部分：
+
+退出条件
+业务逻辑
+进入下一层
+清理状态
+特点：
+
+每一层的环境变量，包括返回值，都可以通过参数传递，根据编程需要灵活添加需要的参数
+// 逆递归
+function fibReverse(n){
+    // level 当前层
+    // max 最大层
+    // ...param 其余参数，这里保存:
+    // 1. param[0] = 上一层结果
+    // 2. param[1] = 上两层结果
+    let f = (level, max, ...param)=>{
+        if (level > max){
+            // 1.退出条件（最终结果）
+            return param[0];
+        }
+        // 2.业务逻辑
+        let n1 = param[0] + param[1];
+        let n2 = param[0];
+        // 3.进入下一层
+        return f(level + 1, max, n1, n2);
+        // 4.清理状态(这里没有)
+    }
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return f(2, n, 1, 0);
+}
+递归优化
+记忆化搜索状态树。递归之所以效率比较低，在于相同子状态的重复计算。如果能够把某个子状态的解保存起来，下一次直接使用，那么递归的效率将大大提高。
+
+// 用一个缓存保存子状态的解
+function fibmemo(n, memo){
+    if (n <= 1)
+        return n;
+    if (memo.get(n-1) === undefined)
+        memo.set(n-1, fibmemo(n - 1, memo));
+    if (memo.get(n-2) === undefined)
+        memo.set(n-2, fibmemo(n - 2, memo));
+    return memo.get(n-1) + memo.get(n-2);
+}
+
+// 在我的电脑上
+// 普通 fib 递归需要 11 秒
+// 经过优化后，只需要 0.017 秒
+// 速度提升了 600 倍
+fibmemo(45, new Map());
+分治回溯模板代码
+将问题分成若干子问题，分别求解，然后合并所有解得到最终结果。和普通的递归模板没太大分别，它只是强调分割子问题，然后合并结果这两个明确的步骤。
+
+回溯法，就是在最后一步重置状态恢复到上一层。
+
+function fibDivide(n){
+    let f = (problem, ...param)=>{
+        // 1. 退出条件
+        if (problem == 0) return 0;
+        if (problem == 1) return 1;
+        // 2. 生成子问题
+        let data = (pb)=>{return [pb-1, pb-2]}(problem); // 分割成两个子问题
+        let subproblems = (pb, data)=>{return data}(problem, data);
+        // 3. 处理子问题
+        let sub1 = f(subproblems[0]); // n - 1
+        let sub2 = f(subproblems[1]); // n - 2
+        // 4. 合并结果
+        return (...subs)=>{return subs[0] + subs[1]}(sub1,sub2);
+        // 5. 清理状态（这里没有）回溯法就在这里返回上一级状态
+    }
+
+    return f(n);
+}
+树
+遍历
+前序遍历：根左右
+中序遍历：左根右
+后序遍历：左右根
+深度优先：前三种，典型：根左..右
+广度优先：分层迭代
+// 前序模板
+function preorder(root){
+    if (root){
+        console.log(root.val);
+        preorder(root.left);
+        preorder(root.right);
+    }
+}
+// 中序模板
+function inorder(root){
+    if (root){
+        inorder(root.left);
+        console.log(root.val);
+        inorder(root.right);
+    }
+}
+// 后序模板
+function postorder(root){
+    if (root){
+        postorder(root.left);
+        postorder(root.right);
+        console.log(root.val);
+    }
+}
+// 深度优先（实际前三种即是深度优先）
+function dfs(node, visited){
+    if (node && ! visited.includes(node)){
+        visited.push(node);
+        console.log(node.val);
+        for (let next of node.children()){
+            if (! visited.includes(next))
+                dfs(next, visited);
+        }
+    }
+}
+// 广度优先
+function bfs(root, visited){
+    let queue = [];
+    queue.push(root);
+    while (queque.length != 0){
+        let node = queue[0];
+        queue.shift();
+        if (node && ! visited.includes(node)){
+            visited.add(node);
+            console.log(node.val);
+            let nodes = node.children();
+            queue.push(...nodes);
+        }
+    }
+}

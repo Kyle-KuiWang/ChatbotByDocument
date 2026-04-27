@@ -1,0 +1,133 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/deepin%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86V4
+DeepinWiki
+deepin 常用资源整理 · V4.1.4
+4.1.2 网络应用
+天翼云网盘（wine）下载及打包教程：https://bbs.deepin.org/zh/post/221558
+一条命令让火狐浏览器可自动更新到最新版：https://bbs.deepin.org/zh/post/224603
+如何让火狐国际版拥有中国版的功能：https://bbs.deepin.org/zh/post/228249
+火狐浏览器国际版的简单设置：https://bbs.deepin.org/zh/post/237756
+解决megasync不能打开的问题：https://bbs.deepin.org/zh/post/206774
+写了一个简单的图床管理软件，欢迎各位试用：https://bbs.deepin.org/zh/post/233372
+edge不能登录：https://bbs.deepin.org/zh/post/236343
+[二次开发]星火应用商店第三方Web前端：https://bbs.deepin.org/zh/post/242817
+国产终端工具推荐--闪令：https://bbs.deepin.org/post/241112
+大家心心念的云盘备份软件-备份助手：https://bbs.deepin.org/post/241930
+推荐两个网站，替代photoshop 和 visio：https://bbs.deepin.org/post/242042
+Remote Desktop Manager - Remmina 替代：https://bbs.deepin.org/post/245566
+咯咚电台--Bash 电台播放软件（持续更新）：https://bbs.deepin.org/post/246580
+ed2k 链接下载工具：https://wiki.archlinux.org/title/AMule_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+关于阿里云盘小白羊的后续：https://bbs.deepin.org/post/252972
+推荐一个好看实用的浏览器-Sidekick：https://bbs.deepin.org/post/249880
+局域网传输软件推荐：https://bbs.deepin.org/post/249194
+一个有意思的浏览器插件：merlin：https://bbs.deepin.org/post/250895
+分享一款远程桌面软件hoptodesk：https://bbs.deepin.org/post/253399
+4.1.3 办公学习
+为知笔记deepin版闪亮登场：https://bbs.deepin.org/zh/post/209845
+为知笔记最新版编译，有一丝丝的deepin特殊适配：https://bbs.deepin.org/zh/post/222180
+有道云笔记linux版beta-1.1.3：https://bbs.deepin.org/zh/post/221134
+为知笔记重构版（官方重构）无依赖打包分享：https://bbs.deepin.org/zh/post/227217
+墨干编辑器V1.1.1：https://bbs.deepin.org/post/245186（Gitee）
+Microsoft Office PowerPoint 2007(wine)：https://bbs.deepin.org/zh/post/224229
+专业的云端知识库——语雀：https://bbs.deepin.org/zh/post/221917
+专业的素材管理应用——Eagle：https://bbs.deepin.org/zh/post/221954
+完美解决腾讯会议在deepin上运行问题：https://bbs.deepin.org/zh/post/209769
+安卓版腾讯会议…居然还挺好用？[附食用教程]：https://bbs.deepin.org/zh/post/238329
+WPS for linux字体显示问题：https://blog.csdn.net/qq_36191272/article/details/105596225 同类问题：WPS页面显示问题 推荐解决方法：在星火应用商店安装“WPS Office缺失字体”“Win字体”
+使用 Dtk 开发了一个 MarkDown 编辑器，欢迎大家试用：https://bbs.deepin.org/zh/post/228829
+一款词典工具：https://bbs.deepin.org/zh/post/227166
+Pixso上架deepin应用商店，设计应用生态强势补充：https://bbs.deepin.org/zh/post/235058
+金山PDF在高分屏下窗口太小的解决方案：https://bbs.deepin.org/zh/post/239325
+wine使用教程7-借用容器和wine版本安装Microsoft Office2013：https://bbs.deepin.org/post/239589
+Microsoft Office 2013首次打包-限时体验：https://bbs.deepin.org/zh/post/239932
+写了一个简单Markdown笔记软件，欢迎大家试用：https://bbs.deepin.org/zh/post/238077
+安利开源免费“全局文本、文件搜索”RecollGUI可搜索文本内容：https://bbs.deepin.org/post/243309
+图片吸收器 - 快来吸取你想顺手保存的图片吧：https://bbs.deepin.org/post/244175
+腾讯交互翻译transmart-支持linux版本：https://bbs.deepin.org/post/244433
+白杉树背单词训练软件 v2.0_65 正式发布：https://bbs.deepin.org/post/248998
+WPS Office 版本信息及字体检测小工具：https://bbs.deepin.org/zh/post/248386
+解决MindMaster在 4k分辨率下菜单栏错位问题：https://bbs.deepin.org/zh/post/253183
+分享一个好用的划词翻译软件（其实就是推广自己的软件）：https://bbs.deepin.org/post/253348
+CAD二维绘图软件：QCAD，Linux deepin系统中的详细使用方式：https://bbs.deepin.org/post/253391
+markdown 应用推荐-Oh Mymd：https://bbs.deepin.org/post/253524
+4.1.4 社交沟通
+Icalingua：第三方QQ客户端：https://bbs.deepin.org/zh/post/226550（原项目因不可抗因素已删除，建议使用分支版本 Icalingua++）
+解决QQ(wine)因字体卡死&宋体发虚太难看的一种方法：https://bbs.deepin.org/post/213530
+Wechat（微信） Linux升级版：freechat-spark 可过验证：https://bbs.deepin.org/zh/post/226549
+星火微信Linux2.1.2-2已更新：https://bbs.deepin.org/zh/post/231200
+解决微信打不开问题分享：https://bbs.deepin.org/post/247361
+UOS在wayland模式下deepin-wine微信不能输入中文的解决办法：https://bbs.deepin.org/post/247001
+deepin foxmail通信录导入：https://bbs.deepin.org/post/233037
+如何打开 *.msg文件：https://bbs.deepin.org/zh/post/239744
+6月28前后新装20.6商店TIM微信QQ安装提示依赖不足方案一：https://bbs.deepin.org/zh/post/239691
+星火应用商店反馈和交流平台 v1.1.2 发布：https://bbs.deepin.org/post/246258（地址）
+4.1.5 音乐视频
+自动从网络上匹配歌词的Deepin Music：https://bbs.deepin.org/zh/post/221829
+功能完善、社区活跃的超级播放器——KODI：https://bbs.deepin.org/zh/post/224939
+You-get 强大的视频下载程序图形软件[持续更新]：https://bbs.deepin.org/post/250587
+网易云音乐调整缩放比例的方法：https://bbs.deepin.org/zh/post/225377
+使用Deepin深度系统制作音乐：https://bbs.deepin.org/zh/post/223386
+开源的第三方SoundCloud客户端 SoundNote：https://bbs.deepin.org/zh/post/237530
+bilimini——跨平台的好用的 B 站“桌面端”：https://bbs.deepin.org/zh/post/225784
+b站辅助插件bilibili-evolved现已支持b站视频导出至mpv播放：https://bbs.deepin.org/zh/post/232228
+高颜值的第三方网易云音乐播放器（强烈推荐）：https://github.com/qier222/YesPlayMusic/releases
+Kdenlive22.04.0-2修复Deb包，支持字幕自动生成功能：https://bbs.deepin.org/zh/post/237153
+Kdenlive flatpak 版本解决语音识别找不到 pip3：https://bbs.deepin.org/zh/post/239779
+Kdenlive解决无法输入中文和语音识别提示需安装srt、vosk的教程：https://bbs.deepin.org/post/245782
+安装kdenlive官网最新版解决中文输入和语音识别：https://bbs.deepin.org/post/251790
+wine版剪映基本能用了，字幕和画面都出来了：https://bbs.deepin.org/zh/post/238330
+Wine7.9安装剪映全过程指南：https://bbs.deepin.org/zh/post/238301
+打包剪映专业版（wine），并教你解决视频预览窗口显示黑屏的问题：https://bbs.deepin.org/zh/post/238449
+分享一个使用deepin-wine打包的剪映：https://bbs.deepin.org/zh/post/240190
+推荐一款不用梯子看油管视频的开源安卓软件-LibreTube：https://bbs.deepin.org/post/240769
+一个新的原生c++编写的bilibili客户端，wiliwili：https://bbs.deepin.org/post/246886
+music-island介绍：https://bbs.deepin.org/post/249132You-get 强大的视频下载程序图形软件：https://bbs.deepin.org/post/250587
+[应用推荐]简洁美观好用的开源音乐软件：https://bbs.deepin.org/post/252868
+music-islandV1.0.2更新介绍：https://bbs.deepin.org/post/249283
+【应用推荐】小苹果影视盒子(uengine) ：https://bbs.deepin.org/post/251365
+【应用推荐】简洁美观好用的开源音乐软件：https://bbs.deepin.org/post/252868
+4.1.6 游戏娱乐
+Wine游戏收集贴-持续不定期更新-不定期更新链接：https://bbs.deepin.org/zh/post/217731
+使用 PlayOnLinux 和 winetricks 完美运行《白色相簿2》：https://bbs.deepin.org/zh/post/214585
+云原神 1.1.0版本直装包：https://bbs.deepin.org/zh/post/225788
+使用waydroid运行安卓版原神（不是云游戏！）：https://bbs.deepin.org/post/246093
+运行 Windows 版《原神》：https://bbs.deepin.org/post/245429 和 https://bbs.deepin.org/post/245807
+linux下玩24点(题目生成+计算)：https://bbs.deepin.org/zh/post/217418
+用 mame 命令玩 MAME 街机游戏：https://bbs.deepin.org/zh/post/208391
+植物大战僵尸中文版打包分享：https://bbs.deepin.org/zh/post/195096
+谁说deepin不能玩游戏：https://bbs.deepin.org/zh/post/235387
+一个动漫游戏启动器-2.3.2-wine版本：自带wine和dxvk测试：https://bbs.deepin.org/post/236466
+在deepin上玩原神Windows版的方法：一个动漫游戏启动器：https://bbs.deepin.org/zh/post/236269
+如何使用steam玩游戏：https://bbs.deepin.org/zh/post/239665
+战网客户端（wine）打包更新：https://bbs.deepin.org/zh/post/239518
+分享一下对于游戏“反恐精英”启动不了和切换中文问题的解决：https://bbs.deepin.org/zh/post/239420
+星火饥荒解包可加 mod 版：https://bbs.deepin.org/post/243277
+分享刚打包的一款wine版游戏：Zombies Rush 戴夫：https://bbs.deepin.org/post/241015（链接已失效）
+在“盒子”里的win95--electron windows95：https://bbs.deepin.org/post/242046
+deepin如何使用steam玩游戏：https://bbs.deepin.org/post/239665
+Unciv 开源文明五：https://bbs.deepin.org/post/246370
+人力资源机器：编程一小时版本 (wine) ：https://bbs.deepin.org/post/246465
+传送门马里奥 mario：https://bbs.deepin.org/post/246634
+Order of Twilight 黎明的秩序：https://bbs.deepin.org/post/246720
+经典终端贪食蛇游戏 csnaketerm：https://bbs.deepin.org/post/246804
+跨平台好用的全能模拟器RetroArch使用方法，感觉比MAME模拟器强：https://bbs.deepin.org/post/246675
+一个用UEngine打包的silly wisher：https://bbs.deepin.org/post/247878
+BASE2022-生化警报：https://bbs.deepin.org/zh/post/247962
+在deepin玩原神的3个办法：https://bbs.deepin.org/zh/post/248366
+关于原神An Anime Game Launcher的一些问题：https://bbs.deepin.org/zh/post/248661
+战争地带2100 v4.3.3 豪华版发布 更新于2023-01-21：https://bbs.deepin.org/zh/post/248895
+下一代跨平台 Minecraft 启动器 | WonderLab：https://bbs.deepin.org/post/250184
+[深度首发]越南2S飞车|2S Speed 游玩体验：https://bbs.deepin.org/post/252642
+崩坏3（安卓）：https://bbs.deepin.org/post/253595
+Deepin安装OpenCV2：https://bbs.deepin.org/post/253917
+4.1.7 多设备协同
+安卓手机后台管理工具黑阈激活器（DTK版本）：https://bbs.deepin.org/zh/post/208066
+Macast —— 一个跨平台的DLNA投屏接收器：https://bbs.deepin.org/zh/post/225095
+Deskreen投屏，Linux同wifi下投屏的解决方案：https://bbs.deepin.org/zh/post/230214
+vivo互传（wine）：https://bbs.deepin.org/zh/post/221939
+deepin下安装Citrix Receiver连接云桌面：https://bbs.deepin.org/zh/post/232020
+跨平台共享使用鼠标和键盘【Barrier】安装记：https://bbs.deepin.org/zh/post/239679
+Linux版本的HandShaker，欢迎下载尝试并反馈：https://bbs.deepin.org/post/240764
+用命令快速分享到文叔叔等平台--transfer（GO语言）：https://bbs.deepin.org/post/241623
+跨平台的文件分享软件-速享【flutter开发】：https://bbs.deepin.org/post/241839
+局域网传输软件推荐：https://bbs.deepin.org/zh/post/249194
+ToDesk最新版若启动不了，请下载旧版安装：https://dl.todesk.com/linux/todesk_4.1.0_amd64.deb

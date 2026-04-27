@@ -1,0 +1,51 @@
+https://wiki.deepin.org/zh/05_HOW-TO/02_%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%A6%82%E4%BD%95%E5%9C%A8deepin%E4%B8%8A%E9%83%A8%E7%BD%B2nodejs%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83
+如何在deepin上部署nodejs开发环境
+deepin上nodejs开发环境部署以及一些工具介绍
+页面内容
+简介
+Node.js发布于2009年5月，由Ryan Dahl开发，是一个基于Chrome V8引擎的JavaScript运行环境，使用了一个事件驱动、非阻塞式I/O模型，让JavaScript 运行在服务端的开发平台，它让JavaScript成为与PHP、Python、Perl、Ruby等服务端语言平起平坐的脚本语言。
+
+安装
+nodejs就是一个基于google的v8引擎的一个解释器。可以使用下面命令进行安装。
+
+使用命令从源里安装
+sudo apt install nodejs
+可以用通过以下命令验证安装是否成功：
+
+node -v
+看到以下输出说明安装成功：
+
+v10.21.0
+使用安装包安装
+从源里下载的版本相对过低，可尝试下载安装包解压安装。
+可参考下面链接进行安装。
+
+安装包链接
+
+选择长期维护版，或者根据自己的需要选择对应版本。
+
+选择Linux 二进制文件 根据系统架构选择，这里以x64为例。
+
+wget https://nodejs.org/dist/v18.14.2/node-v18.14.2-linux-x64.tar.xz
+通过wget下载安装包。
+
+sudo tar -xvf  node-v18.14.2-linux-x64.tar.xz -C /usr/local/
+将压缩包解压到/usr/local目录下。
+
+sudo mv /usr/local/node-v18.14.2-linux-x64 /usr/local/node
+vim ~/.bashrc
+添加环境变量。
+ps: 如果使用zsh则配置.zshrc，或者选择/etc/profile做全局配置
+
+export NODE_HOME=/usr/local/node
+export PATH=$NODE_HOME/bin:$NODE_HOME/node_global:$NODE_HOME/node_modles:$NODE_HOME/node_global/bin:$PATH
+mkdir /usr/local/node/node_{global,cache}
+npm config set prefix "/usr/local/node/node_global"
+npm config set cache "/usr/local/node/node_cache"
+自定义全局目录以及缓存文件夹。
+
+npm config list
+通过该指令查看配置的列表。
+
+source ~/.bashrc
+刷新shell环境。

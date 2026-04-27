@@ -1,0 +1,17 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/01_%E4%B8%AD%E9%98%B6/04_%E8%BD%AF%E4%BB%B6%E7%9B%B8%E5%85%B3/Apt-mark%E7%89%88%E6%9C%AC%E9%94%81%E5%AE%9A
+Apt-mark版本锁定
+页面内容
+在执行系统更新时，有时候我想阻止某些个别的包升级， Debian 系下可以使用 apt-mark 命令。
+
+阻止包
+sudo apt-mark hold <pkg>
+比如，阻止升级 Perl，执行 apt-mark hold perl 即可。
+
+取消阻止
+如果不想阻止了，那么可以通过 apt-mark unhold 取消：
+
+sudo apt-mark unhold <pkg>
+显示已阻止的包
+要查看已经被阻止的包，则可以执行：
+
+sudo apt-mark showhold

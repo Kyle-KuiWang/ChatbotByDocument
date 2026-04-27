@@ -1,0 +1,10 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/01_%E4%B8%AD%E9%98%B6/12_%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/shutdown%E5%85%B3%E6%9C%BA%E5%91%BD%E4%BB%A4
+shutdown关机命令
+# 立刻关机
+shutdown -h now
+# 立刻重启, 等价于执行 reboot 命令
+shutdown -r now
+# 到晚上8点1分时关机
+shutdown -h 20:01
+# 5小时后关机
+shutdown -h +5

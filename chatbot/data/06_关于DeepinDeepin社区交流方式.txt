@@ -1,0 +1,44 @@
+https://wiki.deepin.org/zh/06_%E5%85%B3%E4%BA%8EDeepin/Deepin%E7%A4%BE%E5%8C%BA/%E4%BA%A4%E6%B5%81%E6%96%B9%E5%BC%8F
+交流方式
+页面内容
+讨论
+最后编辑
+dengtongxue
+03/16/2023
+联系官方
+意见/建议反馈
+论坛：https://bbs.deepin.org/ （产品需求与问题反馈推荐使用此渠道）
+讨论版：https://github.com/orgs/linuxdeepin/discussions （开发与技术交流推荐使用此渠道）
+支持邮箱：<support@deepin.org>（此邮箱为反馈与支持的渠道补充，及时性与有效性弱，请优先使用论坛&讨论版）
+递交安全问题
+security@deepin.com
+社交媒体
+国内社交媒体：
+微博: @深度操作系统
+Bilibili（B站）: deepin深度操作系统
+抖音: @deepinlinux
+今日头条: 深度操作系统
+Global social media:
+Twitter: @linux_deepin
+Reddit: /r/deepin
+Discord: Click here to join
+Facebook: Click here to join
+开发者社区
+邮件列表
+欢迎订阅我们的邮件列表并参与讨论：https://www.freelists.org/archive/deepin-devel/
+
+讨论板
+您可以在 GitHub 上的开发者中心中发起相关的讨论：https://github.com/linuxdeepin/developer-center/discussions
+
+实时聊天频道
+如果您是社区开发者，希望参与到开发相关的讨论中来，那么您可以加入下面的实时聊天频道来参与讨论：
+
+Telegram 群组：https://t.me/deepin_community
+Matrix：https://matrix.to/#/#deepin-community:matrix.org
+这些频道均通过桥接的方式打通，选择您喜欢的方式加入任一频道即可，无需全部加入。
+
+If you are a community developer, you can chat with us in the following chatrooms:
+
+Telegram group: https://t.me/deepin
+Matrix：https://matrix.to/#/#deepin:matrix.org
+All these channels are bridged together, so you can choose the preferred platform to join the chat, it's not necessary to join all these channels.

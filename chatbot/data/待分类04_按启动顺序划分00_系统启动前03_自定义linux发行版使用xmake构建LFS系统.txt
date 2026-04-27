@@ -1,0 +1,180 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/04_%E6%8C%89%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%E5%88%92%E5%88%86/00_%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%89%8D/03_%E8%87%AA%E5%AE%9A%E4%B9%89linux%E5%8F%91%E8%A1%8C%E7%89%88/%E4%BD%BF%E7%94%A8xmake%E6%9E%84%E5%BB%BALFS%E7%B3%BB%E7%BB%9F
+使用 xmake 构建 LFS 系统
+前言
+这一个项目的目的是使用国产的构建工具 xmake，从头构建起 LFS。所谓 LFS 是让用户构建自己的 linux 发行版。
+对的，你可以用市面上存在的 linux 发行版，如 ubuntu、debian、gentoo、centos、fedora、redhat、deepin、uos、arch等等，也能自己从头定义一个 linux。毕竟 linux 和其组件大部分都是开源或者可以免费得到的。
+不使用每个组件自身的构建系统，而是使用 xmake 来构建他们。这样有什么好处？我希望得到一个统一的、和谐的构建系统。将来用户不需要费劲心思去学习不同构建系统之间的差异，而只是使用同一个易用的 xmake 作为构建界面。
+前提是我能完成这个项目。
+背景知识
+从源代码开始安装软件
+包的种类：
+源代码包：让用户根据自己的硬件环境优化构建全新的可执行软件
+预编译二进制包：让用户免于编译的等待，但优化可能是通用的，没有针对性，还有不同组件因为编译方式不同导致的兼容问题。
+存档格式：
+tar、zip、gzip等
+包里面的关键文件：
+README: 帮助
+INSTALL： 安装文档
+makefile: make 构建工具的脚本
+configure: configure 配置工具的脚本
+常用工具：
+
+sed、awk : 文本匹配修改工具
+diff、patch： 打补丁工具
+configure、make、cmake： 构建工具
+perl、python： 依赖的运行组件
+curl、wget： 下载工具
+md5sum、sha256sum：计算散列值的工具（验证文档的完整性）
+通常的安装流程：
+
+# 下载源码包
+curl -O http://xxx.org/xxx.tar
+# 查看散列值是否和官网给出的一致
+md5sum xxx.tar
+# 解压缩
+tar -xavf xxx.tar
+cd xxx
+# 查看帮助文档
+less README
+# 配置 makefile
+./configure --prefix=/usr
+# 构建
+make
+# 安装
+sudo make install
+# 清理临时文件
+make clean
+c 语言机制
+多数开源软件都是 c 语言或 c++ 语言开发的。在 c 语言中，程序可以分成多个源文件（*.c），如果要使用另一个源文件的内容怎么半？不需要复制，只需要添加对应的头文件(*.h)。
+
+这种方式叫静态链接。很多时候一个组件会被多个应用程序使用，如果都静态链接，会增大程序容量，这时候可以动态链接，即告之操作系统，我这个程序要用到那个组件，操作系统执行的时候再去把相关组件加载进来，而不需要一开始就组合到应用程序内部。
+
+知识点：
+
+头文件：类似源文件的说明文件
+源文件：程序的逻辑文本，使用头文件来调用其他源文件的内容
+编译：将源文件编译成二进制的格式，即对象文件(object file) （*.o)
+链接：将多个对象文件组合起来形成一个可执行的应用程序（或库）
+动态链接：只记录关联组件的信息，不包含相关组件的内容
+静态库： 多个对象文件合并成一个中间库 (*.a)
+动态库： 用来动态链接的中间库（*.so)
+程序： 若干个对象文件 + 静态库 + 动态库 链接成程序 (*.out)。
+核心工具：
+
+预处理器： 将源代码做简单处理，
+.h -> .ads / .adb
+.c -> .i
+.cxx -> .ii
+编译器： gcc 将源代码转换为汇编代码： .i -> .s
+汇编器： as 将汇编代码转换为对象文件： .s -> .o
+归档器： ar 将对象文件合并成静态库: .o -> .a
+链接器： ld 将对象文件、静态库等组合为程序: .o|.a|.so -> .out
+gcc 是一个智能工具，它可以调用其他工具来完成整个编译流程，因此实际使用中，用户不需要分别调用不同的工具来完成这个流程。
+
+# 演示生成步骤
+# test.h test.c main.c
+# 预编译
+# -o 表示输出
+gcc -E test.c -o test.i # -> test.i
+gcc -E main.c -o main.i # -> main.i
+# 编译
+gcc -S main.i # -> main.s
+gcc -S test.i # -> test.s
+# 汇编
+gcc -c test.s # -> test.o
+as main.s # -> test.o
+# 归档（静态库）
+# -rc 创建新的库 libtest.a
+ar -rc libtest.a test.o
+# 动态库
+gcc -shared test.o -o libtest.so
+# 使用静态库构建程序
+# -L. 库的路径 . 当前目录
+# -l 库的名字 libname.a 或 libname.so(自动添加其余部分)
+gcc main.o -o stapp -static -L. -ltest
+# 或者
+gcc main.o libtest.a -o stapp
+# 使用动态库
+gcc main.o -o dyapp -L. -ltest
+
+# 手动链接比较麻烦
+# 1.o i.o n.o 是 c 语言程序的初始部分
+# -I 是动态链接器的位置，虽然 libtest.a 是静态链接，但是 libc.so 是动态链接，每个 c 语言程序都要链接到基本的 c 库。
+# -lc 就是 libc 库
+ld main.o libtest.a /usr/lib/crt{1.o,i.o,n.o} -I /lib64/ld-linux-x86-64.so.2 -lc -o stapp
+# 或静态链接到 c 库
+ld main.o libtest.a /usr/lib/crt{1.o,i.o,n.o} -static -lgcc -lc -lgcc_eh -lc -L /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/ -o stapp
+
+# 运行动态链接的程序
+# LD_LIBRARY_PATH 环境变量告诉动态链接器，该从哪里查找动态库 libtest.so
+LD_LIBRARY_PATH=. ./dyapp
+其他工具：
+
+addr2line: 将源代码对应的行记录下来
+ldd： 查看程序的动态库
+objcopy： 转换不同格式的对象文件，如：bin -> elf
+nlmconv: 将对象文件输出为 NLM 格式。
+objdump: 对象文件逆反为汇编文件。
+readelf: 查看对象文件（elf格式）的信息。
+size： 列出程序的各段落的大小情况。
+gasp: 汇编宏处理器
+ranlib: 静态库索引
+strings： 检索文件中的字符串
+strip: 移除符号
+gprof： 性能分析
+c++filt: 解码c++符号
+dlltool: 创建 windows 动态库
+nm： 检索对象文件的符号信息
+windmc： windows 消息资源
+windres: windows 资源文档编译器
+核心库：
+
+libc: c 语言官方提供的核心库，也就是说只要是 c 语言开发的程序，都包含这个基础库。这个库有多个提供方，glibc 由 GNU 提供。
+libstdc++: c++ 语言的基础库。
+elf 格式：
+
+.text: 指令段
+.data: 数据段
+.bss: 为初始化数据段
+.fini: 析构函数段
+.init: 构造函数段
+.rodata: 只读数据
+.debug: 调试符号表
+动态链接器：
+
+/lib64/ld-linux-x86-64.so.2 : 64 位动态链接器，当前名字（将来也许会变）
+/lib/ld-linux.so.2: 32 为动态链接器，当前名字（将来也许会变）
+搜索目录
+/etc/ld.so.conf : 配置搜索的目录
+/etc/ld.so.conf.d
+/usr/lib
+/lib
+LD_LIBRARY_PATH : 配置目录的环境变量
+编译时写入程序，参数： rpath=路径。
+交叉编译：
+
+所谓交叉编译是指在当前平台上编译一个能在目标平台（和当前平台不同的）上运行的程序。支持这种编译方式的编译器，叫交叉编译器。
+
+在交叉编译器（注意是针对编译器）这个领域，有一些专业术语需要学习：
+
+build：构建平台
+host：运行平台
+target：输出目标的平台
+比如你编译一个 gcc， 构建的平台就是 build。 这个 gcc 将来能在那种机器上运行，这个运行平台就是 host。 最后，这个 gcc 能够构建在什么机器上运行的程序，这个就是 target。
+
+可见，如果不是编译器，那 target 就是没啥意义的。一般程序你可以理解 build 就是你本机，host 就是目标机器。 也可以认为 target 等于 host。
+
+根据三者的组合，可以得到：
+
+build = host = target : 普通编译（本机编译器）
+build != host = target : 交叉编译一个普通编译器
+build = host != target: 普通编译一个交叉编译器
+build != host != target : 交叉编译一个交叉编译器
+接下来，我会使用第四种方案，交叉编译一个交叉编译器，设置是： build != host 但 target = build 。
+
+目的是：
+
+构建一个独立于当前环境的编译器 A (build= p1, host=p2, target=p1)
+用 A 构建基础的必要的软件包
+以此为基础，构建基于新系统的编译器 B (build=p2, host=p1, target=p1)
+用 B 构建完整的新系统。

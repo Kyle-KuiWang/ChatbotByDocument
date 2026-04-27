@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/00_wiki/04_wiki%E9%9C%80%E6%B1%82%E9%A1%B5
+需求页
+ 软件wiki：neofech
+ 软件wiki：neovim
+ 软件wiki：ncdu
+说明
+评估合适的内容将在wiki编辑人员看到后被手动写入wiki, 同时删除对应评论
+
+谨记
+由于wiki评论区没有互动回复功能, 如果希望他人回复请到论坛提问
+
+说明: 当前wiki正在重新建设中, 需求等wiki重构完成后统一处理

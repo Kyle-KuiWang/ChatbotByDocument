@@ -1,0 +1,102 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/02_XDG%E8%A7%84%E8%8C%83/desktop%E6%96%87%E4%BB%B6%E8%A7%84%E8%8C%83
+文件命名
+桌面条目文件应具有.desktop 扩展名，但应具有扩展名的文件Type Directory除外 .directory。根据扩展名确定文件类型非常容易和快速。当不存在文件扩展名时，桌面系统应通过“魔术检测”回退到识别。
+
+对于应用程序，桌面文件的名称在扩展名之前的 .desktop部分应该是有效的 D-Bus 众所周知的名称。这意味着它是由点分隔的非空元素序列 (U+002E FULL STOP)，不能以数字开头，并且每个元素仅包含集合中的字符[A-Za-z0-9-_]：ASCII 字母、数字、破折号 (U +002D HYPHEN-MINUS）和下划线（U+005F LOW LINE）。
+
+桌面条目的名称应遵循“反向 DNS”约定：它应以应用程序作者控制的反向 DNS 域名开头，小写。域名后面应该是应用程序的名称，它通常由连在一起的单词和首字母大写 (CamelCase) 组成。例如，如果所有者 example.org写入“Foo Viewer”，他们可能会选择名称org.example.FooViewer，从而生成一个名为org.example.FooViewer.desktop （与dbus命名方式一致）
+
+允许但是不推荐使用破折号，因为在反向 DNS 名称的某些相关用途中不允许使用破折号，例如 D-Bus 对象路径和接口名称，以及 Flatpak 应用程序 ID。如果作者的域名包含破折号，建议用下划线代替：这不会引起歧义，因为下划线不允许出现在 DNS 域名中。
+
+如果作者的域名包含以数字开头的标签（这在 D-Bus 知名名称中是不允许的），建议在桌面条目名称的该元素前加上下划线。例如，7-zip.org 可能会发布一个名为 org._7_zip.Archiver.（规避数字开头）
+
+桌面文件 ID
+代表应用程序的每个桌面条目都由其desktop file ID标识，该文件 ID 基于其文件名。
+
+要确定桌面文件的 ID，请使其完整路径相对于$XDG_DATA_DIRS（见XDG 基本目录规范）安装桌面文件的组件，删除“applications/”之前的所有前缀（包含application），并将“/”转换为“-”。
+
+例如/usr/share/applications/foo/bar.desktop具有桌面文件 ID foo-bar.desktop。
+
+如果多个文件具有相同的桌面文件 ID，则使用 $XDG_DATA_DIRS 优先顺序中的第一个。
+
+例如，如果$XDG_DATA_DIRS包含默认路径 /usr/local/share:/usr/share，则 /usr/local/share/applications/org.foo.bar.desktop和 /usr/share/applications/org.foo.bar.desktop都具有相同的桌面文件 ID org.foo.bar.desktop，但只会使用第一个。
+
+如果foo-bar.desktop和foo/bar.desktop都存在，则不确定选择哪个。
+
+如果桌面文件没有安装在$XDG_DATA_DIRS某个组件的应用程序子目录中，那么它就没有ID。
+
+文件的基本格式
+desktop文件是以UTF-8编码的。一个文件被解释为一系列由换行符分隔的行。在文件中，重视大小写。
+
+兼容的实现必须不从文件中删除任何字段，即使他们不支持这些字段。这些字段必须保持在某个列表中，如果文件被 "重写"，它们将被包括在内。这确保即使另一个系统访问和更改文件，任何特定于桌面的扩展都将被保留。
+
+注释
+以#开头的行和空行被认为是注释，将被忽略，但是它们应该在桌面条目文件的读写过程中被保留下来。
+
+注释行是不被解释的，可以包含任何字符（LF除外）。然而，我们鼓励对包含非ASCII字符的注释行使用UTF-8
+
+grup
+名称为groupname的组头是一个格式的行。
+
+[组名］
+组名可以包含所有的ASCII字符，除了[ 和 ] 以及控制字符。
+
+多个组不能有相同的名称。
+
+在组头之后直到新组头的所有{key,value}对都属于该组。
+
+桌面条目文件的基本格式要求有一个名为桌面条目的组头。文件中可能还有其他组，但这是最重要的组，需要明确地支持。这个组也应该被用作自动检测MIME类型的 "魔钥"。在桌面条目文件中，这个组前面应该没有任何东西，但可能有一个或多个注释。
+
+Entries
+文件中的条目是{key,value}对，格式为：键=值
+等号前后的空格应被忽略；=号是实际的分隔符。
+
+只有字符A-Z，a-z，0-9-可以用于键名。
+
+由于大小写的关系，键名和NAME是不等同的。
+
+同一组中的多个键不能有相同的名字。不同组中的键可以有相同的名称。
+
+例子：
+[Desktop Entry]
+X-Deepin-CreatedBy=com.deepin.dde.daemon.Launcher
+X-Deepin-AppID=code
+Name=Visual Studio Code
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+Exec=/opt/apps/com.visualstudio.code/files/code/code --unity-launch %F
+Icon=com.visualstudio.code
+Type=Application
+StartupNotify=false
+StartupWMClass=Code
+Categories=TextEditor;Development;IDE;
+MimeType=text/plain;inode/directory;application/x-code-workspace;
+Actions=new-empty-window;
+Keywords=vscode;
+
+[Desktop Action new-empty-window]
+Name=New Empty Window
+Exec=/opt/apps/com.visualstudio.code/files/code/code --new-window %F
+Icon=com.visualstudio.code
+这就提供了一个很好的例子：有分组 有entry类型
+
+可能的值类型
+识别的值类型是string、 localestring、 iconstring、 boolean和 numeric。
+
+type 的值string可以包含除控制字符之外的所有 ASCII 字符。
+type 的值localestring是用户可显示的，并以 UTF-8 编码。
+type 的值iconstring是图标的名称；这些可能是绝对路径，或者是使用图标主题规范中描述的算法定位的图标的符号名称。此类值不是用户可显示的，并且以 UTF-8 编码。
+type 的值boolean必须是字符串 true或false.
+type 的值必须是本地环境中的说明符 numeric识别的有效浮点数。 %f``scanf``C
+转义序列\s, \n, \t,\r和 \支持 string,localestring和 类型的值，分别iconstring表示 ASCII 空格、换行符、制表符、回车和反斜杠。
+
+一些键可以有多个值。在这种情况下，键的值被指定为复数形式：例如，string(s)。多个值应该用分号分隔，并且键的值可以选择用分号终止。尾随的空字符串必须始终以分号结尾。这些值中的分号需要使用\;.
+
+键的国际化（翻译）值
+类型为localestring和iconstring的键可以用[LOCALE]作为后缀，其中LOCALE是该条目的locale类型。LOCALE必须是lang_COUNTRY.ENCODING@MODIFIER的形式，其中_COUNTRY, .ENCODING, 和@MODIFIER可以省略。如果出现后缀的键，同样的键也必须出现，但没有后缀。
+
+当读入桌面条目文件时，键的值是通过匹配LC_MESSAGES类别的当前POSIX语言和该键所有出现的LOCALE后缀来选择的，.ENCODING部分被剥离。
+
+匹配过程如下。如果LC_MESSAGES的形式是lang_COUNTRY.ENCODING@MODIFIER，那么它将匹配形式为lang_COUNTRY@MODIFIER的键。如果这样的键不存在，它将试图匹配lang_COUNTRY，然后是lang@MODIFIER。然后，将尝试与lang本身进行匹配。最后，如果没有找到匹配的键，将使用没有指定locale的所需键。匹配时，LC_MESSAGES值的编码将被忽略。
+
+如果LC_MESSAGES没有MODIFIER字段，那么将不会匹配带有修改器的键。同样的，如果LC_MESSAGES没有COUNTRY字段，那么将不会匹配有国家的键。如果LC_MESSAGES只有一个lang字段，那么它将直接与一个具有类似值的键进行匹配。下表列出了各种LC_MESSAGES值的可能匹配情况，以及它们被匹配的顺序。注意，ENCODING字段没有显示。

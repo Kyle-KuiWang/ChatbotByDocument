@@ -1,0 +1,31 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/00_%E5%85%BC%E5%AE%B9%E9%80%82%E9%85%8D(wine)/%E8%99%9A%E6%8B%9F%E6%9C%BA/VMware_Workstation
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+VMware_Workstation
+简介
+VMware Workstation是一款桌面虚拟计算机软件，提供用户在单一的桌面上同时运行不同的操作系统，和进行开发、测试 、部署新的应用程序的最佳解决方案。还可以在实体机器上以及可便于携带的虚拟机器中模拟完整的网络环境，同时还具有实时快照、拖曳共享文件夹、支持 PXE 等功能。
+
+¶安装
+sudo apt-get install vmware-workstation-install
+
+卸载
+sudo apt-get remove vmware-workstation-install
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/v/vmware-workstation-install/
+
+常见问题
+相关链接
+官方网站：https://www.vmware.com
+
+评论
+评论加载中...
+提供者 Wiki.js

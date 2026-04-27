@@ -1,0 +1,96 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/01_%E4%B8%AD%E9%98%B6/13_%E5%85%B6%E4%BB%96shell/fish%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B
+fish 脚本编程
+前言
+fish shell 是和 bash shell 类似的产物，它比 linux 系统默认的 bash 命令行更优胜的地方在于它的人性化，很多智能体验，或者文字样式不需要经过任何配置，就能够使用。而 zsh 之类的需要自己去配置，非常麻烦。
+内置函数
+abbr -ag ll ls -l: 将 ls -l 用 ll 缩写代替
+alias ll="ls -l"： 用 ll 函数包装 ls -l
+argparse: 对参数文本进行解析，包括三部分，选项，规范，参数。
+-n： 函数名（用于错误输出）
+-x： 独占
+-N： 最小参数个数
+-X： 最大参数个数
+-i： 忽略未知参数
+-s： 遇到未知参数立即停止
+规范：从参数中搜索，找到并生成规范对应的局部变量_flag_x。
+'n/name': 生成局部变量_flag_n 和 _flag_name，能处理选项 -n 和 --name
+'n/name=': 接受选项值，如 -n9 和 --name 9 和 --name=9
+'n/name=?': 选项值可选
+‘n/name=+': 可多次使用选项，保存多个值
+'n#max': -99 等
+'n/name=!验证函数`：对参数值进行验证
+_argparse_cmd : 被验证的函数名
+_flag_name: 当前验证的选项
+_flag_value: 当前参数值
+bg、fg、jobs、disown： 任务放后台、转到前台、任务状态、分离任务
+bind：快捷键绑定，ctrl(\c),alt(Meta),esc(\e)等
+block：屏蔽事件
+breakpoint: 调试断点
+cd 改变目录、cdh 通过最近访问目录列表改变目录、dirh 目录记录、prevd 上一个目录、netxd 下一个目录、pushd 入栈当前目录并进去指定目录、popd 出栈目录、pwd 显示当前目录
+complete： 定义自动完成词（补全）
+-c / -p: 命令或者路径，没有其他参数时返回当前补全定义
+-s / -l: 短选项和长选项
+-a: 参数
+-F / -f: 文件名参数 或 非文件名
+-r： 需要参数
+-w： 别名
+-n ： 判断条件
+-C ： 搜索相关补全
+-d ： 说明描述
+-e ： 删除补全
+-x : -r -f 的组合
+contains key I have key：查询列表中（I have key）是否包含指定项（key）
+count: 列表（即变量）的项总数
+exit: 退出当前 shell
+fish_add_path: 添加搜索路径，即 $PATH
+fish_config: 启动 fish 配置网页
+fish_is_root_user: 检查当前用户是否 root
+fish_key_reader: 交互式输出按键的 bind 绑定形式
+fish_update_completions: 解析系统自带的补全
+funcsave: 保存自定义函数 ~/.config/fish/functions/xxx.fish
+isatty: 文件描述符是否终端
+open: 类似 xdg-open ，用关联的程序打开不同类型的文件
+printf： 打印格式化文本
+%d、%s：数字、文本
+%o、%x：八进制、十六进制
+%f、%g、%e: 六位小数浮点、浮点、科学计数
+echo -n -e “a\nb”： 输出文本，-n 结束不换行，-e 识别转义(\n)
+random: 0~32767 的随机数
+read : 读取用户输入
+-g、-l、-u、-x、-U：存储的变量的范围
+2〔方案選單〕 . -d、-t、-a、-L：指定分隔符、按toke、列表、多行列表
+-s、-S：密码模式、语法高亮
+-n、-z：行标记、空字符行标记
+realpath -s txt：将相对路径转换为绝对路径，-s 保留符号链接文件
+set：显示和设置变量，变量是列表，可以多个值
+-a、-p：添加值到末尾、添加到头部
+-l：局部变量（可屏蔽更大范围的同名变量）
+-g：全局变量
+-U: 通用变量（多个 fish shell 共享）
+-x：导出变量（环境变量）
+-u：取消导出
+--path：路径变量（以:分隔列表项，而不是空格）
+--unpath：取消路径模式
+-e：取消变量
+-q: 判断是否定义了变量
+-n：所有已经定义的变量名的列表
+-S: 显示变量的定义信息
+变量[2]:可以使用下标对变量的表项进行操作
+set_color:设置颜色
+-b：背景色
+-c：输出安全颜色名
+-o：粗体
+-d：黯淡
+-i：斜体
+-r：反转前景和背景色
+-u：下划线
+source:导入脚本
+status： 查询运行时状态
+suspend: 挂起 shell
+time：命令运行需要的时间，$CMD_DURATION 结果。
+trap: 收到外部信号响应
+type: 返回名称的类型
+ulimit：限制资源
+umask：文件创建掩码
+vared:交互式修改变量
+wait：等待后台任务完成

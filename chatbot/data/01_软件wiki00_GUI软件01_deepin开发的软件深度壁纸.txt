@@ -1,0 +1,13 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/01_deepin%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/%E6%B7%B1%E5%BA%A6%E5%A3%81%E7%BA%B8
+简介
+壁纸，又名电脑壁纸或桌面背景，是在桌面上可以随意个性化的图片。
+
+随着电脑技术的发展，从黑白屏到彩屏，电脑的待机桌面不再由单一的颜色所组成，而是可以用一张图片来替换，这张壁纸便称之为电脑壁纸。电脑壁纸是电脑屏幕所使用的背景图片，可以根据大小和分辨率来做相应调整。
+电脑壁纸让我们的电脑看起来更好看，更漂亮和更有个性。
+
+设置
+设置方法请参考深度桌面环境帮助手册-设置壁纸
+
+配置文件
+系统默认壁纸目录：/usr/share/backgrounds
+深度桌面环境壁纸目录：/usr/share/personalization/themes/Deepin/wallpapers

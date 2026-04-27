@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/10_%E5%AE%9A%E6%97%B6%E5%BC%80%E5%85%B3%E6%9C%BA_%E6%89%8B%E5%8A%BF%E8%AF%86%E5%88%AB_%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/%E6%89%8B%E5%8A%BF%E8%AF%86%E5%88%AB/Easystroke
+简介
+Easystroke是一个手势识别应用，它可以识别移动鼠标的手势来执行对应的系统或应用操作，比如模拟按键、执行shell命令、启动程序和模拟鼠标滚动等。
+
+安装
+sudo apt-get install easystroke
+
+卸载
+sudo apt-get remove easystroke
+
+¶仓库地址
+http://packages.deepin.com/deepin/pool/main/e/easystroke/

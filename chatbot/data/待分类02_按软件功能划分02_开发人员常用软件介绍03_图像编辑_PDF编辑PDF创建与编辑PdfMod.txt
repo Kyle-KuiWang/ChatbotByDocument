@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/03_%E5%9B%BE%E5%83%8F%E7%BC%96%E8%BE%91_PDF%E7%BC%96%E8%BE%91/PDF%E5%88%9B%E5%BB%BA%E4%B8%8E%E7%BC%96%E8%BE%91/PdfMod
+简介
+PdfMod是一个PDF文档编辑应用，它可以对页面进行重新排序、旋转和删除操作，能够对文档的标题、作者等元素进行编辑、多个文件可以通过拖放合并，也能够将图片导出或导入到PDF文档中。
+
+安装
+sudo apt-get install pdfmod
+
+卸载
+sudo apt-get remove pdfmod
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/p/pdfmod/

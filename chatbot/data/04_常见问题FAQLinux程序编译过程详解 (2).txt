@@ -1,0 +1,105 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E8%AF%A6%E8%A7%A3
+DeepinWiki
+Linux 程序编译过程详解
+4.链接
+链接也分为静态链接和动态链接，其要点如下：
+
+静态链接是指在编译阶段直接把静态库加入到可执行文件中去，这样可执行文件会比较大。链接器将函数的代码从其所在地（不同的目标文件或静态链接库中）拷贝到最终的可执行程序中。为创建可执行文件，链接器必须要完成的主要任务是：符号解析（把目标文件中符号的定义和引用联系起来）和重定位（把符号定义和内存地址对应起来然后修改所有对符号的引用）。
+动态链接则是指链接阶段仅仅只加入一些描述信息，而程序执行时再从系统中把相应动态库加载到内存中去。
+在Linux系统中，gcc编译链接时的动态库搜索路径的顺序通常为：首先从gcc命令的参数-L指定的路径寻找；再从环境变量LIBRARY_PATH指定的路径寻址；再从默认路径/lib、/usr/lib、/usr/local/lib寻找。
+在Linux系统中，执行二进制文件时的动态库搜索路径的顺序通常为：首先搜索编译目标代码时指定的动态库搜索路径；再从环境变量LD_LIBRARY_PATH指定的路径寻址；再从配置文件/etc/ld.so.conf中指定的动态库搜索路径；再从默认路径/lib、/usr/lib寻找。
+在Linux系统中，可以用ldd命令查看一个可执行程序依赖的共享库。
+由于链接动态库和静态库的路径可能有重合，所以如果在路径中有同名的静态库文件和动态库文件，比如libtest.a和libtest.so，gcc链接时默认优先选择动态库，会链接libtest.so，如果要让gcc选择链接libtest.a则可以指定gcc选项-static，该选项会强制使用静态库进行链接。以Hello World为例：
+
+如果使用命令“gcc hello.c -o hello”则会使用动态库进行链接，生成的ELF可执行文件的大小（使用Binutils的size命令查看）和链接的动态库（使用Binutils的ldd命令查看）如下所示：
+$ gcc hello.c -o hello
+$ size hello  //使用size查看大小
+   text    data     bss     dec     hex filename
+   1183     552       8    1743     6cf     hello
+$ ldd hello //可以看出该可执行文件链接了很多其他动态库，主要是Linux的glibc动态库
+        linux-vdso.so.1 =>  (0x00007fffefd7c000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fadcdd82000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fadce14c000)
+如果使用命令“gcc -static hello.c -o hello”则会使用静态库进行链接，生成的ELF可执行文件的大小（使用Binutils的size命令查看）和链接的动态库（使用Binutils的ldd命令查看）如下所示：
+
+$ gcc -static hello.c -o hello
+$ size hello //使用size查看大小
+     text    data     bss     dec     hex filename
+ 823726    7284    6360  837370   cc6fa     hello //可以看出text的代码尺寸变得极大
+$ ldd hello
+       not a dynamic executable //说明没有链接动态库
+链接器链接后生成的最终文件为ELF格式可执行文件，一个ELF可执行文件通常被链接为不同的段，常见的段譬如.text、.data、.rodata、.bss等段。
+
+分析ELF文件
+1.ELF文件的段
+ELF文件格式如下图所示，位于ELF Header和Section Header Table之间的都是段（Section）。一个典型的ELF文件包含下面几个段：
+
+.text：已编译程序的指令代码段。
+.rodata：ro代表read only，即只读数据（譬如常数const）。
+.data：已初始化的C程序全局变量和静态局部变量。
+.bss：未初始化的C程序全局变量和静态局部变量。
+.debug：调试符号表，调试器用此段的信息帮助调试。
+2023-4-17_27781.png
+
+可以使用readelf -S查看其各个section的信息如下：
+
+$ readelf -S hello
+There are 31 section headers, starting at offset 0x19d8:
+
+Section Headers:
+  [Nr] Name              Type             Address           Offset
+       Size              EntSize          Flags  Link  Info  Align
+  [ 0]                   NULL             0000000000000000  00000000
+       0000000000000000  0000000000000000           0     0     0
+……
+  [11] .init             PROGBITS         00000000004003c8  000003c8
+       000000000000001a  0000000000000000  AX       0     0     4
+……
+  [14] .text             PROGBITS         0000000000400430  00000430
+       0000000000000182  0000000000000000  AX       0     0     16
+  [15] .fini             PROGBITS         00000000004005b4  000005b4
+……
+2.反汇编ELF
+由于ELF文件无法被当做普通文本文件打开，如果希望直接查看一个ELF文件包含的指令和数据，需要使用反汇编的方法。
+
+使用objdump -D对其进行反汇编如下：
+
+$ objdump -D hello
+……
+0000000000400526 <main>:  // main标签的PC地址
+//PC地址：指令编码                  指令的汇编格式
+  400526:    55                          push   %rbp
+  400527:    48 89 e5                mov    %rsp,%rbp
+  40052a:    bf c4 05 40 00          mov    $0x4005c4,%edi
+  40052f:    e8 cc fe ff ff          callq  400400 <puts@plt>
+  400534:    b8 00 00 00 00          mov    $0x0,%eax
+  400539:    5d                      pop    %rbp
+  40053a:    c3                          retq
+  40053b:    0f 1f 44 00 00          nopl   0x0(%rax,%rax,1)
+……
+使用objdump -S将其反汇编并且将其C语言源代码混合显示出来：
+
+$ gcc -o hello -g hello.c //要加上-g选项
+$ objdump -S hello
+……
+0000000000400526 <main>:
+#include <stdio.h>
+
+int
+main(void)
+{
+  400526:    55                          push   %rbp
+  400527:    48 89 e5                mov    %rsp,%rbp
+  printf("Hello World!" "\n");
+  40052a:    bf c4 05 40 00          mov    $0x4005c4,%edi
+  40052f:    e8 cc fe ff ff          callq  400400 <puts@plt>
+  return 0;
+  400534:    b8 00 00 00 00          mov    $0x0,%eax
+}
+  400539:    5d                          pop    %rbp
+  40053a:    c3                          retq
+  40053b:    0f 1f 44 00 00          nopl   0x0(%rax,%rax,1)
+……
+评论
+评论加载中...
+提供者 Wiki.js

@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/09_%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/WxMEdit
+简介
+wxMEdit是一个跨平台的文本/十六进制编辑器，它具有书签管理、语法高亮显示、编码识别和转换、自动换行、字数统计及自动更新等功能，以及在文本列模式下和十六进制下支持各种编码。
+
+安装
+sudo apt-get install wxmedit
+
+卸载
+sudo apt-get remove wxmedit
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/w/wxmedit
+
+常见问题
+¶相关链接

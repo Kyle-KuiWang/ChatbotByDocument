@@ -1,0 +1,36 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E8%99%9A%E6%8B%9F%E6%9C%BA/deepin%E4%B8%8B%E7%94%A8VirtualBox%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AFNS_ERROR_FAILURE
+DeepinWiki
+搜索...
+
+/
+/
+/
+deepin下用VirtualBox空间不足启动错误NS_ERROR_FAILURE
+deepin下用VirtualBox空间不足启动错误NS_ERROR_FAILURE
+打开VirtualBox报以下错误
+
+忘记截图了，具体错误信息是 NS_ERROR_FAILURE (0x80004005)
+
+发生原因：
+（仅个人而言）某些原因项目的win文件占了满盘（我的本机虚拟机文件夹放在了home,home文件分区应该分小了。留下的后遗症，安了一个centos-7,还备份了一下，想安个win10），虚拟机自动暂停就直提示空间不足，于是强制退出了，强制退出2-3次之后，就出现了0x80004005错误。
+
+解决方法：
+找到你的virtualbox，或者桌面上的VirtualBox快捷方式，右键–>属性–>权限修改如图
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+按照错误信息中的Location，找到VirtualBox.xml，将其删除，再次打开VirtualBox，正常，vagrant up也正常。
+
+评论
+评论加载中...
+提供者 Wiki.js

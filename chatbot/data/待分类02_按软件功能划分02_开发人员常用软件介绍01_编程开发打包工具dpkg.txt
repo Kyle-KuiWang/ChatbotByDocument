@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/dpkg
+打包deb
+打包debain软件
+
+打包
+首先认识结构，一个软件包有/DEBIAN，/etc，/usr，/opt等目录，接下来依次讲解每个目录的作用
+/DEBIAN
+
+打包命令
+dpkg -b 目录 -xxx.deb
+安装并测试软件包
+打包完成后，你需要安装并测试你的软件包，可以使用命令安装，或者使用深度包管理器
+
+dpkg -i xxx.deb
+如果没有顺利安装，可能是存在依赖问题，请查看软件包的/DEBIAN/control中填写的依赖

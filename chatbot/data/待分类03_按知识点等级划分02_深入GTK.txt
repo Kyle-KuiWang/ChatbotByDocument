@@ -1,0 +1,28 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/02_%E6%B7%B1%E5%85%A5/GTK
+GTK
+跳到导航跳到搜索
+
+摘自 GTK 官方网站：
+
+GTK，即 GIMP Toolkit，最初由 GNU项目为 GIMP 开发，但现在它已经是一个非常流行的工具包，绑定了很多语言。本文将探讨 GTK 主题、风格、图标、字体和字号的配置工具，也会详细介绍手动配置。
+
+主题
+GTK 3 和 GTK 4 的默认主题是 Adwaita，但也包含 HighContrast 和 HighContrastInverse 两个主题。 GTK 2 的默认主题是 Raleigh。
+
+要强制使用一个特殊的主题，请设置如下的 环境变量:
+
+对于 GTK 3 和 GTK 4，请使用 GTK_THEME。例如使用 Adwaita 的深色版本启动GNOME 计算器：
+$ GTK_THEME=Adwaita:dark gnome-calculator
+Note: To apply the above to desktop shortcuts (or launchers) see Desktop entries#Modify environment variables.
+
+对于 GTK 2， 请使用 GTK2_RC_FILES。例如使用 Raleigh 主题启动 GIMP：
+$ GTK2_RC_FILES=/usr/share/themes/Raleigh/gtk-2.0/gtkrc gimp
+Tip: gtkrc can also be a custom file in your home directory created by any of the #Configuration tools. See #Examples.
+
+一般情况下将主题文件解压在 ~/.themes/ 或 ~/.local/share/themes/ 目录。
+
+GTK 和 Qt
+同时在系统上安装GTK和QT（通常是KDE组件）程序的人都知道，两者的外观并不怎么协调。关于两者外观统一的问题，参见：Uniform look for Qt and GTK applications。
+
+请参阅
+https://wiki.archlinux.org/title/GTK

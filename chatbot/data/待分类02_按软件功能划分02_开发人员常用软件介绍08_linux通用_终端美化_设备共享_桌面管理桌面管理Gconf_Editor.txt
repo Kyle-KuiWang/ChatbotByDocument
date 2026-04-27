@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/08_linux%E9%80%9A%E7%94%A8_%E7%BB%88%E7%AB%AF%E7%BE%8E%E5%8C%96_%E8%AE%BE%E5%A4%87%E5%85%B1%E4%BA%AB_%E6%A1%8C%E9%9D%A2%E7%AE%A1%E7%90%86/%E6%A1%8C%E9%9D%A2%E7%AE%A1%E7%90%86/Gconf_Editor
+简介
+Gconf Editor是一个配置编辑软件，它允许用户修改桌面环境和应用程序的相关参数值，实现改变桌面环境显示和应用程序属性。例如修改菜单按钮的图标，窗口关闭按钮的左右位置，登录界面背景等。
+
+安装
+sudo apt-get install gconf-editor
+
+卸载
+sudo apt-get remove gconf-editor
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/g/gconf-editor/

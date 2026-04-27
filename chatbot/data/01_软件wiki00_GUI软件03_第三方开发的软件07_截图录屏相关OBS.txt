@@ -1,0 +1,10 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/07_%E6%88%AA%E5%9B%BE%E5%BD%95%E5%B1%8F%E7%9B%B8%E5%85%B3/OBS
+OBS安装
+前言
+OBS Studio（Open Broadcaster Software）是一个跨平台的开源的直播录屏软件，是Linux系统上最受欢迎的录屏软件
+
+安装
+sudo apt update
+sudo apt install ffmpeg obs-studio
+使用
+打开软件按照向导配置，在录屏时需要添加源，直播需要配置直播服务器

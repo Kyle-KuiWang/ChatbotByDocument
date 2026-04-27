@@ -1,0 +1,40 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/%E6%8E%A7%E5%88%B6%E4%B8%AD%E5%BF%83%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90
+DeepinWiki
+控制中心常见问题分析
+分析控制中心应用最常见的问题,总结其出现的原因,以及如何定位,最终避免再出现,或能够迅速定位问题所在
+控制中心常见问题分析
+控制中心显示模块中某几个分辨率设置不成功，或者设置后花屏，闪屏
+控制中心分辨率的设置功能分为几个部分，前端部分是UI，提供给用户一个良好的操作界面，后端实现部分，真正执行该功能的部分。
+碰到显示模块设置不成功的或者设置后出现花屏，闪屏等问题，可以抛开控制中心快速进行问题的定位和分析。
+根据Xrandr里面的wiki,首先执行xrandr命令，查看当前所连接的屏幕通用信息
+执行设置分辨率的命令： xrandr --output eDP1 --mode 1920x1080 （注： eDP1 是 根据xrandr命令出来的，有可能是HDMI等等）
+如果执行命令依然不成功或者花屏，闪屏，那么与控制中心无关，如果可以成功，那么需要控制中心排查一下传入参数是否正确
+
+GLib-GIO-ERROR : Settings 提示找不到某一个键名
+这里以我实际开发碰到的问题为例子：当打开控制中心以后，点击账户模块，提示如下错误：
+GLib-GIO-ERROR **: 16:11:19.644: Settings schema 'com.deepin.dde.control-center' does not contain a key named 'auto-login-visable'
+追踪与中断点陷阱 (核心已转储)
+问题原因： 对应的 com.deepin.dde.control-center.gschema.xml 文件找不到 'auto-login-visable' 这个节点信息
+分析过程： 控制中心程序可以启动，但是当点击“账户”模块时，控制中心就崩溃掉了。 可以在控制台下执行 dde-control-center -s ， 等界面出来后，点击
+“账户”模块，然后控制中心程序退出，控制台可以看到标题内容错误。
+解决办法： 这个错误通常会出现在新功能开发阶段，不像dde-dock ，控制中心的 com.deepin.dde.control-center.gschema.xml 并非自己的工程进行管理，它
+是另外一个项目——deepin-desktop-schemas 它来管理的。这个时候我们需要下载 deepin-desktop-schemas 工程并切换到对应的分支，然后将对应的xml文件
+拷贝到 /usr/share/glib-2.0/schemas 目录下（有则覆盖）
+
+控制中心一直闪退
+问题原因:闪退的原因有很多,这里之举例启动的一种情况,也是大家很容易遇到的情况,dde-qt-dbus-factory的版本没有和dde-control-conter的版本同步升级,这个特别容易出现在exp版本,有些之更新了 dde-control-conter其他的控制中心依赖的没有更新导致的
+分析过程:可以在命令行中打开控制中心即在终端输入: dde-control-conter -s 看下报错误的位置比如xxx::datetime xxxx::battery 等等
+解决办法:更新dde-qt-dbus-factory和dde-control-conter到最新的版本
+
+声音模块没有输入输出设备及无法选中设备
+问题原因:1.没有输入输出硬件设备，2.没有接入对应的输入输出设备。
+分析过程:1.使用命令“arecord -l”查看音频输入设备，使用命令“aplay -l”查看音频输出设备，查看有无输入输出硬件设备。2.安装并打开D-Feet，选择Session Bus。在左侧搜索com.deepin.daemon.Audio，在右侧依次展开/com/deepin/daemon/Audio->Interfaces->com.deepin.daemon.Audio->Properties。双击Cards查看所有输入输出端口，属性Direction=1表示输出端口，Direction=2表示输入端口。双击DefaultSink查看选中端口所属输出设备，双击DefaultSource查看选中端口所属输入设备。双击Sinks查看输出设备列表，双击Sources查看输入设备列表。设定DefaultSink为/com/deepin/daemon/Audio/Sink0，依次展开/com/deepin/daemon/Audio/Sink0->Interfaces->com.deepin.daemon.Audio.Sink->Properties，双击ActivePort查看选中端口，双击Card查看端口CardID。设定DefaultSource为/com/deepin/daemon/Audio/Source0，依次展开/com/deepin/daemon/Audio/Source0->Interfaces->com.deepin.daemon.Audio.Source->Properties，双击ActivePort查看选中端口，双击Card查看端口CardID。
+
+###"控制中心-账户"无指纹相关信息
+问题原因: 1.未接入指纹设备，2.已接入指纹设备，但系统未识别，3.指纹设备硬件已损坏
+分析过程：1.首先需要了解系统版本系统是否支持指纹识别。支持指纹设备后，可进一步排查问题出现原因。2.当未接入指纹设备时，“控制中心-账户”中不会有指纹相关信息及“添加指纹”按钮，需先接入指纹设备，3.接入设备后若还是没有指纹相关信息，打开D-Feet工具，左侧搜索系统服务“com.deepin.daemon.Authenticate”，进入“/com/deepin/daemon/Authenticate/Fingerprint”路径下“com.deepin.daemon.Authenticate.Fingerprint”接口中，查看“Devices”属性是否有值，若为空，则表示系统为识别出来，需要先重启电脑后再查看，4.重启后若还是没有指纹信息，此时可更换usb端口后重新查看。5.若更换端口后D-Feet中还是无法查看到指纹设备信息，此时无法判定是否指纹设备硬件是否已损坏。6.更换电脑，多试几次，若还是找不到指纹账户信息。则可以判定指纹设备已损坏。
+
+###选中打开文件的默认程序
+问题原因:没有选中的默认程序，默认程序勾选错误。
+分析过程:安装并打开D-Feet，选择Session Bus。在左侧搜索com.deepin.daemon.Mime，在右侧依次展开/com/deepin/daemon/Mime->Interfaces->com.deepin.daemon.Mime->Methods。网页类型："x-scheme-handler/http"，"x-scheme-handler/ftp"，"x-scheme-handler/https"，"text/html"，"text/xml"，"text/xhtml_xml"，"text/xhtml+xml"。邮件类型："x-scheme-handler/mailto"，"message/rfc822"，"application/x-extension-eml"，"application/x-xpinstall"。文本类型："text/plain"。音乐类型："audio/mpeg"，"audio/mp3"，"audio/x-mp3"，"audio/mpeg3"，"audio/x-mpeg-3"，"audio/x-mpeg"，"audio/flac"，"audio/x-flac"，"application/x-flac"，"audio/ape"，"audio/x-ape"，"application/x-ape"，"audio/ogg"，"audio/x-ogg"，"audio/musepack"，"application/musepack"，"audio/x-musepack"，"application/x-musepack"，"audio/mpc"，"audio/x-mpc"，"audio/vorbis"，"audio/x-vorbis"，"audio/x-wav"，"audio/x-ms-wma"。视频类型："video/mp4"，"audio/mp4"，"audio/x-matroska"，"video/x-matroska"，"application/x-matroska"，"video/avi"，"video/msvideo"，"video/x-msvideo"，"video/ogg"，"application/ogg"，"application/x-ogg"，"video/3gpp"，"video/3gpp2"，"video/flv"，"video/x-flv"，"video/x-flic"，"video/mpeg"，"video/x-mpeg"，"video/x-ogm"，"application/x-shockwave-flash"，"video/x-theora"，"video/quicktime"，"video/x-ms-asf"，"application/vnd.rn-realmedia"，"video/x-ms-wmv"。图片类型："image/jpeg"，"image/pjpeg"，"image/bmp"，"image/x-bmp"，"image/png"，"image/x-png"，"image/tiff"，"image/svg+xml"，"image/x-xbitmap"，"image/gif"，"image/x-xpixmap"，"image/vnd.microsoft.icon"。终端类型："application/x-terminal"。双击GetDefaultApp，弹出运行D-Bus方法，在方法输入框中输入音乐类型的任意一种比如"audio/mpeg"，点击运行，方法输出框中展示错误信息或者输出当前类型的默认程序。类似操作执行ListApps查看对应类型所有应用程序，执行ListUserApps查看用户自定义添加的应用程序。
+解决办法:查看对应类型的默认程序

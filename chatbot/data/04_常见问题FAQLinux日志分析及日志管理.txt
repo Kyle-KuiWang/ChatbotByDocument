@@ -1,0 +1,151 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%8F%8A%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86
+DeepinWiki
+Linux日志分析及日志管理
+1.日志介绍
+在 Linux 系统中，日志记录了系统中包括内核、服务和其它应用程序等在内的运行信息。在我们解决问题的时候，日志是非常有用的，它可以帮助我们快速的定位遇到的问题。
+
+Linux系统内核和许多程序会产生各种错误信息、警告信息和其他的提示信息，所以把它们写到日志文件中去。完成这个过程的服务，即日志守护进程为syslog。
+
+syslog可以根据日志的类别和优先级将日志保存到不同的文件中，位于/etc/syslog或/etc/syslogd或/etc/rsyslog.d，默认配置文件为/etc/syslog.conf或rsyslog.conf，任何希望生成日志的程序都可以向syslog发送信息。
+
+2.日志分类
+在下面文章中将以UOS系统下的日志为例，我们将日志分为应用日志和系统日志来分析。
+
+3.应用日志
+目录：/var/log/和~/.cache/package/，package为软件包名
+
+UOS应用日志大部分默认目录/.cache/deepin/，如影院：/.cache/deepin/deepin_movie/deepin-movie.log
+
+部分应用日志默认目录/var/log/，如uos应用商店：/var/log/lastore/daemon.log，向日葵：/var/log/sunlogin/sunlogin_service.log
+
+查看日志方法：用cat/more/less/tail/head等命令，如：
+
+less ~/.cache/deepin/deepin-movie/deepin-movie.log |grep Error  查看错误日志
+tail -f ~/.cache/deepin/deepin-movie/deepin-movie.log    实时监控日志
+4.系统日志
+Linux系统日志将分为以下四个部分：系统日志类型、系统日志级别（优先级）、系统日志文件、系统日志管理。
+
+4.1系统日志类型
+linux常见的日志类型如下表，但并不是所有的Linux发行版都包含这些类型：
+
+类型	说明
+auth	用户认证时产生的日志，如login命令、su命令
+authpriv	与 auth 类似，但是只能被特定用户查看
+console	针对系统控制台的消息
+cron	系统定期执行计划任务时产生的日志
+daemon	某些守护进程产生的日志
+ftp	FTP服务
+kern	系统内核消息
+local0.local7	由自定义程序使用
+lpr	与打印机活动有关
+mail	邮件日志
+mark	产生时间戳。系统每隔一段时间向日志文件中输出当前时间，每行的格式类似于 Jun 28 09:00:00 rs2 -- MARK --，可以由此推断系统发生故障的大概时间
+news	网络新闻传输协议(nntp)产生的消息
+ntp	网络时间协议(ntp)产生的消息
+user	用户进程
+4.2 系统日志级别
+Linux常见的日志级别如下表：数值越小，优先级越高
+
+数值	类型	说明
+0	emerg	紧急情况，系统不可用（例如系统崩溃），一般会通知所有用户
+1	alert	需要立即修复，例如系统数据库损坏
+2	crit	危险情况，例如硬盘错误，可能会阻碍程序的部分功能
+3	err	一般错误消息
+4	warning	警告
+5	notice	不是错误，但是可能需要处理
+6	info	通用性消息，一般用来提供有用信息
+7	debug	调试程序产生的信息
+如：内核日志控制台打印信息，可以通过修改/proc/sys/kernel/printk文件内容来控制，查看内核日志级别：
+
+cat /proc/sys/kernel/printk
+4 4 1 7
+控制台日志级别：优先级高于该值的消息将被打印至控制台
+
+默认的消息日志级别：将用该优先级来打印没有优先级的消息
+
+最低的控制台日志级别：控制台日志级别可被设置的最小值(最高优先级)
+
+默认的控制台日志级别：控制台日志级别的缺省值
+
+4.3 系统日志文件
+4.3.1 rsyslog.conf配置文件规则
+前面我们讲到，linux日志文件由syslog或rsyslog守护进程生成，它有一些规则，下面我们来看一下：
+
+系统日志守护进程syslog的默认配置文件/etc/rsyslog.conf，根据日志类型和优先级来制定配置规则。
+
+配置文件rsyslog.conf内容如下图，展示的是规则部分内容：
+
+$ cat /etc/rsyslog.conf
+ll.png
+
+由图可见保存的日志文件目录/var/log以及日志文件*.log是根据日志类型和优先级来定的。下面将解析配置文件格式内容。
+
+配置文件的基本格式：
+
+服务名称[连接符号]日志等级 日志记录位置
+如：user.err /var/log/user.err
+配置文件格式中的[连接符号]的三种含义：
+
+“.”表示只记录比当前等级（包含该等级）高的日志，如：user.info /var/log/user.info只记录日志等级大于等于info级别的日志。
+“.=”表示只记录所需等级的日志，其他等级的日志都不记录，如：*.=err /var/log/err
+“.！”表示不等于，也就是除该等级的日志外，其他等级的日志都记录。
+注意：修改rsyslog.conf配置文件后，需要重启rsyslog服务才生效。
+
+启动/重启/停止rsyslog服务（start/stop/restart）：
+
+#sudo service rsyslog restart或
+#/etc/init.d/rsyslog restart或
+#systemctl restart rsyslog
+查看rsyslog服务状态：
+
+#chkconfig --list rsyslog
+#systemctl status rsyslog
+4.3.2 日志文件轮替规则
+日志是重要的系统文件，记录和保存了系统中所有的重要事件。但是日志文件也需要进行定期的维护，因为日志文件是不断增长的，如果完全不进行日志维护，而任由其随意递增，那么用不了多久，我们的硬盘就会被写满。
+
+4.3.2.1 默认日志文件轮替
+Linux 系统是可以自动完成日志的轮替工作，logrotate 就是用来进行日志轮替（也叫日志转储）的。logrotate有一定的规则，其配置文件/etc/logrotate.conf内容如下图：
+
+$ cat /etc/logrotate.conf
+ll1.png
+
+日志轮替最主要的作用就是把旧的日志文件移动并改名，同时建立新的空日志文件，当旧日志文件超出保存的范围时就删除。那么，旧的日志文件改名之后，如何命名呢？主要依靠 /etc/logrotate.conf 配置文件中的“dateext”参数。
+
+从上图可以看到参数dateext默认是被注释的，那么日志文件就需要进行改名了（自动）。如user日志文件，当第一次进行日志转存时，当前的user日志会自动改名为user.1，然后会新建user日志，用来保存新的日志；
+
+当第二次进行日志转存时，user.1会自动改名为user.2，以此类推，到了一定规则会压缩文件为user.x.gz(x: 1、2、3、4...)。
+
+如果配置文件中的“dateext”参数开放，那么日志将会用日期来作为日志文件的后缀，如“user-20200628”。这样日志文件名不会重叠，也就不需要对日志文件进行改名，只需要保存指定的日志个数，删除多余的日志文件即可。
+
+4.3.2.2 自定义日志文件论轮替
+自定义日志文件加入轮替的两种方法：
+
+方法一：直接修改/etc/logrotate.conf 配置文件中写入该日志的轮替策略，从而把日志加入轮替
+
+方法二：在 /etc/logrotate.d/目录中新建立该日志的轮替文件，在该轮替文件中写入正确的轮替规则，因为该目录中的文件都会被包含到主配置文件中，所以也可以把日志加入轮替。
+
+推荐使用这种方式，因为系统中需要轮替的日志非常多，如果全部直接写入/etc/logrotate.conf配置文件，那么这个文件的可管理性就会非常差，不利于此文件的维护。
+
+日志文件的轮替之所以可以在指定的时间备份日志,是因为其依赖系统定时任务，在 /etc/cron.daily/目录下存在logrotate文件，系统会执行该文件，
+
+然后logrotate会依据 /etc/logrotate.conf 配置文件的配置来判断配置文件中的日志是否符合日志轮替的条件，还可以用logrotate命令直接实现轮替：logrotate [选项] 配置文件名
+
+例子：logrotate -f /etc/logrotate.d/logfile
+
+4.3.2.3 配置文件logrotate.conf的主要参数说明
+参数	说明
+daily	日志的轮替周期是毎天
+weekly	日志的轮替周期是每周
+monthly	日志的轮控周期是每月
+rotate数宇	保留的日志文件的个数。0指没有备份
+compress	当进行日志轮替时，对旧的日志进行压缩
+create mode owner group	建立新日志，同时指定新日志的权限与所有者和所属组.如create 0600 root utmp
+mail address	当进行日志轮替时.输出内存通过邮件发送到指定的邮件地址
+missingok	如果日志不存在，则忽略该日志的警告信息
+nolifempty	如果曰志为空文件，則不进行日志轮替
+minsize 大小	日志轮替的最小值。也就是日志一定要达到这个最小值才会进行轮持，否则就算时间达到也不进行轮替
+size大小	日志只有大于指定大小才进行日志轮替，而不是按照时间轮替，如size 100k
+dateext	使用日期作为日志轮替文件的后缀，如secure-20130605
+sharedscripts	在此关键宇之后的脚本只执行一次
+prerotate/cndscript	在曰志轮替之前执行脚本命令。endscript标识prerotate脚本结束
+postrolaie/endscripl	在日志轮替之后执行脚本命令。endscripi标识postrotate脚本结

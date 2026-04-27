@@ -1,0 +1,40 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/GIT/Git
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+/
+Git
+Version Control
+页面内容
+标签
+讨论
+最后编辑
+花酒锄作田
+02/22/2023
+Git
+简介
+git是一个开源的分布式版本控制系统，可以有效、高速地处理从小到非常大的项目版本管理，和linux是“亲兄弟”，出自Linux Torvalds。
+
+什么是版本控制？版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。
+
+特点
+性能优良。
+分布式，绝大多数操作都是在本地执行
+Git使用哈希值保证数据的完整性
+相较于SVN这样的集中式版本控制系统，Git的上手难度明显偏高
+安装
+sudo apt install -y git
+# 或者安装所有模块
+sudo apt install -y git-all
+验证
+git --version
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

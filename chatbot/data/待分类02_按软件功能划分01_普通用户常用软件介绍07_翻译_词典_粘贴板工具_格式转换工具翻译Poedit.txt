@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/07_%E7%BF%BB%E8%AF%91_%E8%AF%8D%E5%85%B8_%E7%B2%98%E8%B4%B4%E6%9D%BF%E5%B7%A5%E5%85%B7_%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%B7%A5%E5%85%B7/%E7%BF%BB%E8%AF%91/Poedit
+简介
+Poedit 是一款基于多语言的本地化工具，支持 Win/Mac/Linux 三大主流平台，经常被用于本地化各种计算机软件，以及翻译 WordPress 主题或插件。Poedit 支持开源及跨平台的 gettext类（.po 格式，使用 gettext 作为程序的本地化），以及可以直接对接世界范围内最主流的翻译服务平台 Crowin，是目前同类软件中使用最为广泛的优秀工具。
+
+安装
+sudo apt-get install poedit
+
+卸载
+sudo apt-get remove poedit
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/p/poedit/

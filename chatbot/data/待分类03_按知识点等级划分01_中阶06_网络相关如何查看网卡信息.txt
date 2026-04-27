@@ -1,0 +1,21 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/01_%E4%B8%AD%E9%98%B6/06_%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1%E4%BF%A1%E6%81%AF
+查看网卡信息
+查看所有网络连接
+终端输入：nmcli connection show
+
+查看活动的网络连接
+终端输入：nmcli connection show -active
+
+查看指定网卡的信息
+终端输入：nmcli connection show enp2s0
+命令中的 enp2s0 为网卡名称
+
+显示设备的连接状态
+终端输入：nmcli device status
+
+显示所有设备网络设备详情信息
+终端输入：nmcli device show
+
+显示指定网络设备的详细信息
+终端输入：nmcli device show enp2s0
+命令中的 enp2s0 为网卡名称

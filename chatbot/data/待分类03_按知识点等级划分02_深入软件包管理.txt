@@ -1,0 +1,225 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/02_%E6%B7%B1%E5%85%A5/%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86
+软件包管理
+主要工具列表
+Apt - 主要的包管理工具
+aptitude - CLI and ncurses front end for Apt (recommended)
+Synaptic - Graphical front end for Apt (recommended)
+apt-get - CLI Apt package handling utility
+dpkg – Debian 包文件安装器
+dpkg
+dpkg is a medium-level package manager for Debian. It's also used in Deepin Operating System.
+
+Functions
+Install or manage a single software package
+Upgrade software suite
+Install the application security patch
+Why "medium-level"?
+There's dpkg-deb, which performs lower-level actions on .deb (binary) packages, such as reading the control information and directly extracting the contained files.
+dpkg checks dependencies and will refuse to install a package whose dependencies aren't met, but it won't help you find and install those dependencies. You need a higher-level tool (e.g. aptitude, apt-get or dselect) for that.
+APT
+It's a set of tools for managing Debian packages, and therefore the applications installed on your system.
+
+Functions
+Install applications
+Remove applications
+Keep your applications up to date
+and much more...
+APT resolves dependency problems and retrieves requested packages from designated package repositories. APT delegates the actual installation and removal of packages to dpkg. APT is primarily used by commandline tools, but there are many GUI tools to let you use APT without having to touch the command line.
+tools like aptitude can interact with APT via both commandline and TUI interfaces.
+
+Commands
+dpkg Commands
+dpkg命令一般需要root权限执行，所以一般跟着sudo命令 例如: sudo dpkg xxxx
+格式：
+dpkg [<选项> ...] <命令>
+dpkg -s package | grep Status ##查询软件包是否安装
+dpkg -s package ##查看软件包是否安装，获取其他有用信息
+dpkg -S filesname ##查找文件属于哪个安装包
+dpkg -C ##搜索损坏的软件包
+dpkg -i <package.deb> ##安装软件包
+dpkg -r package ##删除已安装的软件包，但保留配置文件
+dpkg -P package ##删除已安装软件包,完全清除包（含配置文件）
+dpkg -h ##获取更多关于dpkg用法的信息
+dpkg -S file ##这个文件属于哪个已安装软件包。
+dpkg -L package ##列出软件包中的所有文件。
+dpkg –force-all –purge packagename ##有些软件很难卸载，而且还阻止了别的软件的应用，就可以用这个，不过有点冒险。
+
+apt commands
+apt-get:智能的解决软件包的依赖关系，方便软件的安装和升级（最新版只用apt，去掉了-get）
+apt-cache:查询apt的二进制软件包缓存文件
+apt-file:软件包查找工具，可以查到软件包所含的文件和安装的位置
+apt-get/apt命令[编辑]
+apt-get/apt命令一般需要root权限执行，所以一般跟着sudo命令 例如: sudo apt-get xxxx 格式：
+apt-get在最新版中已更新为apt
+sudo apt-get [options1]  [options2]
+apt-get update ##在修改/etc/apt/sources.list或者/etc/apt/preferences之後运行该命令。此外您需要定期运行这一命令以确保您的软件包列表是最新的
+apt-get install package_name ##安装一个新软件包
+apt-get remove package_name  ##卸载一个已安装的软件包（保留配置文件）
+apt-get --purge remove package_name ##卸载一个已安装的软件包（删除配置文件）
+apt-get autoclean  ##删除已卸载软件的软件包
+apt-get clean ##这个命令会把安装的软件的备份也删除，不过这样不会影响软件的使用的。
+apt-get upgrade ##更新所有已安装的软件包
+apt-get dist-upgrade ##将系统升级到新版本
+apt-get autoclean ##清除那些已经卸载的软件包的.deb文件
+apt-get autoremove ##删除某个包的同时，删除依赖于它的包
+apt-cache命令
+apt-cache show package_name ##显示软件包记录，类似于dpkg –print-avail。
+apt-cache search package_name ##在软件包列表中搜索字符串
+apt-cache showpkg package_name ##显示软件包信息。
+apt-cache policy package_name  ##显示软件包的安装状态和版本信息。
+apt-cache depends package_name  ##显示指定软件包所依赖的软件包。
+apt-cache rdepends package_name  ##显示软件包的反向依赖关系，即有什么软件包需依赖你所指定的软件包。
+apt-cache dumpavail package_name  ##打印可用软件包列表。
+apt-cache pkgnames package_name  ##打印软件包列表中所有软件包的名称。
+apt-file命令
+apt install apt-file  ##安装apt-file命令。
+apt-file update  ##更新软件包的文件库，第一次使用或apt-get update后都需运行一次。
+apt-file search  package_name ## 查找包含特定文件的软件包（不一定是已安装的），这些文件的文件名中含有指定的字符串。
+apt-file list package_name  ##显示该软件包的文件。
+aptitude命令
+aptitude 与 apt-get 一样，是 Debian 及其衍生系统中功能极其强大的包管理工具。
+与 apt-get 不同的是，aptitude 在处理依赖问题上更佳一些。举例来说，aptitude 在删除一个包时，会同时删除本身所依赖的包。这样，系统中不会残留无用的包，整个系统更为干净。
+aptitude命令一般也需要root权限执行，所以一般跟着sudo命令 例如: sudo aptitude xxxx
+格式：
+aptitude [-S 文件名] [-u|-i]
+aptitude [选项] <动作> ...动作
+(如果未指定，aptitude 将进入交互模式)：
+aptitude install ##安装/升级软件包
+aptitude remove ##卸载软件包
+aptitude purge ##卸载软件包并删除其配置文件
+aptitude forbid-version ##禁止 aptitude 升级到某一特定版本的软件包
+aptitude update ##下载新/可升级软件包列表
+aptitude safe-upgrade ##执行一次安全的升级
+aptitude full-upgrade ##执行升级，可能会安装和卸载软件包
+aptitude search ##按名称 和/或 表达式搜索软件包
+aptitude show ##显示一个软件包的详细信息
+aptitude clean ##删除已下载的软件包文件
+aptitude autoclean ##删除旧的已下载软件包文件
+aptitude download ##下载软件包的 .deb 文件
+aptitude reinstall ##下载并(可能)重新安装一个现在已经安装了的软件包
+aptitude --help ##查看更多关于aptitue的用法
+
+dselcet命令
+dselcet使用频率比较少,在此不多介绍,但是可以阅读：dselect用法小结
+若系统没有，则可以使用下面命令安装：
+sudo apt-get install dselect
+相关知识
+
+删除APT缓存
+
+我们使用apt-get安装软件，会自动到软件源服务器下载需要的文件，这些文件存放与/var/cache/apt/archives 目录，如果您不需要可以将其删除，方法为终端执行：
+sudo apt-get clean
+或者
+sudo apt-get autoclean
+区别
+
+apt-get clean删除/var/cache/apt/archives/ 和 /var/cache/apt/archives/partial/目录下所有包(锁定的软件包除外)
+apt-get autoclean仅删除/var/cache/apt/archives/ 和 /var/cache/apt/archives/partial/目录下旧版本的软件包和无用的软件包(锁定的软件包除外)
+实例
+
+在/var/cache/apt/archives/ 文件夹下我们有gimp2.3和gimp2.6版本的两个deb包、chrome28版本的deb包、firefox15版本的deb包(没有锁定的包),我们的系统当前安装了gimp的2.6版本和chrome28版本,并且没有安装firefox软件.
+运行sudo apt-get clean,将删除gimp2.3和gimp2.6版本的两个deb包、chrome28版本的deb包、firefox15版本的deb包(也就是全部删除)
+运行sudo apt-get autoclean,将删除gimp2.3版本的deb包和firefox15版本的deb包(只删除老旧的软件包和系统当前不需要的包)
+删除软件配置[编辑]
+
+当我们需要重置一个软件的设置或者彻底卸载该软件（软件+配置）删除该软件对于的配置文件即可. 配置文件存放的位置有： 1.用户设置(特定用户配置) ～/ ～/.config
+2.全局设置(系统全局配置)
+/usr/share
+注释：～/为您的主文件夹.
+实例
+
+/home/cxbii/.config/deepin-music-player  ##这个路径的配置文件只对cxbii用户有效(即特定用户配置)
+/usr/share/deepin-music-player  ##这个路径的配置文件对该系统下所有用户都有效(即系统全局配置)
+如果我们在删除一个软件包的同时需要删除该软件包的配置,可以加上--purge参数,例如:
+sudo apt-get remove --purge package_name
+卸载软件包
+
+如果我们需要删除特定的软件包,可以终端执行:
+sudo apt-get remove package_name
+如果需要清除无关的依赖包,可以终端执行:
+sudo apt-get autoremove
+此命令可以删除系统内部不需要的依赖包,但是此操作有一定的危险性,可能误删需要的依赖包,如果无特殊需要,请不要执行该操作.
+实例
+
+apt-get remove为删除某个包的同时，删除依赖于它的包
+例如： A 依赖于 B, B 依赖于 C apt-get remove 删除B的同时，将删除A(A依赖于B，B被删了，A也就无法正常运行了)
+apt-get autoremove的行为重点是卸载所有自动安装
+例如：C 依赖于 B, D 依赖于B, 且D没有被其他手动安装的包依赖
+apt-get remove C 将删除C, 同时提示你用apt-get autoremove去清除B,D apt-get autoremove C 将删除B, C, D
+aptitude remove C 将删除B, C, D(删除C, 那么B,D 这两个包既是自动安装的,且没有其他手动安装的包依赖于它们, 则可以判定B,D也是没必要的)
+升级软件包[编辑]
+
+升级系统分下面几个步骤:
+第一步，获得最近的软件包的列表(刷新源)；列表中包含一些包的信息，比如这个包是否更新过。
+第二步，如果这个包没有发布更新，就不管它；如果发布了更新，就把包下载到电脑上，并安装。
+对应到命令操作,我们可以终端执行:
+sudo apt-get update ##刷新软件源
+然后选择执行一下任一命令:
+sudo apt-get upgrade ##更新软件包
+sudo apt-get dist-upgrade ##更新系统
+upgrade和 dist-upgrade的区别:
+相同点
+
+无论是使用哪一种方式更新,都需要要运行update更新。
+不同点
+
+upgrade只是简单的更新包，不管这些依赖，它不能添加新的软件包，或是删除软件包。并且不更改相应软件的的配置文件(包括内核)
+dist-upgrade可以根据依赖关系的变化，添加软件包，删除软件包,并且更改相应软件的配置文件(包括内核)
+适用范围
+
+upgrade适合发行版本正常的软件更新和安装补丁更新.
+dist-upgrade适合发行版从测试版等非正式版更新至正式版,或者跨越大版本进行更新(例如深度操作系统11.12更新至深度操作系统12.06).
+添加PPA
+
+安装支持“add-apt-repository”命令：
+sudo apt-get install python-software-properties
+sudo apt-get install software-properties-common
+sudo apt-get update
+常见问题
+
+虽然apt-get是很智能的包管理器,但是不可避免的也会出现一些问题,因此本页面集中收集最为常见的错误与解决方法
+问题一
+
+终端出现:
+E:Sub-process /usr/bin/dpkg returned an error code (1)
+解决方法,终端执行：
+cd /var/lib/dpkg
+sudo mv info info.bak
+sudo mkdir info
+sudo dpkg --configure -a
+sudo apt-get install -f
+sudo mv /var/lib/dpkg/info/* /var/lib/dpkg/info.bak
+sudo rm -rf /var/lib/dpkg/info
+sudo mv /var/lib/dpkg/info.bak /var/lib/dpkg/info
+问题二
+
+使用apt-get命令安装软件时，终端提示：
+E: 无法获得锁 /var/lib/dpkg/lock - open (11: 资源暂时不可用)
+E: 无法锁定管理目录(/var/lib/dpkg/)，是否有其他进程正占用它？
+解决方法如下:
+方法一
+已经打开的包管理程序（例如：apt-get 或 aptitude）在运行，请先关掉它。 如果不知道是哪个程序，打开终端查看与apt-get有关的程序,sudo kill 前面的数字。或者 可以重启电脑
+方法二
+打开终端,依次执行下面的命令：
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock sudo rm /var/lib/apt/lists/lock
+注意：方法二适用方法一无效的时候。
+问题三
+
+使用apt-get刷新源,终端出现:
+E: Some index files failed to download. They have been ignored, or old ones used instead.
+解决方法如下:
+方法一
+如果是因为修改了官方默认源.恢复默认源即可 深度操作系统默认源
+方法二
+可能是服务器出问题,请等待一段时间后再次刷新本地源列表,如果依然不行,尝试终端执行:
+sudo rm /var/lib/apt/lists/partial/*
+sudo apt-get update
+问题四[编辑]
+使用apt-get刷新源,终端提示: W: GPG error: http://apt.tt-solutions.com dapper Release: 由于没有公钥，下列签名无法进行验证： NO_PUBKEY 06EA41DE4F6C1E86
+解决方法,终端执行:
+gpg --keyserver subkeys.pgp.net --recv 4F6C1E86
+gpg --export --armor 4F6C1E86 | sudo apt-key add -
+说明： 若缺少其他公钥，则将命令中两处4F6C1E86改为NO_PUBKEY 06EA41DE4F6C1E86中最后8位即可！
+如果是PPA源,则执行:
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com

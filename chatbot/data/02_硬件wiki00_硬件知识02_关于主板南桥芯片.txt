@@ -1,0 +1,7 @@
+https://wiki.deepin.org/zh/02_%E7%A1%AC%E4%BB%B6wiki/00_%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86/02_%E5%85%B3%E4%BA%8E%E4%B8%BB%E6%9D%BF/%E5%8D%97%E6%A1%A5%E8%8A%AF%E7%89%87
+南桥芯片
+简介
+南桥芯片是电脑主板芯片组中的另一枚芯片。南桥设计用来处理低速IO信号，如PCI总线、USB、网卡、ATA、SATA、声卡、键盘、电源管理等
+
+芯片位置
+南桥芯片一般位于PCI接口下方

@@ -1,0 +1,106 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/deepin%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86V4
+DeepinWiki
+deepin 常用资源整理 · V4.1.4
+三、硬件和设备
+3.1 显卡
+显卡笔记本安装N卡闭源驱动教程：https://bbs.deepin.org/zh/post/215066
+Deepin双显卡之bumblebee(大黄蜂)、Prime及手动切换方案：https://bbs.deepin.org/zh/post/210053
+NVIDIA独立显卡的安装方法：https://bbs.deepin.org/zh/post/223856
+一键安装NVIDIA显卡驱动：https://bbs.deepin.org/zh/post/227866
+UOS/DEEPIN安装nvidia最新闭源驱动的教程：https://bbs.deepin.org/zh/post/232923
+deepin安装N卡驱动教程：https://bbs.deepin.org/zh/post/238766
+uos和deepin安装较新amd显卡驱动完整版：https://bbs.deepin.org/zh/post/237734
+屏幕闪烁问题的解决办法：https://bbs.deepin.org/zh/post/224687
+英伟达官方驱动安装记录：https://bbs.deepin.org/post/244803
+Nvidia独显，安装最新驱动简单方法：https://bbs.deepin.org/post/248336
+3.2 网卡
+Deepin/UOS Redmibook Pro 15 锐龙版无线网卡驱动安装：https://bbs.deepin.org/zh/post/239157
+Deepin20.6 TP-Link WN726n免驱 找不到Wifi选项：https://bbs.deepin.org/zh/post/239338
+3.3 声卡
+如何解决系统安装之后没有声音的情况：https://bbs.deepin.org/zh/post/195889
+终于解决集成声卡的音箱静音后电流噪音：https://bbs.deepin.org/post/247410
+关于intel 12500H 声卡驱动问题的解决办法：https://bbs.deepin.org/zh/post/248032 （新声卡可借鉴）
+3.4 打印机、扫描机
+20.3打印成功经验分享：https://bbs.deepin.org/zh/post/228900
+安装兄弟Brother打印机扫描驱动及配置文件的方法：https://bbs.deepin.org/zh/post/232569
+惠普打印扫描一体机开启扫描功能：https://bbs.deepin.org/zh/post/238968
+添加打印机：https://bbs.deepin.org/zh/post/239471
+USB打印机Canon2900+打印服务器部署_实现Andriod_Iphone无线打印：https://bbs.deepin.org/post/246582
+打印机驱动解决方案，有墨驱动：https://bbs.deepin.org/post/240554
+deepin 20.8和奔图M6202W（青春版）一体机，圆满方案：https://bbs.deepin.org/post/250068
+3.5 指纹
+内测推送的指纹你能用上么：https://bbs.deepin.org/zh/post/239377
+让更多指纹设备再次得到试验指纹功能可行性的机会（不完全保证）：https://bbs.deepin.org/post/242649
+3.6 更多
+关于使用虚拟机解决驱动问题的可能性探讨：https://bbs.deepin.org/zh/post/228005
+linux下外设辅助软件推荐：https://bbs.deepin.org/zh/post/226246
+关于AMD R7 6800H 键盘 WIFI 蓝牙问题解决方案的梳理：https://bbs.deepin.org/zh/post/239542
+Linux 不能识别新硬件的解决思路分享：https://bbs.deepin.org/post/245493
+Installation and Setup · linux-surface： https://github.com/linux-surface/linux-surface/wiki/Installation-and-Setup
+您正在发愁苹果 Superdrive 在 Linux 下不可用吗：https://bbs.deepin.org/post/247908
+CLEVON-NL5xCU 关于机械师笔记本键盘背光驱动：https://bbs.deepin.org/post/249534
+四、应用软件
+4.1 应用分享和使用技巧
+你可以从星火应用商店（一款由社区爱好者维护，致力于丰富Linux生态的第三方应用商店）获取一些最新版本的Linux应用和开箱即用的wine应用。官网：https://www.spark-app.store（向星火商店捐赠）
+
+deepin软件推荐（很多）：https://bbs.deepin.org/zh/post/237514
+Deepin作为主力开发机2年软件整理：https://bbs.deepin.org/zh/post/253278
+国产CPU应用分享站：https://bbs.racoongx.cn/t/cpu-China-APP
+星火终端版1.2.3：https://bbs.deepin.org/post/252112
+4.1.1 系统工具
+Oh my dde：论坛页面 Gitee页面
+iOS14风格小部件正式发布啦：https://bbs.deepin.org/zh/post/213377
+Linux桌面小部件第一个阶段性版本来了：https://bbs.deepin.org/zh/post/231461
+AppImage安装器 大更新 全新版本：https://bbs.deepin.org/zh/post/230017
+deepin下的超级效率工具—超级标签栏：https://bbs.deepin.org/zh/post/220860
+云旗OS助手，安装系统的新方法，免启动盘！：https://bbs.deepin.org/zh/post/203108 （不支持deepin，支持UOS）
+deepin下使用Ventoy安装Windows：https://bbs.deepin.org/zh/post/209123
+超卓文件管理器deb一键安装包分享：https://bbs.deepin.org/zh/post/222897
+用DTK写的定时器：https://bbs.deepin.org/zh/post/223465
+R计算器手动打包：https://bbs.deepin.org/zh/post/191341
+MPaste：剪贴板管理工具：https://bbs.deepin.org/zh/post/220914
+UOS 21.1提取软件包分享：深度安全中心&远程协助&系统诊断工具：https://bbs.deepin.org/zh/post/228885
+统信UOS助手移植分享：https://bbs.deepin.org/zh/post/230801
+App 4 Deepin（国际开发者为deepin开发的一套实用软件）：https://app4deepin.com/#home（该项目已停止更新）
+OBS教程：3分钟学会直播推流与视频录制：https://bbs.deepin.org/zh/post/224816
+screenkey：在屏幕上实时显示键盘操作：https://bbs.deepin.org/zh/post/227849
+一个好用又好看的UEFI启动管理器rEFInd：https://bbs.deepin.org/zh/post/221068
+Pensela：一款跨平台屏幕注释工具：https://bbs.deepin.org/zh/post/227701
+用apt-fast加速软件包下载：https://bbs.deepin.org/zh/post/230874
+Clash for Windows Linux版分享：https://bbs.deepin.org/zh/post/229552
+做了个小应用：Tips 生成器 增添新手使用乐趣：https://bbs.deepin.org/zh/post/228818
+apt 软件包信息查看器：论坛页面 Gitee页面
+infomation-tips 系统状态提示器：https://bbs.deepin.org/zh/post/230635
+desktop 图标文件生成器：https://bbs.deepin.org/zh/post/231528
+一个类似uTools的快速启动器Albert：https://bbs.deepin.org/post/142027
+自己写的小工具：folder-merger文件夹合并：https://bbs.deepin.org/zh/post/232545
+开发了一款自定义触摸板手势的管理工具，有需要的朋友可以试试：https://bbs.deepin.org/zh/post/232824
+Steam++ 加速你的github 和 steam游戏商店：https://bbs.deepin.org/zh/post/233231
+deepin下载器接管Edge：https://bbs.deepin.org/post/236400
+Deepin Maye：https://bbs.deepin.org/post/236438
+WingCleaner 一个个人开发简单实用的脚本：论坛页面 gitee页面
+基于dtk和rdesktop的rdp远程桌面工具1.2.0-1发布：https://bbs.deepin.org/zh/post/237866
+深度取色器：https://bbs.deepin.org/zh/post/237906
+基于Deepin下的Anaconda3安装与使用：https://bbs.deepin.org/zh/post/238563
+截屏+OCR+搜索+贴图+以图搜图 ----eSearch应用：https://bbs.deepin.org/zh/post/238703
+船新的Dock插件，助你认识网瘾，欢迎尝鲜/捉虫：https://bbs.deepin.org/zh/post/238791
+conky体验：https://bbs.deepin.org/zh/post/239050
+在deepin 20中安装和使用nemo以替代深度文件管理器：https://bbs.deepin.org/zh/post/239247
+Xpad 桌面便签：https://bbs.deepin.org/zh/post/239288
+开源免费的utools 替代品--rubick2：https://bbs.deepin.org/zh/post/241595
+羽云工具箱 v1.0.0 正式发布：https://bbs.deepin.org/post/244465
+屏亮小灯 应用发布：https://bbs.deepin.org/post/244531
+在deepin20.6系统上编译安装FSearch 0.1.4 (Linux上的Everything)：https://bbs.deepin.org/zh/post/240300
+界面更加现代化的解压软件-PeaZip【QT开发】：https://bbs.deepin.org/post/242001
+还在羡慕 UOS 里的驱动管理吗？现在你也可以拥有：https://bbs.deepin.org/post/240649
+UOS 电脑管家 可进行系统诊断和驱动管理：https://bbs.deepin.org/post/242993
+推荐一款免费的linux原生图片压缩应用Curtail：https://bbs.deepin.org/post/245531
+图片管理软件Xnview有linux原生版本：https://bbs.deepin.org/post/246466
+介绍一个恢复被删文件的工具，TestDisk：https://bbs.deepin.org/post/246333
+OBS录屏软件不能运行的解决方案：https://bbs.deepin.org/post/247713
+为深度文件管理器开发一个扩展：https://bbs.deepin.org/post/248062
+有没有比较好用的划词翻译软件：https://bbs.deepin.org/post/248255
+vim选中特定多个文件同时打开：https://bbs.deepin.org/post/248205
+请推荐一款Linux 批处理编写软件(有界面的那种)：https://bbs.deepin.org/zh/post/248919
+新版linux桌面小部件预览版欢迎体验：https://bbs.deepin.org/post/253618
+BCUninstaller 强大的卸载软件开源：https://bbs.deepin.org/post/253911

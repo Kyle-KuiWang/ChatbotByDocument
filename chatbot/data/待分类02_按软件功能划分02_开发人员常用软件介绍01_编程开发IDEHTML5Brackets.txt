@@ -1,0 +1,37 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/IDE/HTML5/Brackets
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+/
+Brackets
+页面内容
+讨论
+最后编辑
+Administrator
+02/22/2023
+简介
+Brackets是一个HTML/CSS/JavaScrip前端WEB集成开发环境，它提供了快捷键设置、快速编辑、实时预览、代码隐藏与搜索、界面优化、内建取色器、代码/样式扩展等功能。
+
+安装
+sudo apt-get install brackets
+
+卸载
+sudo apt-get remove brackets
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/b/brackets/
+
+常见问题
+相关链接
+维基百科：
+
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

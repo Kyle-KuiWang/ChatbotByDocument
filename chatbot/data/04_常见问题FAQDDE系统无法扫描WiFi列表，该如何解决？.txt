@@ -1,0 +1,31 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/%E7%B3%BB%E7%BB%9F%E6%97%A0%E6%B3%95%E6%89%AB%E6%8F%8FWiFi%E5%88%97%E8%A1%A8%EF%BC%8C%E8%AF%A5%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%EF%BC%9F
+DeepinWiki
+搜索...
+
+/
+/
+/
+系统无法扫描WiFi列表，该如何解决？
+该问题一般是未安装网卡驱动导致的
+系统无法扫描WiFi列表，该如何解决？
+在终端中执行命令重启无线网卡服务
+systemctl restart network-manager.service
+1.jpg
+2. 如果发现是没有网卡驱动，就需要安装无线网卡驱动，执行命令查看无线网卡型号。
+
+lspci | grep -i ethernet
+2.jpg
+3. 如果查到是Realtek无线网卡，可以访问https://github.com/lwfinger/rtlwifi_new网站获取对应型号的驱动并下载。如果是其他型号的无线网卡，则需要自己去查找对应的驱动。
+4. 解压缩下载的驱动文件，并找到rtlwifi_new-master的文件夹。
+5. 进入rtlwifi_new-master的文件夹，单击右键并选择【在终端中打开】，然后输入以下命令。
+
+make
+sudo make install
+sudo modprobe <无线网卡型号>
+重启系统。
+本篇wiki的原文链接为https://www.deepinos.org/d/102-deepin
+同时可参考论坛帖子https://bbs.deepin.org/forum.php?mod=viewthread&tid=153154
+
+评论
+评论加载中...
+提供者 Wiki.js

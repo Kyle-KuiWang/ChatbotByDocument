@@ -1,0 +1,25 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/%E6%8E%A7%E5%88%B6%E4%B8%AD%E5%BF%83%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5%E3%80%81%E8%BF%9E%E6%8E%A5VPN%E5%A4%B1%E8%B4%A5%EF%BC%8C%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%AF%A6%E7%BB%86%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97
+DeepinWiki
+搜索...
+
+/
+/
+/
+控制中心更新失败、连接VPN失败，如何查看详细错误日志
+控制中心更新失败、连接VPN失败，如何查看详细错误日志
+控制中心更新失败,查看log
+终端输入命令: cat ~/.cache/deepin/dde-control-center/dde-control-center.log
+
+搜索UpdateFailed关键字, 就能看到具体升级失败的原因
+
+特别说明:
+可能在控制中心会存在多个错误信息, 最好是先删除上面的日志, 再重启控制中心(必须要重启,才能生成新的dde-control-center.log), 这样就能保证只有一个UpdateFailed;
+
+假如不想删除dde-control-center.log, 则可以根据时间去查看UpdateFailed出现的信息
+
+连接VPN失败
+终端输入命令: sudo journalctl -b -f -u NetworkManage
+
+评论
+评论加载中...
+提供者 Wiki.js

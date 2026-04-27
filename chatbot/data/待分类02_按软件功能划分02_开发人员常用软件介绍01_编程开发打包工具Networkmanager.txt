@@ -1,0 +1,58 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/Networkmanager
+背景
+不论是往某个软件里添加调试信息，还是重新编译都离不开“打包”。
+因此，介绍一下打包network-manager方法(生成deb包)。
+
+步骤
+以network-manager软件包为例。
+
+获取源码
+$ apt source network-manager
+备注：确保/etc/apt/sources.list 源被打开， 否则下载不了源码
+1.配置系统中的仓库地址
+sudo nano /etc/apt/source.list
+加入
+deb [trusted=yes] http://pools.corp.deepin.com/uos eagle main contrib non-free
+deb-src [trusted=yes] http://pools.corp.deepin.com/uos eagle main contrib non-free
+然后
+sudo apt update
+
+
+<pre>
+$ ls
+network-manager_1.14.6.4+c1-1+deepin.debian.tar.xz network-manager_1.14.6.4+c1-1+deepin.dsc network-manager_1.14.6.4+c1.orig.tar.xz network-manager-1.14.6.4+c1
+修改代码
+随便修改一个文件
+
+如:
+$ cd network-manager-1.14.6.4+c1/src/
+$ vim xxx.c （修改文件）
+$ wq
+保存
+提交修改
+$ cd network-manager-1.14.6.4+c1
+$ dpkg-source --commit
+会提示让你输入一个patch的名字，输入即可.
+之后可以在 ls debian/patches/下面看到刚才生成的文件(patch)
+debian/patches/series: 这个文件决定了，patch的应用顺序
+安装依赖
+这个安装一次就行了。
+
+sudo apt build-dep network-manager-1.14.6.4+c1
+这里可能安装失败，需要依赖其他文件，根据他的提示把相应文件安装好即可。
+应用一下
+$ dpkg-source -b .
+重新编译
+$ dpkg-buildpackage -us -uc -j8
+编译过程遇到如下报错:
+“error: ‘SIOCGSTAMP’ undeclared (first use in this function); did you mean ‘SIOCGARP’?”
+tools/rctest.c
+tools/l2test.c
+侧在上述文件中增加头文件#include <linux/sockios.h>
+参考:https://patchwork.kernel.org/project/qemu-devel/patch/20190617114005.24603-1-berrange@redhat.com/
+修改完毕后重新提交：dpkg-source --commit
+如果遇到编译错误 执行下：debian/rules clean 即可
+然后重新按照提交步骤一步步往后执行
+生成文件
+编译完成之后，在上一级目录生成deb包.
+sudo dpkg -i xxx.deb 安装即可

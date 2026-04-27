@@ -1,0 +1,28 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/IDE/%E5%A4%9A%E8%AF%AD%E8%A8%80/Visual_Studio_Code_2
+
+DeepinWiki
+搜索...
+Visual Studio Code
+简称 VSCode，一款由微软开发的跨平台免费源代码编辑器
+页面内容
+讨论
+最后编辑
+A Linux Fan
+02/22/2023
+简介
+Visual Studio Code（简称 VS Code）是一款由微软开发且跨平台的免费源代码编辑器。该软件支持语法高亮、代码自动补全（又称 IntelliSense）、代码重构功能，并且内置了命令行工具和 Git 版本控制系统。用户可以更改主题和键盘快捷方式实现个性化设置，也可以通过内置的扩展程序商店安装扩展以拓展软件功能。
+
+安装
+sudo apt install com.visualstudio.code
+卸载
+sudo apt remove --purge com.visualstudio.code
+仓库地址
+http://packages.deepin.com/deepin/pool/main/v/vscode/
+
+相关链接
+维基百科：https://zh.wikipedia.org/zh-cn/Visual_Studio_Code
+Visual Studio Code 官方网站：https://code.visualstudio.com/
+
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

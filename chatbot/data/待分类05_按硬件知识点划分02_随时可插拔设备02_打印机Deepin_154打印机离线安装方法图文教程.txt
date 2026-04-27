@@ -1,0 +1,61 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/05_%E6%8C%89%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86%E7%82%B9%E5%88%92%E5%88%86/02_%E9%9A%8F%E6%97%B6%E5%8F%AF%E6%8F%92%E6%8B%94%E8%AE%BE%E5%A4%87/02_%E6%89%93%E5%8D%B0%E6%9C%BA/Deepin_154%E6%89%93%E5%8D%B0%E6%9C%BA%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B
+Deepin_154打印机离线安装方法图文教程
+页面内容
+讨论
+最后编辑
+Administrator
+02/22/2023
+简介
+本经验有深度论坛用户(zpu198)分享，原文地址
+
+正文
+基本情况：常用办公离不开打印机，而本人所在单位计算机涉密，打印机的离线安装一直不会（本人也是小白，只是deepin粉丝），没事来论坛看看，综合各方面的贴子汇总如下，希望可以帮到像我一样的小白。
+
+参考贴子：https://bbs.deepin.org/post/138493
+
+下面以hp p1008为例
+
+准备工作：手动下载plugin
+
+下载地址：
+https://www.openprinting.org/download/printdriver/auxfiles/HP/plugins/
+
+下载驱动版本号见第2步
+
+图片
+
+下这两个文件放到任意自己找得到的地方，在别的机子上装，就复制到别的机子上就行
+
+设置root密码。打开“深度终端”，输入：sudo passwd，然后输入自己用户密码（即登陆密码），重新设置（root、unix)密码。（如果已经设置，请跳过。）
+打开终端（DeepinTerminal），输入hp-plugin。在终端的输出中会显示版本号。
+P Linux Imaging and Printing System (ver. 3.16.10)这就是在前面要下载的驱动版本号
+
+Plugin Download and Install Utility ver. 2.1
+
+Copyright (c) 2001-15 HP Development Company, LP
+This software comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to distribute it
+under certain conditions. See COPYING file for more details.
+
+
+HP Linux Imaging and Printing System (ver. 3.16.10)
+Plugin Download and Install Utility ver. 2.1
+
+Copyright (c) 2001-15 HP Development Company, LP
+This software comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to distribute it
+under certain conditions. See COPYING file for more details.
+点yes,
+选择手动下载plugin 2个文件所在位置
+选定hplip-3.16.10-plugin.run
+点next,
+点yes,
+i agree 前打勾，
+点next,
+输入第一步设置的root 密玛
+点ok，
+点OK 就安装完成，可以添加打印机了
+点添加
+点forward
+点apply后
+点打印测试页，应该 成功了吧

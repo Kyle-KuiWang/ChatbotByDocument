@@ -1,0 +1,17 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%88%9B%E5%BB%BA%E5%B7%A5%E5%85%B7/framer%E5%BC%80%E6%BA%90%E5%8E%9F%E5%9E%8B%E8%AE%BE%E8%AE%A1%E8%BD%AF%E4%BB%B6
+
+DeepinWiki
+搜索...
+framer开源原型设计软件
+页面内容
+讨论
+最后编辑
+blue_whale
+02/22/2023
+Framer 开源原型设计工具
+Framer 是一个开源原型设计工具，使用 CoffeeScript 编写。支持动画效果和交互操作。
+
+https://www.framer.com
+评论
+暂时没有评论。
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

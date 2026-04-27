@@ -1,0 +1,13 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/03_%E5%9B%BE%E5%83%8F%E7%BC%96%E8%BE%91_PDF%E7%BC%96%E8%BE%91/PDF%E5%88%9B%E5%BB%BA%E4%B8%8E%E7%BC%96%E8%BE%91/Sejda_PDF_Desktop
+简介
+Sejda PDF Desktop 是一款免费且易于使用的 PDF 编辑软件，拥有合并、拆分、转换、压缩、编辑、加密 PDF 文件等多种功能。
+安装
+wget https://sejda-cdn.com/downloads/sejda-desktop_7.5.3_amd64.deb
+sudo apt install ./sejda-desktop_7.5.3_amd64.deb
+卸载
+sudo apt remove --purge sejda-desktop
+常见问题
+Sejda PDF Desktop 免费版功能有一定限制
+
+相关链接
+Sejda PDF Desktop 官方网站：https://www.sejda.com/desktop

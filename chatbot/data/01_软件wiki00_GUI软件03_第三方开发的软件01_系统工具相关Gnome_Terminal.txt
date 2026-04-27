@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/01_%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/Gnome_Terminal
+简介
+Gnome Terminal是一个终端仿真器，所有设置都存储在配置文件中，可以通过菜单栏进行设置，同时可以通过命令来执行操作。
+
+安装
+sudo apt-get install gnome-terminal
+
+卸载
+sudo apt-get remove gnome-terminal
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/g/gnome-terminal/
+
+常见问题
+¶相关链接

@@ -1,0 +1,77 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/UEFI%E5%A6%82%E4%BD%95%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8
+DeepinWiki
+7.6 演练
+grub的内容相当杂乱，庞大而复杂，所以整理起来也是非常艰难。如果实在看不懂，那么就照以下步骤进行即可（所有步骤皆实际操作）：
+
+#系统默认已经安装grub，uefi环境下，也就是我推荐的方式，安装的grub组件包括：grub-common、grub-efi-amd64、grub-efi-amd64-bin、grub2-common
+# 首先切换到root 管理账号，得到管理权限
+sudo passwd root
+su
+
+apt list grub* #列出grub相关包，可以看出已经安装的grub包，确认是否uefi环境，然后继续
+
+#1. 简单安装
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=mygrub #x86_64-efi就是grub 的uefi引导框架，--efi-directory这个指示了esp挂载的根在哪里。因为我的esp分区挂载在/boot/efi目录，所以选择在哪里，因此你也可以根据自己的实际情况设置esp分区的根。--bootloader-id 这个参数会在esp分区的/efi/目录下生成对应的文件夹。和mircosoft，ubuntu等文件夹平级。这个命令并不会生成esp分区的/efi/boot/bootx64.efi 默认启动器，只会生成对应文件夹的/efi/mygrub/grubx64.efi启动器，这个时候就没有默认的启动器，如果你想要,可以复制：
+
+mkdir /boot/efi/efi/boot
+mv /boot/efi/efi/mygrub/grubx64.efi /boot/efi/efi/boot
+
+
+#2. 定制安装
+# 自动生成的启动器，符合大多数要求，为了演示，接下来对其中某些过程进行定制
+# 首先要理解grub-install干了什么，它首先调用了grub-mkconfig生成了菜单，然后调用grub-mkimage生成启动映像
+
+#2.1 生成菜单，会自动调用os-prober搜索磁盘的其他系统，生成菜单
+mkdir -p /boot/efi/efi/grub2
+grub-mkconfig -o /boot/efi/efi/grub2/grub.cfg
+
+# 自动生成的菜单是根据/etc/grub.d/ 下的脚本，和/etc/default/grub来生成的。因为要定制，所以可以对这个生成后的脚本直接进行编辑。
+
+cd /boot/efi/efi/grub2
+nano grub.cfg
+#一般只需要增加或删减菜单项即可
+
+
+#2.2 生成启动映像
+grub-mkimage -o grub2.efi --prefix=/efi/grub2 --format=x86_64-efi fat.mod part_gpt.mod #必须要带这俩个模块，否则无法读取gpt分区和fat文件系统的内容，映像必须要读取菜单文件grub.cfg，--prefix指明grub目录位置，另外，菜单用的命令模块也在x86_64-efi目录下面。
+
+cp grub2.efi /boot/efi/efi/boot/bootx64.efi #这个是磁盘默认启动的efi
+cp grub2.efi /boot/efi/efi/grub2 #我自定义的grub目录，即现在这个目录已经有grub2.efi 和grub.cfg ,注意grub.cfg的名字是不能改的，已经被固定了，grub2.efi会在设定的目录自动找这个文件。
+cp /usr/lib/grub/x86_64-efi /boot/efi/efi/grub2 -r #复制所有模块到目录下面
+#重启即可使用自定义菜单启动系统。
+cp /boot/vmlinuzxxx /boot/efi/efi/debian/vmlinuz
+cp /boot/initrd.imgxxx /boot/efi/efi/debian/initrd.img
+#复制默认在/boot目录下的内核和映像盘到我想要的目录下，因为我在grub.cfg新增了一个测试菜单项，路径就指向那里，演示的是debian系统，所以里面已经有debian目录，就复制到那里即可。
+
+#2.3 修改主板菜单
+# 最好是从主板菜单启动，因为bootx64.efi会被其他系统抢用。
+efibootmgr -c -d /dev/sda -p 1 -l /efi/grub2/grub2.efi -L grub2-debian -g #-c新建，-d 磁盘；-p 分区；-l 启动路径；-L 菜单标题； -g gpt分区。
+
+efibootmgr -b 0005 -B #删除编号0005的菜单项
+
+#以上在debian虚拟机中测试通过，但是这里是手写的，所以也许有纰漏。
+7.7 其他
+参考资料
+UEFI论坛： http://www.uefi.org
+EFI SHELL： http://www.tianocore.org
+ubuntu uefibooting: https://help.ubuntu.com/community/UEFIBooting
+ubuntu grub help: https://help.ubuntu.com/community/Grub2
+archlinux grub wiki: https://wiki.archlinux.org/index.php/GRUB_(简体中文)
+gurb官方文档： https://www.gnu.org/software/grub/manual/grub.html
+arch linux boot loaders: https://wiki.archlinux.org/index.php/Category:Boot_loaders_(简体中文)
+grub for windows中文项目:https://github.com/beatfan/UEFI_grub2
+IBM 中文社区：https://www.ibm.com/developerworks/cn/linux/l-grub2/#ibm-pcon
+gurb 模块： https://blog.csdn.net/zuosifengli/article/details/7321142
+编译UEFI版本Grub2引导多系统文件efi: https://www.jianshu.com/p/326e71f67d58
+mkisofs命令制作iso文件： https://blog.csdn.net/halazi100/article/details/45601239
+linux 制作iso 和 刻录DVD: https://blog.csdn.net/jxm_csdn/article/details/52537831
+文件系统： https://wiki.archlinux.org/index.php/File_systems_(简体中文)
+金步国linux文档： http://www.jinbuguo.com/
+关于Windows Boot Manager、Bootmgfw.efi、Bootx64.efi、bcdboot.exe 的详解: https://blog.csdn.net/lindexi_gd/article/details/50392343/
+系统启动流程: https://wiki.deepin.org/zh/03_按知识点等级划分/01_中阶/05_生命周期/系统启动流程
+系统安装-000 基础三：Windows与Linux的UEFI引导修复教程: https://blog.csdn.net/qq_15304853/article/details/79054734
+制作一个能从各种ISO镜象启动的U盘: https://noodlefighter.com/post/note_udisk-for-repair/
+hpe 精简微服务器UEFI Shell参考：http://h17007.www1.hpe.com/docs/iss/proliant_uefi/UEFI_TM_030617/GUID-D7147C7F-2016-0901-0A69-000000001B9F.html
+评论
+评论加载中...
+提供者 Wiki.js

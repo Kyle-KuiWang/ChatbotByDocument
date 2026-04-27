@@ -1,0 +1,140 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/00_%E5%85%A5%E9%97%A8/00_linux%E5%9F%BA%E7%A1%80/Linux%E6%A0%87%E5%87%86%E8%A7%84%E8%8C%83
+认证
+在制定好标准并开发出测试套件之后，为了区分系统或应用程序是否兼容 LSB 标准， FSG 提供了 LSB 标准认证服务。任何 Linux 发行版厂商和应用程序开发商都可以进行 Linux 认证，目前提供的认证有两种：
+
+LSB 运行环境：为平台供应商提供的 LSB 标准认证
+LSB 应用程序：为应用程序开发商提供的 LSB 标准认证
+对于平台供应商来说，经过 LSB 认证之后，就可以确保自己的系统所提供的服务都是标准的，任何遵守 LSB 标准的应用程序都可以很好地在自己的系统上运行；而对于应用程序开发商来说，其意义则刚好相反：不需要担心自己的应用程序在遵守 LSB 标准的系统上的可移植性问题。
+
+LSB 认证过程包含以下步骤：
+
+注册：要进行 LSB 认证的第一个步骤是在 [https://www.freestandards.org/index.php?title=Special:Userlogin] 上先创建一个帐号，并注册您的公司和产品。
+测试和验证：使用 LSB 提供的测试工具，在您的测试系统上运行，并对结果进行分析（详细内容请参看本系列的下一篇文章），确保您的系统或应用程序遵守 LSB 规范。
+最终审计：在准备好正式提交测试结果之后，需要先签署 LSB 认证协议和 LSB 商标许可协议，并向 FSG 支付认证所需要的费用。然后 FSG 会有专人对测试结果进行审计，如果一切正常，就通过了 LSB 认证。通过 LSB 认证的产品都会在 [http://www.freestandards.org/en/Products] 公开发布。目前已经 Redhat、Suse、RedFlag 等公司都已经通过了 LSB 3.0 的认证，对于 LSB 3.1 的认证正在进展中。
+通过 LSB 认证之后，所认证的产品可以贴上 "LSB Certified" 的标签进行销售了。
+
+认证问题报告
+在运行 LSB 所提供的测试工具时可能会出现部分测试用例失败的情况，其原因可能是产品本身的问题，例如 FHS 标准要求系统中必须存在 /media/ 目录，而在某些系统中，这个目录可能并不存在，此时就可能会导致相应的测试套件失败，错误信息如下：
+
+<pre>
+10|715 /tset/LSB.fhs/root/media/media-tc 00:55:04|TC Start, scenario ref 720-0
+15|715 3.7 5|TCM Start
+400|715 1 1 00:55:04|IC Start
+200|715 1 00:55:04|TP Start
+520|715 1 30056 1 1|Reference 3.11-1(A)
+520|715 1 30056 1 2|The /media directory exists and is searchable
+520|715 1 30056 1 3|/media: directory not found
+520|715 1 30056 1 4|exit code 1 returned, expected 0
+220|715 1 1 00:55:04|FAIL</pre>
+但是有时可能并非是测试环境的问题，而是测试套件本身的问题，或者是由于系统中存在一个公认但却暂时无法修复的问题，此时并不影响 LSB 的认证的结果。如果出现这种问题，测试人员可以将这个问题反馈给 LSB[http://www.freestandards.org/cert/prsubmit.php]，经过确认之后，，经过确认之后，LSB 会在一个 waiver 文件中列出这种情况，并将对应的测试套件暂时剔除，并尝试在下一个版本中进行修复。我们也可以从 [http://www.freestandards.org/cert/pr.php] 上查看已经发现的问题。
+
+LSB 的历史、现状和将来
+LSB 项目最初发起于 1998 年 5 月，其项目启动宣言得到了 Linus Torvalds、Bruce Perens、Eric Raymond 等人的签名支持，当时的目标是建立一系列构建 Linux 发行版所采用的源代码应该遵循的标准，并提供一个参考平台。2000 年 5 月，LSB 成为 Free Standards Group（FSG） 的一个工作组。FSG 是一个独立的非盈利组织，专注于通过开发和促进标准来加速开源软件的发展。
+
+从 2001 年 6 月发布第一个正式版本的规范以后，LSB 规范几乎每 6 个月都会进行一次更新。截止到 2005 年 7 月发布的 3.0 版本为止，LSB 重点关注的是服务器端的使用，这与 Linux 在服务器端得到了广泛的应用是一致的。这个规范已经被 ISO 采纳为国际标准 23360。
+
+目前最新的版本规范是 2005 年 10 月发布的 LSB 3.1，目前它可以支持 7 种体系结构：
+
+IA32
+IA64
+X86_64
+PPC32
+PPC64
+S390
+S390x
+由于平台的差异，所有的规范除了有一个通用的版本之外，还都存在一个适用于特定平台的版本，其中的内容是完全适用于这个平台的。
+
+与上一个版本相比，LSB 3.1 版本的规范主要是增强了对桌面系统的标准化支持，增加了对 GTK 和 QT GUI 工具包的标准化。另外，LSB 还调整了自己的路线图，以便可以与主流的 Linux 发行商（Redhat、Novell、Asianux、Debian 等）的发行计划更好地吻合，并吸引了更多 Linux 发行商的参与，对开发工具和文档进行了改进，还与各个国家的组织（例如中国电子技术标准化研究所，CESI）进行认证方面的合作。
+
+下一个版本 LSB 3.2 也在 2007 年第二季度发布，将主要增加 freedesktop.org 的标准和跨桌面的交互操作性。 LSB 4.0 将在 2008 年发布，它将实现更好的二进制兼容性，并增加对 Perl、Python、LAMP、Java 等语言的标准化支持。详细路线图及各个主要版本的特性如图 3 所示：
+
+实例：lsb_release 的规范定义和实现
+我们知道，在 /etc 目录中有一个文件可以查看当前系统的版本信息，在 RHEL4U3（Red Hat Enterprise Linux 4 Update 3）上这个文件是 /etc/redhat-release：
+
+<pre>cat /etc/redhat-release
+Red Hat Enterprise Linux ES release 4 (Nahant Update 3)</pre>
+在 SLES9SP3（SUSE LINUX Enterprise Server 9 Service Pack 3）上这个文件是 /etc/SuSE-release：
+
+<pre>cat /etc/SuSE-release
+SUSE LINUX Enterprise Server 9 (i586)
+VERSION = 9
+PATCHLEVEL = 3</pre>
+我们可以看出，在这两个发行版上，不但使用的文件不同，文件的内容和格式也完全不同。如果开发人员在自己的程序中使用这些信息，他们就很难使用一个统一的接口来获取发行版本的信息，因此必须为每种平台都定制一个脚本或开发一个程序才能实现这种功能，这无疑会增加很多工作量，而且所生成的程序的可移植性也会很差。
+
+为了解决这个问题，LSB 规范中增加了对 lsb_release 接口及其输出格式的定义：lsb_release 的功能是打印与发行版本相关的信息，必须实现以下选项详细规范的定义请参考：[http://refspecs.freestandards.org/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/lsbrelease.html]
+
+我们前面已经介绍过，通过 LSB 认证发行版或软件可以得到 FSG/LSB 的授权，贴上 "LSB Certified"的标签进行销售。实际上，在通过 LSB 认证的系统上，我们可以看到一个与 LSB 有关的包，其中包含了 LSB 规范中对 lsb_release 接口规范的实现。lsb_release 是 LSB-Core-generic 规范中要求的一个接口，各种平台（目前可以支持的 7 种平台： IA32、IA64、X86_64、PPC32、PPC64、S390 和 S390x）上都应该提供这个接口的实现。在 RHEL4U3 上，我们可以找到一个名为 redhat-lsb 的包（RHEL4U3 遵守的是 LSB 3.0 版本的规范，因此这个包的版本是 redhat-lsb-3.0-8.EL），该包的内容如下：
+
+<pre>rpm -ql redhat-lsb
+/bin/mailx
+/etc/lsb-release.d
+/etc/lsb-release.d/core-3.0-ia32
+/etc/lsb-release.d/core-3.0-noarch
+/etc/lsb-release.d/graphics-3.0-ia32
+/etc/lsb-release.d/graphics-3.0-noarch
+/etc/redhat-lsb
+/etc/redhat-lsb/lsb_killproc
+/etc/redhat-lsb/lsb_log_message
+/etc/redhat-lsb/lsb_pidofproc
+/etc/redhat-lsb/lsb_start_daemon
+/lib/ld-lsb.so.3
+/lib/lsb
+/lib/lsb/init-functions
+/usr/bin/lsb_release
+/usr/lib/lsb
+/usr/lib/lsb/install_initd
+/usr/lib/lsb/remove_initd
+/usr/sbin/redhat_lsb_trigger.i386
+/usr/share/man/man1/lsb_release.1.gz</pre>
+而在 SLES9SP3 中，这个包的名字是 lsb（lsb-3.0-4.8），它包含的内容如下：
+
+<pre>
+rpm -ql lsb /etc/lsb-release /etc/lsb-release.d /etc/lsb-release.d/graphics-2.0-ia32 /etc/lsb-release.d/graphics-2.0-noarch /etc/lsb-release.d/graphics-3.0-ia32 /etc/lsb-release.d/graphics-3.0-noarch /lib/ld-lsb.so.2 /lib/ld-lsb.so.3 /usr/bin/lsb_release /usr/share/man/man1/lsb_release.1.gz</pre>
+我们可以看出，在这两个发行版上的两个包中存在一些共同的文件：
+
+*/usr/bin/lsb_release
+*/lib/ld-lsb.so.3
+其中 /lib/ld-lsb.so.3 在两个系统上都是一个符号链接：
+
+<pre># ls -l /lib/ld-lsb.so.3
+lrwxrwxrwx 1 root root 13 Apr 20 03:04 /lib/ld-lsb.so.3 -> ld-linux.so.2</pre>
+系统中提供的大部分应用程序都是链接到了 ld-linux.so.2 上，但是兼容 LSB 标准的应用程序都可以链接到 ld-lsb.so.3 上（由于 SLES9SP3 还兼容 LSB 2.0 的规范，因此系统中还存在一个 /lib/ld-lsb.so.2 库，也是指向 ld-linux.so.2 的符号链接；而 RHEL4U3 不兼容 LSB 2.0 的规范，因此没有这个库）。
+
+而 /usr/bin/lsb_release 就是对 lsb_release 接口的具体实现，在这两个系统上都是一个 shell 脚本。下面我们分别在这两个系统上执行 lsb_release -a 命令，在 RHEL4U3 上的结果如下：
+
+<pre># /usr/bin/lsb_release -a
+LSB Version:
+:core-3.0-ia32:core-3.0-noarch:graphics-3.0-ia32:graphics-3.0-noarch:log
+Distributor ID: RedHatEnterpriseES
+Description: Red Hat Enterprise Linux ES release 4 (Nahant Update 3)
+Release: 4
+Codename: NahantUpdate3</pre>
+在 SLES9SP3 上的结果如下：
+
+<pre># /usr/bin/lsb_release -a
+LSB Version:
+core-2.0-noarch:core-3.0-noarch:core-2.0-ia32:core-3.0-ia32:graphics-2.0-ia32:
+graphics-2.0-noarch:graphics-3.0-ia32:graphics-3.0-noarch
+Distributor ID: SUSE LINUX
+Description: SUSE LINUX Enterprise Server 9 (i586)
+Release: 9
+Codename: n/a</pre>
+再看一下在这两个系统上与 lsb_release 有关的包，我们会发现二者之间有一些区别，例如在 SLES9SP3 上存在一个 /etc/lsb-release 文件，其中存放的是所遵循的 LSB 标准的版本，内容如下：
+
+<pre># cat /etc/lsb-release
+LSB_VERSION="core-2.0-noarch:core-3.0-noarch:core-2.0-ia32:core-3.0-ia32"</pre>
+而在 RHEL4U3 上并没有这个文件，但是在 /etc/lsb-release.d 目录中的文件却比 SLES9SP3 上多：
+
+*/etc/lsb-release.d/core-3.0-ia32
+*/etc/lsb-release.d/core-3.0-noarch
+*/etc/lsb-release.d/graphics-3.0-ia32
+*/etc/lsb-release.d/graphics-3.0-noarch
+而在 SLES9SP3 上只有以 graphics 开头的文件。仔细查看一下 /usr/bin/lsb_release的实现我们就会发现，所遵守的 LSB 规范的列表既可以保存在 /etc/lsb-release 文件中，也可以以文件的形式放到 /etc/lsb-release.d 目录中。因此 LSB 只是对接口定义进行了规范，但却没有限定具体的实现，这样既可以为发行版供应商提供充分的自由，又为应用程序开发人员提供了一致的接口，可以得到最大限度的推广和应用。
+
+结束语
+标准化的 Linux 操作系统可以为应用程序开发者提供一个开发应用程序的良好平台，使他们开发的应用程序可以非常平滑地移植到其他发行版本上。LSB 通过定义一系列规范，并提供标准测试套件和开发环境，可以帮助开发人员更容易地开发遵守规范的应用程序，辅助供应商构建更标准的系统。在本系列的下一篇文章中，我们将介绍如何使用 LSB 标准提供的测试工具来验证系统和应用程序是否遵守 LSB 规范。
+
+相关链接
+IBM文档中心:LSB简介
+维基百科:POSIX
+维基百科:LSB

@@ -1,0 +1,109 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86%E6%96%B9%E6%B3%95
+DeepinWiki
+常用日志采集方法（全）
+采集系统日志，方便问题定位
+系统崩溃、卡死、死机
+可以尝试TTY（ Ctrl + Alt + F2 ）是否能正常切换，键盘大小写灯能否正常显示，若以上都无反应，则可强制重启机器并提取内核日志 cat ~/kern.log | grep -i "Call Trace" 查看是否存在内核模块崩溃的情况, 更换内核版本再次查看是否死机，并提供日志到研发分析。
+
+可同步采集如下日志
+
+~/.kwin.log
+/var/log/
+还可能需要辅助coredump日志
+
+Coredump工具使用与日志导出
+无法进入系统
+当遇到类似如下问题时：
+
+开机无法进入系统
+终端锁屏后无法登录系统
+升级后无法进入系统
+重启无法进入系统
+采集目标
+
+~/.cache/deepin/
+~/.xsession-errors
+~/.xsession-errors.old
+/var/log/
+桌面显示异常
+当遇到类似如下问题时：
+
+蓝屏
+白屏
+花屏
+黑屏
+显示不完整
+分辨率异常
+重影
+卡顿
+采集目标
+
+~/.kwin.log
+/var/log/
+可能需要辅助coredump日志
+
+Coredump工具使用与日志导出
+系统常见模块日志路径
+DDE
+模块	名称	Log路径
+dde-无法显示登陆界面	Lightdm	/var/log/lightdm/lightdm.log
+dde-登陆界面	lightdm-deepin-greeter:	/var/log/lightdm/seat0-greeter.log
+dde-后端startdde	startdde	生成的文件会保存在桌面：sudo journalctl -b /usr/bin/startdde >~/Desktop/startdde.log
+dde-后端daemon	daemon	sudo journalctl /usr/lib/deepin-daemon/dde-session-daemon > ~/Desktop/daemon.log
+dde-任务栏	dde-dock	~/.cache/deepin/dde-dock/dde-dock.log
+dde-控制中心	dde-control-center	~/.cache/deepin/dde-control-center/dde-control-center.log
+dde-启动器	dde-launcher	~/.cache/deepin/dde-launcher/dde-launcher.log
+dde-锁屏界面	dde-lock	~/.cache/deepin/org.deepin.dde.lock/org.deepin.dde.lock.log
+dde-关机界面	dde-shutdown	~/.cache/deepin/dde-shutdown/dde-shutdown.log
+dde-窗口异常	dde-kwin	~/.kwin.log
+系统内核
+一级模块	Log路径	说明
+系统/内核	/var/log/messages	整体系统信息，其中也包含系统启动期间的日志
+系统/内核	/var/log/auth.log	包含系统授权信息，包括用户登录和使用的权限机制等
+系统/内核	/var/log/daemon.log	各种系统后台守护进程日志信息
+系统/内核	~/.cache/deepin/dde-printer	打印机安装失败或报错
+系统/内核	/var/log/deepin-installer.log	系统安装过程出现问题
+系统/内核	/var/log/deepin-installer.log	开机过程出现问题日志
+系统/内核	/var/log/apt/history	apt进行了哪个操作， 相关的依赖有哪些
+系统/内核	/var/log/apt/term.log	apt命令相关较为具体的一些操作，主要就是下载、打开、安装包等细节操作
+系统/内核	/var/log/dpkg.log	进行包的安装、卸载、更新、数据更新等问题日志
+系统/内核	/var/log/wtmp	用户进行登录、注销等出现问题
+系统/内核	/var/log/faillog	用户登陆失败
+系统/内核	/var/log/utmp	终端进行登录、注销
+系统/内核	/var/log/syslog	系统日志
+系统/内核	/var/log/kern.log	内核日志（如系统无法启动）
+系统/内核	cd /var/lib/systemd/coredump	蓝屏程序异常退出(崩溃的coredump文件目录)
+系统组件&应用
+一级模块	Log路径	备注
+窗管	窗管问题:~/.kwin.log （目前没有什么log日志内容）	
+系统上层	应用商店:~/.cache/deepin/deepin-app-store/deepin-app-store.log	
+输入法配置	/tmp/fcitx-用户名-inotify.log	
+输入法配置	fcitx-diagnose > fcitx.log	
+磁盘管理器	/var/log/deepin/deepin-diskmanager-service/Log	
+下载器	~/.config/uos/downloader/Log	
+窗口管理器	窗管log默认没有打开，打开方法：https://docs.deepin.com/f/e9c396ec3c/ 默认在/home/$USER/kwin.log	
+xorg	/var/log/目录下所有log文件	
+安卓容器	/usr/share/log/log.txt	
+安卓容器	/home/Kbox(跟随用户名动态改变)/log/AospLog.log	
+安卓容器	/home/Kbox(跟随用户名动态改变)/log/KboxServer.log	
+归档管理器	~/.cache/deepin/deepin-compressor/deepin-compressor.log	归档管理器版本，系统版本，出现异常情况的操作步骤，假如有崩溃的话提供coredump
+日历	~/.cache/deepin/dde-calendar-service/dde-calendar-service.log	日历版本，系统版本，日程数据~/.config/deepin/dde-daemon/calendar/scheduler.db，假如有崩溃的话提供coredump
+日历	~/.cache/deepin/dde-calendar/dde-calendar.log	
+帮助手册	.cache/deepin/deepin-manual/deepin-manual.log	系统镜像版本和地址,帮助手册版本,/usr/share/deepin-manual/manual-assets 资源文件,假如帮助显示不了请提供资源文件截图,有崩溃请提供coredump 当程序未启动时,可以通过1040终端运行dman 或者dmanHelper, 1030终端运行dman和dman-search 查看是否有错误,请提供终端输出的结果 当搜索无结果时,可查看数据库文件search.db是否存在及大小 1040数据库文件~/.local/share/deepin/deepin-manual/search.db ,1030数据库文件/usr/share/deepin-manual/manual-assets/(系统版本类型)/search.db
+文档查看器	~/.cache/deepin/deepin-reader/deepin-reader.log	文档查看器版本，系统版本，出现异常情况的操作步骤，记录出现bug的时间，假如有崩溃的话提供coredump
+字体管理器	~/.cache/deepin/deepin-font-manager/deepin-font-manager.log	字体管理器版本，系统版本，出现异常情况的操作步骤，记录出现bug的时间，假如有崩溃的话提供coredump
+软件包安装器	~/.cache/deepin/deepin-deb-installer/deepin-deb-installer.log	软件包安装器版本，系统版本，出现异常情况的操作步骤，记录出现bug的时间，假如有崩溃的话提供coredump
+终端	~/.cache/deepin/deepin-terminal/deepin-terminal.log	系统镜像版本和镜像地址（例如：镜像地址=https://cdimage.uniontech.com/daily-iso/20210626-stable-rollback/）、 终端版本、假如有崩溃的话提供coredump、~/.cache/deepin/deepin-terminal/文件夹打包
+语音记事本	~/.cache/deepin/deepin-voice-note/deepin-voice-note.log	异常处理： 需要提供应用版本，镜像版本地址，应用日志,操作步骤，对于录音、播放异常(采用对比测试可以直接判断是否应用层的问题，可下载第三方录音软件audacity,gnome-sound-recorder等,也可以终端直接输入命令arecord test.wav -f cd 直接录test.wav文件}，需要提供异常录音文件（应用有保存mp3功能，提供另存为的mp3文件). 特殊配置： 关闭录音设备检测，不插话筒也可录音，新建/usr/share/deepin-voice-note/deepin-voice-note.conf文件，写入 [Audio] CheckInputDevice=false
+设备管理器	~/.cache/deepin/deepin-devicemanager/deepin-devicemanager.log	设备管理器的版本　架构　系统类型(个人，专业等)　cpu型号　bug所在的环境
+服务与支持	~/.cache/deepin/uos-service-support/uos-service-support.log	系统镜像版本 应用版本 服务与支持中联系我们使用的二维码，运行异常记录，异常警告，假如有崩溃的话提供coredump
+远程协助	~/.cache/deepin/uos-remote-assistance/uos-remote-assistance.log	远程协助连接过程中,记录键盘鼠标等操作事件
+系统监视器	~/.cache/deepin/deepin-system-monitor/deepin-system-monitor.log	系统监视器异常告警，Error级别的操作记录
+文本编辑器	~/.cache/deepin/deepin-editor/deepin-editor.log	文本编辑器版本，系统版本，出现异常情况的操作步骤，记录出现bug的时间，假如有崩溃的话提供coredump
+欢迎	暂无	暂无
+日志收集工具	~/.cache/deepin/deepin-log-viewer/deepin-log-viewer.log var/log/deepin/deepin-log-viewer-service	系统镜像版本 应用版本 应用和服务日志 如果无Log信息或不存在的情况下 需要查看/var/log下是否有log文件，应用日志问题查看~/.cache/deepin/
+计算器	~/.cache/deepin/deepin-calculator/deepin-calculator.log	计算器版本，异常操作的步骤
+邮箱	~/.cache/deepin/deepin-mail/deepin-mail.log	版本；涉及隐私用户不介意的话可以提供邮件缓存文件~/.local/share/deepin/deepin-mail/mail；有崩溃的话提供coredump。
+浏览器	~/.cache/deepin/org.deepin.browser/	浏览器运行时的日志信息
+下载器	~/.config/uos/downloader/Log/	下载器运行时的一些日志信息
+截图录屏	~.cache/deepin/deepin-screen-recorder/deepin-screen-recorder.log	

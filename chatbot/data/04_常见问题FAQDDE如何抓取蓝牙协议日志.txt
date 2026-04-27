@@ -1,0 +1,32 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/%E5%A6%82%E4%BD%95%E6%8A%93%E5%8F%96%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%97%A5%E5%BF%97
+DeepinWiki
+搜索...
+
+/
+/
+/
+如何抓取蓝牙协议日志
+若使用蓝牙过程中出现异常，需要抓取日志提交开发人员分析
+如何抓取蓝牙（HCI）协议日志
+1. 安装抓取蓝牙HCI日志工具
+
+sudo apt-get install bluez-hcidump
+
+2. 设置bluetoothd为debug，方便查看日志
+
+打开/etc/systemd/system/bluetooth.target.wants/bluetooth.server
+
+如下图截图中，截取的这一行加上-d 如：ExecStart=/usr/lib/bluetooth/bluetoothd -d
+截图_deepin-terminal_20220616103355.png
+
+systemctl restart bluetooth.service
+
+3. 运行工具抓取日志
+
+sudo hcidump -w /tmp/sony1.log
+
+sudo journalctl -f /usr/lib/bluetooth/bluetoothd > /tmp/sony.txt
+
+评论
+评论加载中...
+提供者 Wiki.js

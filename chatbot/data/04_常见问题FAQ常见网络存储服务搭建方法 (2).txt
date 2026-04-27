@@ -1,0 +1,128 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%B8%B8%E8%A7%81%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E6%96%B9%E6%B3%95
+DeepinWiki
+配置文件虽然只有一句，但是其中还是有很多讲究；
+共享文件可执行权限有：
+      ro           只读访问
+      rw           读写访问
+      sync          所有数据在请求时写入共享
+      hide          在NFS共享目录中不共享其子目录
+      no_hide         共享NFS目录的子目录
+      all_squash       共享文件的UID和GID映射匿名用户anonymous，适合公用目录。
+      no_all_squash      保留共享文件的UID和GID（默认）
+      root_squash       root用户的所有请求映射成如anonymous用户一样的权限（默认）
+      no_root_squas      root用户具有根目录的完全管理访问权限
+ip配置一般需要进行限定，最好不要使用* ，不然存在安全问题，可以限定具体ip或者ip段才能挂载。
+配置文件修改如下：
+deepin-server@deepin-server-PC:~$ cat /etc/exports
+# /etc/exports: the access control list for filesystems which may be exported
+#               to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+/home/deepin-server/nfs  10.20.*(rw)#此处ip只做了部分限制，圆括号里面就是配置权限的。
+启动服务
+systemctl start rpcbind nfs-server
+查看服务状态
+deepin-server@deepin-server-PC:~$ sudo systemctl status rpcbind nfs-server
+● rpcbind.service - RPC bind portmap service
+   Loaded: loaded (/lib/systemd/system/rpcbind.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2022-01-05 11:53:19 CST; 1h 56min ago
+     Docs: man:rpcbind(8)
+ Main PID: 19304 (rpcbind)
+    Tasks: 1 (limit: 19660)
+   Memory: 608.0K
+   CGroup: /system.slice/rpcbind.service
+           └─19304 /sbin/rpcbind -f -w
+
+1月 05 11:53:19 deepin-server-PC systemd[1]: Starting RPC bind portmap service...
+1月 05 11:53:19 deepin-server-PC systemd[1]: Started RPC bind portmap service.
+
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/lib/systemd/system/nfs-server.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Wed 2022-01-05 11:53:21 CST; 1h 56min ago
+  Process: 19319 ExecStartPre=/usr/sbin/exportfs -r (code=exited, status=0/SUCCESS)
+  Process: 19320 ExecStart=/usr/sbin/rpc.nfsd $RPCNFSDARGS (code=exited, status=0/SUCCESS)
+ Main PID: 19320 (code=exited, status=0/SUCCESS)
+
+1月 05 11:53:20 deepin-server-PC systemd[1]: Starting NFS server and services...
+1月 05 11:53:20 deepin-server-PC exportfs[19319]: exportfs: /etc/exports [1]: Neither 'subtree_check' or 'no_subtree_check' specified for export "10.20.*:/home/deepin-server/Documents/NFS文件目录for-test".
+1月 05 11:53:20 deepin-server-PC exportfs[19319]:   Assuming default behaviour ('no_subtree_check').
+1月 05 11:53:20 deepin-server-PC exportfs[19319]:   NOTE: this default has changed since nfs-utils version 1.0.x
+1月 05 11:53:21 deepin-server-PC systemd[1]: Started NFS server and services.
+deepin-server@deepin-server-PC:~$
+至此服务端算是配置完成了。
+
+客户端配置
+客户端主要就是挂载操作，不过挂载nfs的时候同样需要安装客户端软件
+
+客户端安装
+sudo apt-get install nfs-common
+查看服务端nfs共享信息
+showmount -e 10.20.13.152
+babyfengfjx@babyfengfjx:~$ showmount -e 10.20.13.152
+Export list for 10.20.13.152:
+/home/deepin-server/Documents/NFS文件目录for-test 10.20.*
+babyfengfjx@babyfengfjx:~$
+客户端创建挂载目录
+随便在本地客户端创建一个目录作为NFS挂载目录即可
+
+sudo mkdir /home/babyfengfjx/Documents/nfsfile/
+客户端挂载
+将服务端的NFS共享目录，挂载到本地客户端对应目录即可
+
+sudo mount -t nfs 10.20.13.152:/home/deepin-server/Documents/NFS文件目录for-test /home/babyfengfjx/Documents/nfsfile/
+查看并传输文件
+上述操作完成后，此时就可以在客户端对应目录使用NFS存储了，上传新建文件均可以随心所欲。
+
+开机自动挂载
+写入fstab方法并不推荐，如果NFS挂载失败可能会影响设备正常启动
+
+写入fstab进行开机自动挂载
+echo "10.20.13.152:/home/deepin-server/Documents/NFS文件目录for-test /home/babyfengfjx/Documents/nfsfile/ nfs4 defaults 0 0" >> /etc/fstab
+ mount -av
+通过配置开机自运行脚本
+原理如下：
+
+新建 /etc/rc.local 文件
+这种方法的原理是系统开机后会自动启动 rc-local 服务；
+rc-local 服务启动后就会自动执行 /etc 目录下的 rc.local 脚本；
+该方法的优点就是不存在第一种方法的三个缺点，脚本执行失败不会出现黑屏弹窗、sleep 不会造成开机黑屏以及执行脚本的用户是 root 用户。
+
+主要步骤：
+
+新建 /etc/rc.local 文件
+粘贴以下模板
+#!/bin/sh -e
+# rc.local
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+# In order to enable or disable this script just change the execution
+# bits.
+# By default this script does nothing.
+01.LitterScript/02.bbsmonitor/bbsmonitor.py >bbs.log 2>&1 &
+# 因为该命令本身就是会以root权限执行，所以不用加sudo
+sleep 5;mount -t nfs 10.20.13.152:/home/deepin-server/Documents/NFS文件目录for-test /home/babyfengfjx/Documents/nfsfile/
+exit 0
+在 exit 0 上方插入你需要自启的命令(一行一个)后保存文件
+给脚本加上 755 权限
+sudo chmod +755 /etc/rc.local
+调试脚本(可选)
+sudo /etc/rc.local # 使用 sudo 模拟 root 用户开机自启 /etc/rc.local 文件
+如果第 5 步模拟启动脚本没有报错，那我们就可以重启电脑看看是否可以成功实现脚本开机自启。重启进入系统后我们可以通过 systemctl status rc-local.service 查看 rc-local 的运行状态，如果结果显示的是 active (exited) 则说明你的脚本已经成功执行，反之如果结果显示 failed,那么你需要检查一下脚本是否哪里有问题。
+这里提供可能导致脚本无法正常启动的原因：
+1、执行脚本的用户不一致
+由于 rc.local 开机自启的时候是以 root 用户执行的，这里很多人会忽略了一个问题，很多情况下你的命令是必须要普通用户执行的。比如 conky 和虚拟机(用户A建立的VBox和VM Ware虚拟机用户B无法访问)等。
+假设用户 lolimay 在终端用 VBoxHeadless -s aikuai & 后台启动了虚拟机名 aikuai，那么我们在 rc.local 文件应该用下面这种方式写：
+su - lolimay -c "VBoxHeadless -s aikuai &" # 以 lolimay 用户执行该命令
+2、多余的 sudo
+前面已经提到 rc.local 开机时是以 root 用户启动的，所以写在 rc.local 文件中命令不需要带有 sudo 前缀(实际上就算你带有了 sudo 前缀也不会产生错误)。
+3、最佳实践
+个人建议每当往 rc.local 文件中添加了一个需要自启的命令时，可以先用 sudo /etc/rc.local 命令模拟一下看看是否能够执行成功(如果执行失败也能够直观地看到出错的原因)，这样能够有效减少你重启电脑来调试的次数。
+
+评论
+评论加载中...
+提供者 Wiki.js

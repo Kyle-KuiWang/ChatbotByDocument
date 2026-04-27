@@ -1,0 +1,146 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/find%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E6%8A%80%E5%B7%A7
+DeepinWiki
+find命令查找技巧
+我们先创建了一个/etc/passs的目录，然后在这个目录下创建了一个叫passwd的文件。之后先用带-prune的find看到，能显示出passs目录，但是目录中的passwd文件并没有显示，说明这个参数让find命令没有进入这个目录查找。而后一个不带-prune参数的find显示出了passs目录下的passwd。
+
+-quit：找到符合条件的文件后立即退出。
+
+find中执行命令
+-exec
+
+find命令的exec是一个非常好用的参数，当然其可能造成的破坏也可能非常大。在学习它之前，我先要提醒大家，使用之前千万要确定自己在做什么。
+
+这个参数的常见格式是：
+
+-exec command ;
+注意后面的分号。它是用来给find做标记用的。find在解析命令的时候，要区分给定的参数是要传给自己的还是要传给command命令的。所以find以分号作为要执行命令所有参数的结束标记。命令返回值为0则返回true。在exec参数指定的执行命令中，可以使用{}符号表示当前find找到的文件名。比如：
+
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -exec echo {} \;
+/etc/default/passwd
+/etc/pam.d/passwd
+/etc/passwd
+上面的命令表示，找到/etc/目录下文件名为passwd的文件，并echo其文件名。注意再使用分号的时候前面要加转移字符\，因为分号也是bash的特殊字符，所以bash会先解释它。前面加上\就可以让bash直接将其船体给find命令，这个分号由find解释，而不是bash。其实这个exec用的比较废话，毕竟find本身就会找到相关条件的文件并显示其文件名。但是试想如果我们将echo换成rm或者cp，是不是就有意义的多？比如：
+
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -exec rm {} \;
+请不要执行这个命令！！
+
+或者：
+
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -exec cp {} {}.bak \;
+这个命令可以将符合条件的文件都加个.bak后缀备份一份。于是我们可以执行删除了：
+
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd.bak'
+/etc/default/passwd.bak
+/etc/pam.d/passwd.bak
+/etc/passwd.bak
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd.bak' -exec rm {} \;
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd.bak'
+当然，删除前还是要确认清楚你要删的文件一定是对的。
+
+-execdir
+
+execdir和exec有一些差别，主要是在执行指定的命令时，那个相关命令是在那个工作目录下执行的差别。exec是在find所指定的起始目录，而execdir是文件所在目录。对比一下就明白了：
+
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -exec echo {} \;
+/etc/default/passwd
+/etc/pam.d/passwd
+/etc/passwd
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -execdir echo {} \;
+./passwd
+./passwd
+./passwd
+一个命令打印出来的路径都是/etc/开头，另一个显示的都是当前目录下的某某文件。
+
+execdir的方式要比exec安全一些，因为这种执行方式避免了在解析文件名时所产生的竞争条件。
+
+出了上述两种比较典型的执行命令的方法以外，find还对这两个参数提供了另一种形式的命令执行格式：
+
+-exec command {} +
+
+-execdir command {} +
+
+我们还是先用例子来看一下这个格式和以分号结束的方式的差别：
+
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -exec echo {} \;
+/etc/default/passwd
+/etc/pam.d/passwd
+/etc/passwd
+[root@zorrozou-pc0 find]# find /etc/ -name 'passwd' -exec echo {} \+
+/etc/default/passwd /etc/pam.d/passwd /etc/passwd
+光这样看可能还不是很明显，我们可以这样在描述一遍他们的执行过程：
+
+echo /etc/default/passwd
+echo /etc/pam.d/passwd
+echo /etc/passwd
+和
+
+echo /etc/default/passwd /etc/pam.d/passwd /etc/passwd
+其实就是说，对于command {} ;格式来说，每找到一个文件就执行一遍相关命令，而command {} +格式的意思是说，先执行find，找到所有符合条件的文件之后，将每个文件作为命令的一个参数传给命令执行，exec指定的命令实际上只被执行了一次。这样用的限制也是不言而喻的：{}只能出现一次。
+
+[root@zorrozou-pc0 find]# find /etc -mtime -7 -type f -exec cp -t /tmp/back/ {} \+
+上面这个命令将符合条件的文件全部cp到了/tmp/back目录中，当然如果文件有重名的情况下，会被覆盖掉。从这个命令中我们学习一下{} +格式的使用注意事项，它不能写成：
+
+find /etc -mtime -7 -type f -exec cp {} /tmp/back/ \+
+所以只能使用-t参数改变cp命令的参数顺序来指定相关的动作。
+
+无论如何，直接使用exec和execdir是很危险的，因为他们会直接对找到的文件调用相关命令，并且没有任何确认。所以我们不得不在进行相关操作前再三确认，以防止误操作。当然，find命令也给了更安全的exec参数，它们就是：
+
+-ok
+
+-okdir
+
+它们的作用跟exec和execdir一样，区别只是在做任何操作之前，会让用户确认是不是ok？如：
+
+[root@zorrozou-pc0 find]# find /etc -mtime -7 -type f -ok cp -t /tmp/back/ {} \;
+< cp ... /etc/bluetooth/main.conf > ?
+于是，每一次cp你都要确认是不是要这么做。只要你输入的是y或者以y开头的任何字符串，都是确认。其他的字符串是否认。另外，这两个参数不支持{} +的格式。
+
+OPERATORS
+find的操作符（OPERATORS）实际上是用来连接多个表达式和确定其逻辑关系用的。如：
+
+[root@zorrozou-pc0 zorro]# find /etc -name 'pass*' -type f
+/etc/passs/passwd
+/etc/default/passwd
+/etc/pam.d/passwd
+/etc/passwd-
+/etc/passwd
+这个find命令中使用了两个表达式，他们之间没有任何分隔，这是实际上表达的含义是，找到两个条件都符合的文件。实际上就是表达式的逻辑与关系，这跟-a参数连接或者-and参数一样：
+
+[root@zorrozou-pc0 zorro]# find /etc -name 'pass*' -a -type f
+/etc/passs/passwd
+/etc/default/passwd
+/etc/pam.d/passwd
+/etc/passwd-
+/etc/passwd
+[root@zorrozou-pc0 zorro]# find /etc -name 'pass*' -and -type f
+/etc/passs/passwd
+/etc/default/passwd
+/etc/pam.d/passwd
+/etc/passwd-
+/etc/passwd
+除了逻辑与关系以外，还有逻辑或关系：
+
+[root@zorrozou-pc0 zorro]# find /etc -name 'pass*' -o -type f
+
+[root@zorrozou-pc0 zorro]# find /etc -name 'pass*' -or -type f
+表示两个条件只要符合其中一个都可以。
+
+在条件表达式前面加!表示对表达式取非。同样的也可以用-not参数。另外如果表达式很多，可以使用( expr )确定优先级，如：
+
+[root@zorrozou-pc0 zorro]# find / \( -name 'passwd' -a -type f \) -o \( -name 'shadow' -a -type f \)
+这里表示的是：-name “passwd” -a -type f和-name “shadow” -a -type f是或关系。
+
+最后
+find中还可能常用的其他参数比如：
+
+-depth：制定了这个参数后，遇到目录先进入目录操作目录中的文件，最后再操作目录本身。
+
+-maxdepth：目录最大深度限制。
+
+-mindepth：目录最小深度限制。
+
+还有一些其他相关参数大家可以在man find中自行补充，就不在这更多废话了。希望本篇可以对大家深入的掌握find命令有所帮助。
+
+评论
+评论加载中...
+提供者 Wiki.js

@@ -1,0 +1,5 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/01_%E4%B8%AD%E9%98%B6/01_%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3/cat%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9
+查看文件
+示例: 查看 fileName.txt 文件的内容
+
+cat fileName.txt

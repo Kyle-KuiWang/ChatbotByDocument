@@ -1,0 +1,100 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/02_XDG%E8%A7%84%E8%8C%83/XDG%E6%A1%8C%E9%9D%A2%E8%8F%9C%E5%8D%95%E9%A1%B9
+环境变量
+
+xdg-desktop-menu遵循以下环境变量：
+XDG_UTILS_DEBUG_LEVEL
+将此环境变量设置为非零数值将使xdg-desktop-menu在stderr上执行更详细的报告。设置较高的值会增加详细程度。
+XDG_UTILS_INSTALL_MODE
+用户或管理员可以使用此环境变量来覆盖安装模式。有效值为用户和系统。
+退出码
+
+退出代码0表示成功，而非零退出代码表示失败。可以返回以下故障代码：
+1
+命令行语法错误。
+2
+在命令行上传递的某个文件不存在。
+3
+找不到所需的工具。
+4
+动作失败。
+5
+没有权限读取在命令行上传递的某个文件。
+例子
+
+ShinyThings Inc.公司已经开发了一个名为“ WebMirror”的应用程序，并希望将其添加到应用程序菜单中。该公司将使用“ shinythings”作为其供应商ID。为了将应用程序添加到菜单中，需要有一个带有适当类别类别的.desktop文件：
+
+shinethings-webmirror.desktop：
+
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+
+Exec=webmirror
+Icon=webmirror
+
+Name=WebMirror
+Name[nl]=WebSpiegel
+
+Categories=NetworkWebDevelopment；
+现在，可以使用xdg-desktop-menu工具将Shinythings-webmirror.desktop文件添加到桌面应用程序菜单中：
+
+xdg-desktop-menu安装./shinythings-webmirror.desktop
+请注意，在本示例中，菜单项有两种语言，英语和荷兰语。荷兰语的语言代码是nl。
+
+在下一个示例中，公司ShinyThings Inc.将向桌面应用程序菜单添加其自己的子菜单，该子菜单由“ WebMirror”菜单项和“ WebMirror Admin Tool”菜单项组成。
+
+首先，公司需要创建两个描述菜单项的.desktop文件。由于要将项目添加到新的子菜单中，因此不必包括Categories=行：
+
+shinethings-webmirror.desktop：
+
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+
+Exec=webmirror
+Icon=shinythings-webmirror
+
+Name=WebMirror
+Name[nl]=WebSpiegel
+shinethings-webmirror-admin.desktop：
+
+[Desktop Entry]
+Encoding=UTF -8
+Type=Application
+
+Exec=webmirror-admintool
+Icon=shinythings-webmirror-admintool
+
+Name=webmirror-admintool
+Name[nl]=shinythings-webmirror-admintool
+另外，需要创建一个.directory文件来为子菜单本身提供标题和图标：
+
+shinethings-webmirror.directory：
+
+[Desktop Entry]
+Encoding=UTF-8
+
+Icon=shinythings-webmirror-menu
+
+Name=WebMirror
+Name[nl]=WebSpiegel
+这些文件现在可以通过以下方式安装：
+
+xdg-desktop-menu install ./shinythings-webmirror.directory \
+      ./shinythings-webmirror.desktop ./shinythings-webmirror-admin.desktop
+菜单项也可以一一安装：
+
+xdg-desktop-menu install --noupdate ./shinythings-webmirror.directory \
+      ./shinythings-webmirror.desktop
+xdg-desktop-menu install --noupdate ./shinythings-webmirror.directory \
+      ./shinythings-webmirror-admin.desktop
+xdg-desktop-menu forceupdate
+尽管结果相同，但是同时安装所有文件的效率略高。
+
+.desktop和* .directory文件引用的图标名称分别为webmirror，webmirror-admin和webmirror-menu。在此示例中，图标以两种不同的尺寸安装，一次的尺寸为22x22像素，一次的尺寸为64x64像素：
+xdg-icon-resource install --size 22 ./wmicon-22.png shinythings-webmirror
+xdg-icon-resource install --size 22 ./wmicon-menu-22.png shinythings-webmirror-menu
+xdg-icon-resource install --size 22 ./wmicon-admin-22.png shinythings-webmirror-admin
+xdg-icon-resource install --size 64 ./wmicon-64.png shinythings-webmirror
+xdg-icon-resource install --size 64 ./wmicon-menu-64.png shinythings-webmirror-menu
+xdg-icon-resource install --size 64 ./wmicon-admin-64.png shinythings-webmirror-admin

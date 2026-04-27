@@ -1,0 +1,24 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F
+DeepinWiki
+搜索...
+
+/
+/
+常见日志获取方式
+系统出现问题时，如何获取对应日志信息。
+启动器日志
+日志获取路径
+
+~/.cache/deepin/dde-launcher/dde-launcher.log
+同时提供应用版本信息：
+
+dpkg -l > Desktop/version
+系统日志
+系统普通日志
+# 使用sudo权限查看日志文件最后10行
+sudo less /var/log/messages
+系统启动日志，包括启动引导时的日志
+sudo dmesg | less
+评论
+评论加载中...
+提供者 Wiki.js

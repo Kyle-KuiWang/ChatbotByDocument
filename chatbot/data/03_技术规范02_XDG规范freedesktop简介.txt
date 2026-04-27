@@ -1,0 +1,3 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/02_XDG%E8%A7%84%E8%8C%83/freedesktop%E7%AE%80%E4%BB%8B
+freedesktop简介
+freedesktop是一个开源组织。专注于开源图形和桌面系统的互操作性和共享技术，许多linux桌面环境都是遵循freedesktop所规定的标准，包括deepin所使用的dde，本文件夹下放置的是freedesktop网站所提供的文档翻译。因为本人精力有限，所以大多数页面采用的是机翻+人工校正的方式，欢迎社区各位大佬一起参与共建。

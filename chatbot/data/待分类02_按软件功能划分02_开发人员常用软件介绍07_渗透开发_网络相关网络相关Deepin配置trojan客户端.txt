@@ -1,0 +1,26 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/07_%E6%B8%97%E9%80%8F%E5%BC%80%E5%8F%91_%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/Deepin%E9%85%8D%E7%BD%AEtrojan%E5%AE%A2%E6%88%B7%E7%AB%AF
+Trojan是一个翻墙软件
+
+安装trojan服务
+sudo apt install trojan
+将例子中的客户端配置文件移动到trojan配置服务下
+mv /usr/share/doc/trojan/examples/client.json-example /etc/trojan/config.json
+#修改配置文件#
+
+sudo dedit /etc/trojan/config.josn
+"remote_addr": "example.com",
+"password": [
+  "password1"
+],
+"ssl": {
+  "verify": false
+我填写的flase，不是最正确的做法，但是方便，具体查看https://github.com/trojan-gfw/trojan/issues/362
+
+启动
+systemctl start trojan.service
+关于Trojan-Qt5图形界面客户端
+trojan是有图形界面客户端的，https://github.com/Trojan-Qt5/Trojan-Qt5。
+不过我当时用的版本早，使用一段时间后速度明显缓慢，不清楚现在效果如何。
+
+说明
+在deepin上使用trojan客户端，服务端的设置类似本篇。本篇由论坛用户(houyawei)分享

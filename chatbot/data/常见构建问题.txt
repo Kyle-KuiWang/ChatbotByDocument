@@ -1,0 +1,24 @@
+https://linglong.dev/guide/debug/ll-builder-faq.html
+
+常见构建问题
+cmake类型构建，出现-lxxx失败，但ldconfig与pkg-config均能查询到该库信息。
+
+链接库路径不在常规路径，新路径为/runtime/lib。
+
+添加环境变量 LIBRARY_PATH=<libpath>，目前构建环境已默认包含该环境变量。
+
+构建时link静态库失败，要求重新使用fPIC构建。
+
+构建静态库时使用-fPIC参数。
+
+构建时启动box失败，如下图：
+
+ll-box启动失败
+
+内核不支持unprivilege namespace，开启unprivilege namespace解决。
+
+bash
+sudo sysctl -w kernel.unprivileged_userns_clone=1
+qtbase构建成功，但无法构建qt应用，提示module,mkspec 相关错误。
+
+低版本fuse-overlay mount存在问题，导致qtbase commit时文件内容被污染 ，无法正常使用。使用fuse-overlayfs >= 1.7版本。

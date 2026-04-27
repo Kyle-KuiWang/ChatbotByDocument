@@ -1,0 +1,16 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/02_%E5%BD%B1%E9%9F%B3%E5%A8%B1%E4%B9%90%E7%9B%B8%E5%85%B3/Soundnode_App
+简介
+Soundnode App是一款音乐播放器应用，除了简洁的播放界面和常用的播放功能之外，还具有搜索本地新歌曲、通过各种方式播放歌曲、将歌曲并保存到你喜欢的播放列表、关注/取消关注的用户等功能。
+
+安装
+sudo apt-get install soundnode
+
+卸载
+sudo apt-get remove soundnode
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/s/soundnode/
+
+常见问题
+相关链接
+维基百科：

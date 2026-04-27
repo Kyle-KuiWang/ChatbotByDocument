@@ -1,0 +1,10 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/01_%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/rime
+Rime
+Rime是一款输入法引擎软件，是由佛振开发的一款优秀输入法软件。
+之所以称之为引擎，是因为，除了自带的几款输入法，你可以根据自已的需要来改造甚至是打造自己的输入法，音码、形码、并击输入等等方案都能支持。也有人用它来制作方言（粤语、吴误）或少数民族文字输入（藏文、维吾尔文等等）。如果你觉得你的输入法还差点意思，你可以考虑试试Rime来DIY下你的输入法
+
+下载安装
+Rime是跨平台的，Linux平台下是叫“中州韵”。有基于Fcitx和ibus两种版本
+
+Fcitx版
+apt install fcitx-rime

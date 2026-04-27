@@ -1,0 +1,123 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93
+DeepinWiki
+Linux基础知识点总结
+locate：搜索包含关键字的所有文件和目录。后接需要查找的文件名，也可以用正则表达式。
+
+安装 locate
+
+yum -y install mlocate --> 安装包
+updatedb --> 更新数据库
+locate file.txt
+locate fil*.txt
+[注意] locate 命令会去文件数据库中查找命令，而不是全磁盘查找，因此刚创建的文件并不会更新到数据库中，所以无法被查找到，可以执行 updatedb 命令去更新数据库。
+
+find：用于查找文件，它会去遍历你的实际硬盘进行查找，而且它允许我们对每个找到的文件进行后续操作，功能非常强大。
+
+find <何处> <何物> <做什么>
+何处：指定在哪个目录查找，此目录的所有子目录也会被查找。
+何物：查找什么，可以根据文件的名字来查找，也可以根据其大小来查找，还可以根据其最近访问时间来查找。
+做什么：找到文件后，可以进行后续处理，如果不指定这个参数， find 命令只会显示找到的文件。
+根据文件名查找
+
+find -name "file.txt" --> 当前目录以及子目录下通过名称查找文件
+find . -name "syslog" --> 当前目录以及子目录下通过名称查找文件
+find / -name "syslog" --> 整个硬盘下查找syslog
+find /var/log -name "syslog" --> 在指定的目录/var/log下查找syslog文件
+find /var/log -name "syslog*" --> 查找syslog1、syslog2 ... 等文件，通配符表示所有
+find /var/log -name "*syslog*" --> 查找包含syslog的文件
+[注意] find 命令只会查找完全符合 “何物” 字符串的文件，而 locate 会查找所有包含关键字的文件。
+
+根据文件大小查找
+
+find /var -size +10M --> /var 目录下查找文件大小超过 10M 的文件
+find /var -size -50k --> /var 目录下查找文件大小小于 50k 的文件
+find /var -size +1G --> /var 目录下查找文件大小查过 1G 的文件
+find /var -size 1M --> /var 目录下查找文件大小等于 1M 的文件
+根据文件最近访问时间查找
+
+find -name "*.txt" -atime -7  --> 近 7天内访问过的.txt结尾的文件
+仅查找目录或文件
+
+find . -name "file" -type f  --> 只查找当前目录下的file文件
+find . -name "file" -type d  --> 只查找当前目录下的file目录
+操作查找结果
+
+find -name "*.txt" -printf "%p - %u\n" --> 找出所有后缀为txt的文件，并按照 %p - %u\n 格式打印，其中%p=文件名，%u=文件所有者
+find -name "*.jpg" -delete --> 删除当前目录以及子目录下所有.jpg为后缀的文件，不会有删除提示，因此要慎用
+find -name "*.c" -exec chmod 600 {} \; --> 对每个.c结尾的文件，都进行 -exec 参数指定的操作，{} 会被查找到的文件替代，\; 是必须的结尾
+find -name "*.c" -ok chmod 600 {} \; --> 和上面的功能一直，会多一个确认提示
+软件仓库
+
+Linux 下软件是以包的形式存在，一个软件包其实就是软件的所有文件的压缩包，是二进制的形式，包含了安装软件的所有指令。Red Hat 家族的软件包后缀名一般为 .rpm ， Debian 家族的软件包后缀是 .deb 。
+
+Linux 的包都存在一个仓库，叫做软件仓库，它可以使用 yum 来管理软件包， yum 是 CentOS 中默认的包管理工具，适用于 Red Hat 一族。可以理解成 Node.js 的 npm 。****
+
+yum 常用命令
+
+yum update | yum upgrade 更新软件包
+yum search xxx 搜索相应的软件包
+yum install xxx安装软件包
+yum remove xxx删除软件包
+切换 CentOS 软件源
+
+有时候 CentOS 默认的 yum 源不一定是国内镜像，导致 yum 在线安装及更新速度不是很理想。这时候需要将 yum 源设置为国内镜像站点。国内主要开源的镜像站点是网易和阿里云。
+
+1、首先备份系统自带 yum 源配置文件mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+2、下载阿里云的 yum 源配置文件到/etc/yum.repos.d/CentOS7
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+3、生成缓存
+
+yum makecache
+阅读手册
+
+Linux 命令种类繁杂，我们凭借记忆不可能全部记住，因此学会查用手册是非常重要的。
+
+man
+
+安装更新 man
+
+sudo yum install -y man-pages --> 安装
+sudo mandb --> 更新
+man 手册种类
+
+1.可执行程序或Shell命令；
+2.系统调用（ Linux 内核提供的函数）；
+3.库调用（程序库中的函数）；
+4.文件（例如/etc/passwd）；
+5.特殊文件（通常在/dev下）；
+6.游戏；
+7.杂项（man(7)，groff(7)）；
+8.系统管理命令（通常只能被root用户使用）；
+9.内核子程序。
+man + 数字 + 命令
+
+输入 man + 数字 + 命令 / 函数，可以查到相关的命令和函数，若不加数字， man 默认从数字较小的手册中寻找相关命令和函数
+
+man 3 rand  --> 表示在手册的第三部分查找 rand 函数
+man ls    --> 查找 ls 用法手册
+man 手册核心区域解析：(以man pwd为例)
+
+NAME # 命令名称和简单描述
+     pwd -- return working directory name
+
+SYNOPSIS # 使用此命令的所有方法
+     pwd [-L | -P]
+
+DESCRIPTION # 包括所有参数以及用法
+     The pwd utility writes the absolute pathname of the current working directory to the standard output.
+
+     Some shells may provide a builtin pwd command which is similar or identical to this utility.  Consult the builtin(1) manual page.
+
+     The options are as follows:
+
+     -L      Display the logical current working directory.
+
+     -P      Display the physical current working directory (all symbolic links resolved).
+
+     If no options are specified, the -L option is assumed.
+
+SEE ALSO # 扩展阅读相关命令
+     builtin(1), cd(1), csh(1), sh(1), getcwd(3)
+help
+
+man 命令像新华词典一样可以查询到命令或函数的详细信息，但其实我们还有更加快捷的方式去查询，command --help或command -h，它没有 man 命令显示的那么详细，但是它更加易于阅读。

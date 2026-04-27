@@ -1,0 +1,20 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/02_%E7%BD%91%E7%9B%98%E7%A7%81%E6%9C%89%E4%BA%91_%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%90%8C%E6%AD%A5_%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/%E7%BD%91%E7%9B%98/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%EF%BC%88%E7%AC%AC%E4%B8%89%E6%96%B9%EF%BC%89
+简介
+阿里云盘是一款速度快、不打扰、够安全、易于分享的网盘，你可以在这里存储、管理和探索内容，尽情打造丰富的数字世界。
+虽然阿里云盘目前没有推出官方的 Linux 的客户端，但第三方开发者 @liupan1890 开发了阿里云盘小白羊版，支持 Linux 操作系统，非常好用。
+安装
+用浏览器打开 https://wwe.lanzoui.com/iKGsL037ieha
+选择一个运营商点击下载
+然后右击下载的压缩包，解压到当前文件夹
+打开解压的文件夹，双击“阿里云盘小白羊版”，点击运行即可。
+卸载
+删除解压的文件夹即可
+
+常见问题
+实现在线预览视频的功能
+在终端执行命令安装MPV：
+
+sudo apt install mpv
+相关链接
+阿里云盘官网：https://www.aliyundrive.com/
+阿里云盘小白羊版 Github 主页：https://github.com/liupan1890/aliyunpan

@@ -1,0 +1,76 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/UEFI%E5%A6%82%E4%BD%95%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8
+DeepinWiki
+UEFI如何安全启动
+3.4.3 复制启动文件到esp分区
+如果不复制启动文件到磁盘4的esp分区，是否就无法启动磁盘4上面的系统？
+
+非也！ 因为你可以在其他磁盘，甚至是主板上面的引导菜单（需要用工具建立）启动磁盘4。因此最关键是磁盘的gpt格式。那么esp分区相对一个磁盘来说它是怎样的作用呢？它是为了让该磁盘独立引导的时候，uefi可以在此找到bootx64.efi 文件。
+
+esp默认是被系统隐藏的，diskpart可以解除这个限制：
+
+同理，diskpart进入磁盘工具，select disk 4选择磁盘4，list partition查看分区信息：
+
+u盘分区信息
+
+显示系统即esp分区，这时候应该先选中这个分区，然后才能进行操作：select par 2,然后分配个z:盘符给它assign letter=z。
+
+这时候，你实际上可以访问它，但是默认权限不是管理员权限的，用管理员权限打开cmd，通过命令行来打开z:盘,或者,直接用diskgenius来操作。
+
+其实你需要分配一个盘符，也能通过diskgenius操作esp盘，问题你只能手工复制相关文件，其实还是用命令行高效，而且有保证一些，因为你不清楚下一代windows会怎么修改启动文件的配置，用命令行可以保证你的操作兼容性更高一些。
+
+重要命令:
+
+bcdboot d:\windows /l zh-cn /s z: /f UEFI /addlast /d /v 基本格式就是bcdboot 系统 /l 语言 /s esp所在分区 /f uefi启动 /addlast 添加菜单项放在后面 /d 保留默认启动项 /v输出详细信息。当然这里面有些参数不是必要的。
+
+这个命令最终的结果是什么？
+
+他就是复制了 bootx64.efi、bcd、bootmgfw.efi、bootmgr.efi、memtest.efi还有一堆语言包。
+前面也说了，最关键的是 bootmgfw.efi和bcd。bootx64.efi 只是一个占位文件，bcdboot直接就是把bootmgfw.efi改名成bootx64.efi而已。其他都不是关键的。
+
+但是，放的位置是至关重要！
+
+efi/boot/bootx64.efi
+efi/microsoft/boot/bootmgfw.efi
+efi/microsoft/boot/bcd
+只需要如此安放，即可完成启动文件的配置了。
+
+但是，uefi怎么知道我们需要启动哪个硬盘的esp分区呢？经过我测试，如果是外置的u盘，uefi会自动增加启动项，如果是内置硬盘，uefi就比较傻，这里面的设计似乎不是很完善，也许不同厂家有不同的设计方案，所以下一步，我们来实现怎样增加启动选项在主板中，彻底解决些模糊的地方。
+
+3.4.4 编辑引导菜单
+这里应该明确两个引导菜单，一个是主板里面的，我的主板需要按F11才会弹出这个菜单，或者直接进入bios内部设置启动顺序。这个我称为主板引导菜单。
+
+另一个是操作系统生成的引导菜单，在这里就是存放在esp分区里面的bcd文件。这个bcd是windows专用的引导菜单，如果用linux，它可能用的是grub的引导菜单。windows的引导菜单是不会理会linux的，非常傲娇，而linux的grub引导菜单则可以引导windows。
+
+明显的，我们如果操作的是主板的引导菜单，无疑是最高层级的，因为它是uefi自身的引导菜单，而不是某种操作系统自带的。只要兼容uefi，不管是linux，或者windows，或者chinaOS都没问题的。
+
+然后，我这里首先介绍的是怎么操作bcd引导菜单：
+
+bcdedit /store z:\efi\microsfot\boot\bcd 这里的bcdedit就是操作bcd菜单的系统自带工具，/store是指定bcd文件，如果你不是修改当前系统的。整个命令会列出bcd菜单的内容：
+第一条{bootmgr}是windows 启动管理器，即bootmgfw.efi。 第二条是windows 启动加载器，即\windows\system32\winload.efi。比如你装了两个windows，一个在c盘，一个在d盘，那么两个系统的加载器就分别在自己的windows目录下面。而device指定了盘符。
+
+总的流程就是bootmgfw.efi 打印出引导菜单bcd，用户选择某个菜单项，它即调用该项的系统加载器来装载系统。
+
+明白这个过程，对于若干个windows来说，我们只需要添加对应的菜单项即可，用bcdboot 可以实现，因为它添加新菜单项并不会覆盖旧的bcd，而会智能处理每一次的变更。
+
+如果不想使用命令行，可以借助bootice这个工具来编辑菜单，新版1.3.4甚至还能修改主板的菜单，非常强大。
+选择修改z:\efi\microsoft\boot\bcd 引导菜单。
+我现在c盘里面有一个win10，d盘有个win7，e盘有个deepin，现在我增加win10的启动项：
+发现还支持所谓的实模式，试一下能不能加载deepin：
+选择uefi页，修改启动序列，可以对主板菜单做修改，推荐这个方式去实现引导！：
+3.5 演练结果
+用bcdboot更新菜单项是最稳定的,如果bcd有问题,先删了再用bcdboot添加.注意,bcdboot 先加入低版本windows,后加入高版本windows,这样高版本可以兼容低版本。另外,经测试win7不是完美兼容uefi的。
+bootice虽然是一个很老的工具，连win10的选项也没有，但是大多数情况都能使用。
+实模式无法引导linux efi文件
+UEFI菜单需要添加bootmgfw.efi路径。添加esp分区中的bootmgfw.efi。
+主板会自动添加硬盘的windows boot manager选项,索引到c盘的esp分区\EFI\Microsoft\Boot\bootmgfw.efi(这个应该每个厂家不一定相同),就算你删了或者改名,他自动重新生成.并且，如果发生引导失败，windows boot manager就会自动抢占第一。
+u盘有点特殊，第一次生成：UEFI：（FAT）SanDisk菜单项，但是并不能进入u盘的引导，然后会生成第二个同名菜单项，就能引入。莫名其妙！也许是因为我u盘弄了两个盘，让主板傻了，两个盘都是uefi可以识别的，如果只有一个盘应该会比较正常。
+好，uefi引导windows部分到此结束。
+
+四、UEFI 引导linux
+因为，linux一般能够比较好的协调和windows的并存关系，当你正确安装windows（用第三节的知识），linux的安装就是水到渠成的事情。
+
+如果是全新安装，同样的，进入bios改成uefi启动，关闭csm兼容模式，关闭安全启动secure boot。
+
+注意磁盘分区表格式为gpt。安装镜像版本比较新，能够支持uefi，然后正常安装即可。
+
+如果你想深入定制linux的引导，请参考第七节 grub的使用说明。

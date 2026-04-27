@@ -1,0 +1,36 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_deepin%E6%B7%B1%E5%85%A5/%E4%BF%AE%E6%94%B9%E9%94%AE%E7%9B%98%E6%98%A0%E5%B0%84
+修改键盘映射
+页面内容
+讨论
+最后编辑
+Administrator
+02/22/2023
+有时候，我们需要对键盘上的一些按键（如Ctrl、Alt）进行映射，以便适应不同用户的需求，这时可以借助 gsettings 命令来调整系统设置。
+
+查看当前键盘映射
+查看所有映射
+localectl list-x11-keymap-options
+查看与 CapsLock 键有关的映射
+localectl list-x11-keymap-options | grep caps:
+修改键盘映射
+这里以调整 CapsLock（大写锁定）的映射为例。Vim用户可能希望将CapsLock与Esc键交换，从而能方便地使用含有Esc的组合键。
+
+注意，以下命令会立即生效，无需重启系统。
+
+取消按下 CapsLock 时的 osd 提示框
+gsettings set com.deepin.dde.keybinding.mediakey capslock '[]'
+交换 CapsLock与Esc键
+gsettings set com.deepin.dde.keyboard layout-options '["caps:swapescape"]'
+禁用 CapsLock 键
+gsettings set com.deepin.dde.keyboard layout-options '["caps:none"]'
+恢复 CapsLock 键的原先设置
+可以单独指定 CapsLock 键的设置为默认值：
+
+gsettings reset com.deepin.dde.keybinding.mediakey capslock
+gsettings reset com.deepin.dde.keyboard layout-options
+也可以使整个键盘的布局恢复为默认设置：
+
+gsettings reset-recursively com.deepin.dde.keybinding.mediakey
+gsettings reset-recursively com.deepin.dde.keyboard
+参考资料
+How to change capslock and other keymapping in deepin linux

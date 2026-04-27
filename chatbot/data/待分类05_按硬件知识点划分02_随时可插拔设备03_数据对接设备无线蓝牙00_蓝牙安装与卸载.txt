@@ -1,0 +1,21 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/05_%E6%8C%89%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86%E7%82%B9%E5%88%92%E5%88%86/02_%E9%9A%8F%E6%97%B6%E5%8F%AF%E6%8F%92%E6%8B%94%E8%AE%BE%E5%A4%87/03_%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8E%A5%E8%AE%BE%E5%A4%87/%E6%97%A0%E7%BA%BF/%E8%93%9D%E7%89%99/00_%E8%93%9D%E7%89%99%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD
+00_蓝牙安装与卸载
+页面内容
+讨论
+最后编辑
+blue_whale
+02/22/2023
+简介
+蓝牙（Bluetooth），是一种无线个人局域网（Wireless PAN），最初由爱立信创制，后来由蓝牙技术联盟订定技术标准。这个词的来源是10世纪丹麦和挪威国王蓝牙哈拉尔（丹麦语：Harald Blåtand Gormsen），借国王的绰号“Blåtand”当名称，直接翻译成中文为“蓝牙”（blå＝蓝，tand＝牙）。蓝牙是一种通用的射频频率是2.45GHZ的无线电接口，它使带有电子端口的设备能够在小范围内进行无线通信。
+
+管理应用
+Blueman旨在提供最为常见的蓝牙管理功能。
+
+命令安装，终端执行：
+
+sudo apt-get install blueman
+命令卸载，终端执行：
+
+sudo apt-get remove blueman
+相关链接
+维基百科：蓝牙

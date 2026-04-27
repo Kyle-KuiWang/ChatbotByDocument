@@ -1,0 +1,31 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/00_%E5%85%BC%E5%AE%B9%E9%80%82%E9%85%8D(wine)/Apk/Genymotion
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+Genymotion
+简介
+Genymotion是一款专业的虚拟模拟器，可以在您的电脑上运行安卓应用、游戏或者智能电视应用等，同时它也是开发人员使用的开发工具，还可以调试已开发的程序。
+
+¶安装
+sudo apt-get install genymotion
+
+卸载
+sudo apt-get remove genymotion
+
+仓库地址
+http://packages.deepin.com/deepin/pool/contrib/g/genymotion/
+
+常见问题
+相关链接
+维基百科：
+
+评论
+评论加载中...
+提供者 Wiki.js

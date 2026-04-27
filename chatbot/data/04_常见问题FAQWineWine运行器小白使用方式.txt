@@ -1,0 +1,21 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Wine/Wine%E8%BF%90%E8%A1%8C%E5%99%A8%E5%B0%8F%E7%99%BD%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F
+DeepinWiki
+搜索...
+
+/
+/
+/
+Wine 运行器小白使用方式
+Wine 运行器小白使用方式
+下面是送给小白的 wine 运行器简单使用方法，先声明，wine 并不能完美的运行所有 exe 文件，利用此 wine 运行器简易安装可执行文件的方法如下：
+
+安装本程序
+在应用商店里随便安装一个 QQ 或者微信等基于 deepin-wine6-stable 打包的应用
+image.png
+找到需要安装的 exe，双击或者右键=》打开方式=》wine 运行器打开
+image.png
+点击“运行程序”即可
+image.png
+评论
+暂时没有评论。
+提供者 Wiki.js

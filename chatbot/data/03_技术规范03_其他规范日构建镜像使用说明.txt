@@ -1,0 +1,13 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/03_%E5%85%B6%E4%BB%96%E8%A7%84%E8%8C%83/%E6%97%A5%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E
+下载
+https://cdimage.deepin.com/daily/
+
+构建仓库
+v23日构建镜像已经使包进行构建，github 上提交的commit构建产物自动合入CI Develop仓库中，安装完镜像后需要添加CI Develop仓库使用， 由于各个仓库特性可能会存在部分软件包依赖不满足的情况需要手动处理，日构建镜像加入内测源可能会导致依赖问题无法更新。
+
+仓库地址：
+deb [trusted=yes] https://ci.deepin.com/repo/obs/deepin:/Develop:/community/deepin_develop/ ./
+deb [trusted=yes] https://ci.deepin.com/repo/obs/deepin:/Develop:/dde/deepin_develop/ ./
+deb [trusted=yes] https://ci.deepin.com/repo/obs/deepin:/Develop:/main/standard/ ./
+
+由于玲珑近期更改安装方式，暂时取消预装，涉及截屏软件、看图软件等，如有需要手动安装deb版本即可

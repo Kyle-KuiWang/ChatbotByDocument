@@ -1,0 +1,35 @@
+https://wiki.deepin.org/zh/05_HOW-TO/03_%E7%BE%8E%E5%8C%96%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96
+界面美化
+DDE 内置的个性化设置
+详见 深度桌面环境#桌面美化
+
+使用第三方工具进行美化
+DDE Dock 插件
+DDE Dock 有许多开发者开发的插件，详见：DDE-Dock 插件。
+
+动态壁纸
+Fantacene 可以让你在 DDE 环境下使用动态壁纸，你也可以导入 Wallpaper Engine 内的壁纸。
+
+详见 Fantacene
+
+全局菜单
+第三方工具 dde-top-panel 提供一个顶栏，并可以实现类似 kde 的全局菜单。
+
+详见：https://bbs.deepin.org/en/post/195128
+
+Github 仓库：https://github.com/SeptemberHX/dde-top-panel
+
+标题栏菜单
+Chameleon 可以将窗口菜单集成到标题栏。帮助你变相解决大额头问题（
+
+详见：https://bbs.deepin.org/en/post/224774
+
+Github 仓库：https://github.com/SeptemberHX/Chameleon-patched
+
+第三方应用圆角适配
+深度论坛用户柚子移植了 CutefishOS 的第三方圆角适配工具。
+
+详见：https://bbs.deepin.org/zh/post/226223
+
+系统美化工具（Oh my dde）
+深度论坛用户柚子开发了 Oh-my-dde 系统美化管理工具，已上架官方商店

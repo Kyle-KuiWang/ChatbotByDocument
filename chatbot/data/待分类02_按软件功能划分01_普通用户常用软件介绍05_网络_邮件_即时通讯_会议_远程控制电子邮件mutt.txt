@@ -1,0 +1,127 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/05_%E7%BD%91%E7%BB%9C_%E9%82%AE%E4%BB%B6_%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF_%E4%BC%9A%E8%AE%AE_%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/mutt
+简述
+mutt一款古老而强大的TUI邮件用户代理（MUA），有着非常强大的定制性。neomutt则是fork自mutt并添加了些新功能。
+安装
+mutt
+apt install mutt
+neomutt
+apt install neomutt
+配置
+例举的都是尽量简单配置
+
+收信
+POP3
+POP3是把邮件下载到本地，对邮件操作（如删除）不影响服务器上的邮件
+
+set pop_authenticators = 'user'
+# 完整标准URL格式为 协议://[用户名[:密码]@]邮件服务器域名或ip[:端口]
+set pop_host = 'pops://邮件服务器:995'
+set pop_user = '用户名'
+set pop_pass = '密码'
+IMAP
+IMAP会同步邮件的状态，对邮件操作（如删除）将会影响到服务器上的邮件
+
+# 完整标准URL格式为 协议://[用户名[:密码]@]邮件服务器域名或ip[:端口]
+set folder = 'imaps://邮件服务器:993'
+set imap_user = '用户名'
+set imap_pass = '密码'
+发信
+SMTP
+smtp是发送邮件用的
+
+set smtp_url = 'smtp://邮件服务器:25'
+set smtp_user = '用户名'
+set smtp_pass = '密码'
+多账户
+官方手册的建议：应视为上个使用的邮箱不可知，所以要清空当前连接账户，然后再连下一个账号
+
+账户钩子
+account-hook . 'unset imap_user; unset imap_pass; unset tunnel'
+account-hook imap://host1/ 'set imap_user=me1 imap_pass=foo'
+account-hook imap://host2/ 'set tunnel="ssh host2 /usr/libexec/imapd"'
+account-hook smtp://user@host3/ 'set tunnel="ssh host3 /usr/libexec/smtpd"'
+邮箱和目录钩子
+mailboxes imap://user@host1/INBOX
+folder-hook imap://user@host1/ 'set folder=imap://host1/ ; set record=+INBOX/Sent'
+mailboxes imap://user@host2/INBOX
+folder-hook imap://user@host2/ 'set folder=imap://host2/ ; set record=+INBOX/Sent'
+外观
+格式化字符
+
+代码	意义
+%y	年
+%m	月
+%d	日
+%H	时
+%M	分
+%S	秒
+index_format
+字符串	意义
+%a	发件人地址
+%A	回复地址（如果存在；否则：发件人地址）
+%b	原始邮件文件夹的文件名（类似邮箱）
+%B	等同%K
+%C	当前消息编号
+%c	消息正文中的字符数（字节）（请参阅 formatstrings-size）
+%cr	原始消息中的字符数（字节），包括标题 (参阅formatstrings-size)
+%D	使用 date_format 和本地时区来显示日期时间
+%d	使用 date_format 和发件人时区来显示日期时间
+%e	线程中的当前消息编号
+%E	线程中当前消息数量
+%F	发件人名或收件人名（如果邮件是你发的）
+%Fp	类似%F，但保持原文。收件人姓名不应用上下文格式
+%f	发件人（地址+真名），either From: or Return-Path:
+%g	新闻组名（如果使用NNTP支持编译）
+%g	消息标签
+%Gx	单个消息标签
+%H	此消息的垃圾邮件属性
+%I	作者的首字母缩写
+%i	当前消息的消息ID
+%J	消息标签（如果存在，树展开，并且！=父母的标签）
+%K	发送信件的列表（如果有的话；否则：空）
+%L	如果“To:”或“Cc:”标题字段中的地址与用户的“subscribe”命令定义的地址匹配，则会显示“To <list-name>”，否则与%F相同
+%l	未处理邮件中的行数（可能不适用于 maildir、mh 和 IMAP 文件夹）
+%M	隐藏邮件的数量，如果线程已折叠
+%m	邮箱中的邮件总数
+%N	邮件分数
+%n	作者的真实姓名（如果丢失，则为地址）
+%O	NeoMutt以前存储消息的原始保存文件夹：列表名称或收件人名称，如果没有发送到列表
+%P	内置寻呼机的进度指示器（已显示多少文件）
+%q	新闻组名（如果使用NNTP支持编译）
+%R	“Cc:”收件人的逗号分隔列表
+%r	Comma separated list of "To:" recipients
+%S	消息的单个字符状态（“N”/“O”/“D”/“d”/“！”/"R"/"*")
+%s	消息的主题
+%T	$tochars字符串中的相应字符
+%t	"To:" 字段（收件人）
+%u	作者的用户（登录名）名称
+%v	作者的名字，或者收件人的名字，如果消息来自你
+%W	作者组织名称（“组织：”字段）
+%x	"X-Comment-To:" 字段（如果存在，并在NNTP支持下编译）
+%X	Number of MIME attachments (please see the " attachments" section for possible speed effects)
+%Y	"X-Label:" field, if present, and (1) not at part of a thread tree, (2) at the top of a thread, or (3) "X-Label:" is different from Preceding message's "X-Label:"
+%y	"X-Label:" field, if present
+%Z	A three character set of message status flags. The first character is new/read/replied flags ("n""o""r""O""N"). The second is deleted or encryption flags ("D""d""S""P""s""K"). The third is either tagged/flagged ("*""!"), or one of the characters Listed in $tochars.
+%zc	Message crypto flags
+%zs	Message status flags
+%zt	Message tag flags
+%@name@	insert and evaluate format-string from the matching " index-format-hook" command
+%{fmt}	the date and time of the message is converted to sender's time zone, and "fmt" is expanded by the library function strftime(3); if the first character inside the braces is a bang ("!"), the date is formatted ignoring any locale settings. Note that the sender's time zone might only be available as a numerical offset, so "%Z" behaves like "%z".
+%[fmt]	the date and time of the message is converted to the local time zone, and "fmt" is expanded by the library function strftime(3); if the first character inside the brackets is a bang ("!"), the date is formatted ignoring any locale settings.
+%(fmt)	the local date and time when the message was received, and "fmt" is expanded by the library function strftime(3); if the first character inside the parentheses is a bang ("!"), the date is formatted ignoring any locale settings.
+%>X	right justify the rest of the string and pad with character "X"
+%|X	pad to the end of the line with character "X"
+%*X	soft-fill with character "X" as pad
+flag_chars
+字符	默认选项	描述
+1	*	邮件被标记了。
+2	!	邮件被标记为重要。
+3	D	邮件被标记为删除。
+4	d	邮件中标有要删除的附件。
+5	r	邮件已回复。
+6	O	邮件是旧的（未读但已看到）。
+7	N	邮件为新邮件（未读但未看到）。
+8	o	邮件线程是旧的（未读但已看到）。
+9	n	邮件主题为“新建”（未读但未显示）。
+10	—	邮件已读数 - %S expando。
+11	<空格>	邮件已读取 - %Z expando。

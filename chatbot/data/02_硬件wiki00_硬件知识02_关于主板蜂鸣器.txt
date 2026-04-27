@@ -1,0 +1,7 @@
+https://wiki.deepin.org/zh/02_%E7%A1%AC%E4%BB%B6wiki/00_%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86/02_%E5%85%B3%E4%BA%8E%E4%B8%BB%E6%9D%BF/%E8%9C%82%E9%B8%A3%E5%99%A8
+蜂鸣器是主板上基本的硬件提示设备，从嵌入式到大型机，都会具备。都有直接的控制接口。
+
+终端中的关闭或者打开。
+xset -b off|off
+
+更多的设置 查看 xset的帮助 man xset. 也可参考 IBM的文档xset命令

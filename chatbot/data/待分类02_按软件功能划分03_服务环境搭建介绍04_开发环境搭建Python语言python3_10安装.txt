@@ -1,0 +1,28 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/03_%E6%9C%8D%E5%8A%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%BB%8B%E7%BB%8D/04_%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Python%E8%AF%AD%E8%A8%80/python3_10%E5%AE%89%E8%A3%85
+前言
+当前deepin v20.7 的apt源中只有python 3.7版本，而python官方已经更新到了3.10。虽然3.7和3.10没有太大的差别，但如果想要体验更高版本，本文提供手动编译安装python3.10.7的步骤。
+
+步骤
+这里假设当前用户名为admin，用户家目录为/home/admin，根据实际情况替换。
+
+浏览器访问官方下载页, 下载source code的压缩包。
+创建安装目录。
+mkdir -p /home/admin/apps/python3.10
+解压压缩包
+tar xf Python-3.10.7.tar.xz
+cd Python-3.10.7
+预编译。提示缺少依赖的话，使用apt安装依赖。
+./configure --prefix=/home/admin/apps/python3.10 --enable-optimizations
+编译并安装。CPU若是多核，比如4核，可为make指定-j4参数加速编译。
+make
+make install
+创建软链接
+sudo ln -s /home/admin/apps/python3.10/bin/python3.10 /usr/bin
+sudo ln -s /home/admin/apps/python3.10/bin/python3.10-config /usr/bin
+验证
+# 这里的输出结果应该还是 python 3.7
+python3 --version
+# 这里的输出结果应该是 python 3.10.7
+python3.10 --version
+补充
+网上有些文档说直接覆盖python3.7，但笔者以前在centos7上试过，从python3.6直接升到python3.9，部分工具直接无法使用。所以为了避免不可控问题的出现，建议还是不要覆盖原本的python3.7.

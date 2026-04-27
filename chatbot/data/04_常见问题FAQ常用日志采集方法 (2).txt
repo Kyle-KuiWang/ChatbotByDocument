@@ -1,0 +1,30 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%B8%B8%E7%94%A8%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86%E6%96%B9%E6%B3%95
+DeepinWiki
+文件管理器	1、获取完整日志，请打开debug，并帮忙拿一下文管的日志：如果系统升级后没有debug日志，打开 /etc/X11/Xsession.d/00deepin-dde-env, 修改export QT_LOGGING_RULES="*.debug=true 日志目录： ~/.cache/deepin/dde-desktop/dde-desktop.log ~/.cache/deepin/dde-file-manager/dde-file-manager.log ~/.cache/deepin/dde-dock/dde-dock.log /var/log/deepin/dde-file-manager-daemon /var/log/messages /var/log/syslog 2、测试前先安装 systemd-coredump与gdb，出现卡死时使用使用ps查询卡死进程的进程id（pid）。然后调用gcore -o ~/core pid 生成coredump，将~/目录下的core.$pid 文件压缩后上传pms 3、如果有卡死、崩溃问题，请在崩溃机上处理以下内容： 终端操作 ulimit -c：输出为0，说明默认是关闭core dump的 ulimit -c unlimited :开启core dump功能 1）安装软件 -- apt install systemd-coredump---可查看系统个应用的闪退日志 -- apt install gdb 2）sudo coredumpctl list 找出刚才应用程序的崩溃记录的编号 （pid） 3）coredumpctl gdb 编号（输入上一条查询到的pid） 4）切换gdb模式下，输入bt，输出内容截图或保存 5）free -m 查看内存情况，输出内容截图或保存 以上截图或保存内容，请备注或上传附件到PM单 4、涉及块设备问题，日志操作如下： 终端输入 udisksctl dump >>blocklist.txt ; df -h >> block_df.txt dmesg -w 命令实时查看挂载等信息，输出内容截图或保存 udevadm monitor | grep 你的设备，输出内容截图或保存 实时监听挂载，输出内容截图或保存 以上内容，请备注或上传附件到PM单	1、测试在报问题时，需要提供对应log的路径 + 问题的发生时间 + 复现bug的镜像版本 + 应用名称 & 版本号 2、如果log文件夹.cache/deepin不大，建议提供~.cache/deepin路径下的所有log 3、概率低的问题，务必在问题发生时就导出log文件，问题复现步骤需描述准确、细致 4、宕机、蓝屏的问题提供对应的视频文件 5、音乐 & 影院 & 相机声音卡顿、播放状态异常、应用异常退出，需提供pulse.log，pulse.log抓取需要修改配置文件/etc/pulse/daemon.conf ，设置选项如下所示，去掉下列选项前面的分号（分号表示注释）。 #设置日志保存路径 log-target = file:/home/uos/pulse.log #日志级别，debug、info、notice、warning、error之一。不记录日志级别低于此处指定的日志消息。默认为notice。 log-level = 4 #对于每个记录的消息日志，生成消息的代码位置。 ; log-meta = no #对于每个记录消息，记录自启动以来的相对时间 log-time = 1 #大于0时，对于每条记录的消息日志，代码堆栈都会跟踪指定数量的堆栈帧。 预设为0。 ; log-backtrace = 0 6、画板、相册、看图除提供日志外，需提供详细复现视频或截图，图片方面的问题需提供当时测试图片资源 7、文件丢失普通日志无法分析，需要安装特定版本anything跟踪复现后，提供系统和内核日志
+画板	~/.cache/deepin/deepin-draw/deepin-draw.log	
+音乐	~/.cache/deepin/deepin-music/deepin-music.log	
+看图	~/.cache/deepin/deepin-image-viewer/deepin-image-viewer.log	
+相册	~/.cache/deepin/deepin-album/deepin-album.log	
+影院	~/.cache/deepin/deepin-movie/deepin-movie.log	
+相机	~/.cache/deepin/deepin-camera/deepin-camera.log	
+pulse　audio	/home/uos/pulse.log	
+宕机	/var/log/ + ~.cache/deepin/目录下所有log	
+蓝屏、程序异常退出	需要提供Coredump + /var/log/目录下所有log	
+云扫描	客户端界面程序 ：~/.cache/deepin/deepin-cloud-scan/deepin-cloud-scan.log 服务端界面程序：安装目录的Logs/config.log 服务端后台程序：安装目录的Logs/server.log	云扫描客户端扫描部分的日志在调用云扫描的扫描软件日志中
+云打印	UOS日志路径： 1. 界面程序 ：~/.cache/uniontech/deepin-cloud-print/deepin-cloud-print.log （5.3.x后~/.cache/uniontech/deepin-cloud-print-configurator/deepin-cloud-print-configurator.log） 2. dcp日志路径：/var/log/cups/dcp_log windows日志路径： 1. 界面程序：%temp%/deepin-cloud-print-config/dcpc.log 2. 后台程序：安装目录下Logs/cloud-print-server.log > 1.1.1.1及之后版本服务端的日志都会放在安装目录的Logs目录	详情参考《云打印研发内部培训教程》
+打印管理器	cups DEBUG日志：/var/log/cups/error_log 打印管理器日志：~/.cache/deepin/dde-printer/dde-printer.log ~/.cache/deepin/dde-printer-helper/dde-printer-helper.log	cups日志获取：打印管理器右上角调试开关打开，再重新把有问题的打印场景打印一下，再拿日志，拿完日志以后，务必关闭调试开关
+显卡驱动管理器	后台日志：/var/log/deepin-graphics-driver-manager-server.log 前台日志：~/.cache/deepin/deepin-graphics-driver-manager/deepin-graphics-driver-manager.log	
+毕昇驱动引擎	cups DEBUG日志：/var/log/cups/error_log 打印管理器日志：~/.cache/deepin/dde-printer/dde-printer.log ~/.cache/deepin/dde-printer-helper/dde-printer-helper.log 系统日志：/var/log/syslog	cups日志获取：打印管理器右上角调试开关打开，再重新把有问题的打印场景打印一下，再拿日志，拿完日志以后，务必关闭调试开关 确认毕昇引擎是否正确安装。
+扫描管理	~/.cache/deepin/org.deepin.scanner/org.deepin.scanner	配置文件：~/Documents/EFile_config
+启动盘制作工具	后台日志：/var/log/deepin/deepin-boot-maker-service.log 前台日志：~/.cache/deepin/deepin-boot-maker/deepin-boot-maker.log	
+中文输入法	~/.cache/org.deepin.chineseime/ime/chineseime-qimpanel.log ~/.cache/org.deepin.chineseime/ime/fcitx-iflyime.log ~/.cache/org.deepin.chineseime/ime/ossp.log	新建文件夹： ~/.cache/org.deepin.chineseime/ime 把iflyime.ini放到~/.cache/org.deepin.chineseime/ime中 注销后重新进入系统并使用输入法 iflyime.ini文件内容： [logger] level =-1 output=3
+DDE（控制中心、任务栏、启动器、剪切板、登陆锁屏、系统通知、鉴权模块）	# # 1、先用chmod +x DDE_Logger.sh给予脚本运行权限 # # 2、运行./DDE_Logger.sh执行脚本即可 3./var/log 全部文件 4. sudo vim /etc/X11/Xsession.d/00deepin-dde-env 修改:export QT_LOGGING_RULES="*.debug=true" export DDE_DEBUG_LEVEL=debug 5收集目录: ~/.cache/deepin/ ~/.xsession-errors ~/.xsession-errors.old /var/log/ 公共账户中的脚本	日志脚本参见https://filewh.uniontech.com/d/4a992ea023514c40b65d/
+安装器	1、/var/log/deepin-installer.log 2、/var/log/deepin-installer-first-boot.log	1. deepin-installer.log ##　安装日志 2. deepin-installer-first-boot.log　##　系统配置日志
+签名验证工具	1.ELF文件未通过安全验证：deepin-elf-sign -f ELF_file --logLevel 6,提供打印信息 2.deb包没有有效签名：deepin-deb-verify -f xxx.deb -d, 提供打印信息	1.elf必须为系统中一直存在的问题，临时生成并运行的文件无效 2.deb使用软件包安装器安装失败，使用方法2提供打印信息
+备份还原	本次备份/还原日志：/recovery/deepin-recovery-gui.log 上次日志：/recovery/deepin-recovery-gui-old.log	1040开始才有的日志
+系统	sudo dmesg -T > d.log sudo journalctl > j.log cp /var/log	主要是前两个，后面的一个日志比较全，文件会比较大，可压缩发送
+wine应用	1. 网络问题 进入工作路径，在终端执行：WINEDEBUG=+winsock ./run.sh &> ~/Desktop/net_error.log，收集网络异常环境的日志信息 2. 崩溃、闪退问题 进入工作路径，在终端执行：WINEDEBUG=+seh BOX86_LOG=1 BOX86_MODULE=1 ./run.sh &> ~/Desktop/crash_error.log，收集崩溃环境的日志信息 3. 稳定复现路径 与用户沟通，获取稳定复现的环境与最短路径 4. 获取更详细日志 进入工作路径，在终端执行：BOX86_LOG=1 BOX86_DYNAREC_LOG=1 WINEDEBUG=+seh,+loaddll ./run.sh &> ~/Desktop/crash_more_error.log，收集崩溃环境的日志信息	
+内网仓库和外网仓库源	/var/lib/apt/lists/*	
+评论
+评论加载中...
+提供者 Wiki.js

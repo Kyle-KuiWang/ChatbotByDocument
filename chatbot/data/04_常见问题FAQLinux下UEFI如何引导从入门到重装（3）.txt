@@ -1,0 +1,224 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E4%B8%8BUEFI%E5%A6%82%E4%BD%95%E5%BC%95%E5%AF%BC%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E9%87%8D%E8%A3%85
+七、GRUB 和其他引导系统
+grub 是开源世界一个流行的引导管理器，它有点过于强大，不但能引导各种各样的linux，还能引导windows。即支持bmr又支持uefi，甚至支持各种各样的文件系统，还能增加字体，美化菜单。这简直就是个微型操作系统，也正是如此，导致它也过于复杂。但不管怎么说，grub还是开源世界最流行的引导管理器。
+
+7.1 安装
+主文件夹：
+
+/boot/grub/
+/etc/grub.d/
+/etc/default/grub/
+/usr/lib/grub
+默认菜单：
+
+/boot/grub/grub.cfg 主菜单由下面脚本合成
+/etc/grub.d/00_header 环境变量
+……/05_debian_theme 背景，颜色，主题
+……/10_linux 内核菜单项
+……/20_memtest86 内存测试菜单项
+……/30_os-prober 其他系统菜单项
+……/40_custom 用户菜单项
+/etc/default/grub 默认环境设置
+Linux内核和镜像：
+
+vmlinuz 内核常见文件名
+initrd.img 映像常见文件名
+grub能力列表：
+
+grub-mkconfig 菜单生成
+save_env、load_env、grub-editenv 配置存储
+通过文件系统标签和UUID识别设备
+支持pc efi，pc coreboot
+支持ext4，hfs+和ntfs
+支持LVM、RAID设备
+提供图形终端和图形菜单
+支持翻译、国际化
+提供启动映像
+支持动态加载的模块，和灵活构建核心映像
+多引导规范：multiboot、chainload、loopboot
+识别可执行格式：a.out 和 elf
+支持解压缩gzip和xz文件
+传统磁盘调用CHS（最大1024柱面）和逻辑块地址LBA
+远程终端
+grub-mkrescue 制作grub救援cd
+设备和路径语法：
+
+(fd0) 软盘驱动设备，第一个编号0
+(hd0,msdos2) 硬盘1，msdos分区2，分区从1开始编号，扩展分区从5开始编号。msdos是一个分区方案，另一个是gpt
+(hd1,gpt2)/boot/a.txt 路径格式
+/boot/ unix 路径
+\\?\c:\ windows UNC表示路径
+(cdrom) 光盘
+(ahci0)
+(usb0) usb设备
+(memdisk) 内存盘
+(host) 网络主机
+0+100 读取0到99块
+(hd0)+1 读取硬盘1的第一个块，即开始的512字节
+grub引导镜像：
+
+/usr/lib/grub/x86_64-efi* 新式efi
+/usr/lib/grub/i386-pc 传统bios
+boot.img 512b大小的第一段镜像，支持mbr
+cdboot.img 制作可引导cd的引导镜像，需添加iso9660和biosdisk模块
+diskboot.img 硬盘启动版
+pxeboot.img 网络启动版
+lnxboot.img 模拟linux内核，兼容lilo
+kernel.img grub核心功能
+core.img 整合后的核心镜像，由grub-mkimage构建，推荐小于32kb
+*.mod 大部分功能以模块文件提供
+网络引导：
+
+grub-mknetdir --net-directory=/srv/tftp --subdir=/boot/grub -d /usr/lib/grub/x86_64-efi
+com串行终端：
+
+serial --unit=0 --speed=9600
+terminal_input serial;terminal_output serial
+构建命令：
+
+grub-install 设备： --boot-directory=启动根目录，grub默认复制内容到此 --recheck 重建设备映射，/boot/grub/device.map；--no-rs-codes 关闭bios启动模式的引导记录备份；--compress=no|xz|gz|lzo 压缩选项；--directory=模块目录；--fonts=字体文件名；--install-modules=安装的模块；--pubkey=嵌入的公钥；--locale-directory=/usr/share/locale本地化文件；--modules=预载模块；--themes=starfield主题；--allow-floppy软盘引导格式；--bootloader-id=efi下的子目录名；--core-compress=xz|none|auto内核映像压缩选项；--disk-module=bios模式下的磁盘选项；--efi-directory=efi根目录；--force强制；--force-extra-removable强制安装到移动设备；--force-file-id强制不使用uuid；--label-bgcolor=背景色；--label-color=前景色；--label-font=字体；--macppc-directory=mac ppc；--no-bootsector=不要安装启动扇区，bios；--no-nvram不要更新主板的启动菜单；--no-uefi-secure-boot 不要安装安全启动映像；--product-version=发行版本；--removable 启动镜像可用于移动设备；--skip-fs-probe不检索其他系统；--target=x86_64-efi镜像类型；--uefi-secure-boot 安装安全启动镜像。
+grub-mkconfig -o /boot/grub/grub.cfg: 生成配置文件，通过系统/etc/grub.d/下的脚本，和/etc/default/grub脚本生成。
+grub-mkpasswd-pbkdf2:生成密码
+grub-mkrelpath 路径：生成相对启动根的路径。
+grub-mkrescue -o grub.iso 生成grub急救盘，通过调用grub-mkimage，xorriso，mkisofs生成。--modules=模块；--xorriso=xorriso；--grub-mkimage=grub-miimage；
+grub-mount 设备 挂载点 可用来检查镜像内容
+grub-probe 路径|-d 设备 得到设备的一些信息，--target=fs文件系统，fs_uuid文件系统通用唯一标识，fs_label分区标签，drive grub表示的设备名，device系统设备名，partmap分区映射模块，hints_string适用search的搜索提示。--device-map=/boot/grub/device.map
+grub-script-check /boot/grub/grub.cfg 检查脚本是否存在语法错误
+grub-editenv 文件名 命令：修改环境块，用来保存用户设置。create 新建空环境块；list列出当前环境块。set 变量=值 设置变量；unset 变量 删除变量；
+grub-file --is-x86_64-efi 文件：测试文件是否为参数指定类型
+grub-fstest 映像 命令：blocklist 文件 显示块列表；cat 文件 ；cmp 文件 本地文件 比较；cp 文件 本地文件；crc 文件；hex 文件；ls 路径；xnu_uuid 设备。--diskcount=；--crypto 加密；--zfs-key；--length=；--root=根设备；--uncompress；
+grub-glue-efi 转换成apple格式
+grub-kbdcomp 制作键盘映射
+grub-macbless 苹果系统bless
+grub-menulst2cfg 旧版菜单转为新版
+grub-mkdevicemap -m /boot/grub/device.map 输出磁盘映射文件
+grub-mkfont -o grub.pf2 字体文件：将普通字体转换为grub专用pf2格式字体文件
+grub-mkimage -o 镜像 模块:制作grub镜像。--config=内嵌配置文件；--compression=xz|none|auto 压缩；--directory=/usr/lib/grub/x86_64-efi；--publikey=内嵌签名文件；--memdisk=内嵌内存盘文件；--note IEEE1275使用；--format=镜像格式（x86_64-efi等）；--prefix=/boot/grub，主目录；
+grub-mklayout 键盘映射
+grub-mknetdir 创建网络镜像目录，TFTP使用
+grub-mkstandalone -o 镜像 源 ：创建全模块版本镜像
+gurb-reboot 菜单项: 设置下次启动的菜单项。--boot-directory=/boot/gurb
+gurb-render-label 苹果.disk_label
+gurb-set-default 菜单项：设置默认启动项
+gurb-syslinux2cfg 转换syslinux菜单成grub菜单。
+os-prober 搜索其他系统信息
+efibootmgr
+演练：
+
+#1. 安装
+sudo apt install grub-efi-amd64 #uefi版grub
+sudo apt install efibootmgr #编辑主板中的UEFI引导菜单
+
+#2. 查看信息
+lsblk #查看分区和挂载（比较清晰）
+sudo blkid #查看设备和分区信息
+sudo fdisk -l #查看设备和分区情况
+df -Th #查看空间和挂载点
+sudo grub-probe -t device /boot/grub #查找grub 位置
+#根据大小等信息获取各个系统所在分区，并记录下对应信息，系统：分区：uuid：文件系统。
+
+#3. 简易安装
+sudo grub-install --target=x86_64-efi /dev/sda1 #将grub安装到串口硬盘1分区1，默认安装目录是/boot下的grub文件夹，efi镜像默认安装在/boot/efi下的efi/grub文件夹。可以用--boot-directory=参数指定boot根文件夹，--efi-directory=参数指定efi根文件夹。对移动设备需用--removable并指定两者。grub-install实际通过调用其他工具来完成任务。
+
+sudo update-grub #自动更新grub引导信息，这实际是一个脚本，它调用grub-mkconfig更新/boot/grub/grub.cfg
+7.2 构建
+7.3 配置文件
+变量(/etc/default/grub):
+
+GRUB_DEFAULT 默认启动项
+GRUB_SAVEDEFAULT 保存启动项
+GRUB_TIMEOUT 选择倒计时
+GRUB_TIMEOUT_STYLE 是否展示菜单
+GRUB_DISTRIBUTOR 发行商
+GRUB_TERMINAL_INPUT 输入设备
+GRUB_TERMINAL_OUTPUT 输出设备
+GRUB_CMDLINE_LINUX 内核参数(全部)
+GRUB_CMDLINE_LINUX_DEFAULT 内核参数（标准）
+GRUB_DISABLE_LINUX_UUID 使用UUID
+GRUB_DISABLE_RECOVERY 禁用恢复
+GRUB_VIDEO_BACKEND 图形支持
+GRUB_GFXMODE 分辨率，vesa bios extensions
+GRUB_BACKGROUND 背景图像
+GRUB_THEME 主题
+GRUB_GFXPAYLOAD_LINUX 显示模式
+GRUB_DISABLE_OS_PROBER 是否调用grub-prober发现其他操作系统
+GRUB_OS_PROBER_SKIP_LIST 忽略空格
+GRUB_DISABLE_SUBMENU 是否使用二级菜单
+GRUB_ENABLE_CRYPTODISK 加密
+GRUB_INIT_TUNE 音效
+GRUB_BADRAM 过滤内存坏区
+GRUB_PRELOAD_MODULES 预载模块
+脚本语法：
+
+{} | & $ ; <> 元字符
+! [[ ]] {} case do done elif else esac fi for function if in menuentry select then time until while 关键字
+\ '' "" 转义序列
+$(变量) 得到变量的值,$1第一个参数
+#注释内容 注释
+for
+if
+while、until
+function
+menuentry: title --class --users --unrestricted --hotkey --id $2...{}
+submenu
+break
+continue
+return
+setparams
+shift
+serial: --unit --prot --speed --word --parity --stop
+terminal_input: --append|--remove 终端1 终端2...
+terminal_ouput
+terminfo -a|-u|-v
+menuentry “win10”{
+    insmod ntfs
+    search --set=root --label win10 --hint hd2,gpt2
+    configfile /boot/grub/grub.cfg
+}
+menuentry "winxp"{
+    insmod ntfs
+    search --set=root -fs-uuid {} winxp --hint hd0,msdos2
+    ntldr /ntldr
+}
+主题资源：
+
+颜色 #8899ff
+字体 pff2， 用loadfont命令
+title-text 标题
+title-font 标题字体
+title-color 标题颜色
+message-font
+message-color
+message-bg-color
+desktop-image 背景
+desktop-image-scale-method 缩放
+desktop-image-h-align 水平对齐
+desktop-image-v-align 垂直对齐
+desktop-color 背景颜色
+terminal-box 终端窗口外框
+terminal-border 终端窗口边框宽度
+terminal-left 终端窗口左坐标
+terminal-top 终端窗口顶坐标
+terminal-width 终端窗口宽度
+terminal-height 终端窗口高度
+label： id text font color align visible 组件和属性
+image： file
+progress_bar: id fg_color bg_color text_color bar_style highlight_style highlight_overlay font text
+circular_progress: id center_bitmap tick_disappear start_angle
+boot_menu: item_font selected_item_font item_color selected_item_color icon_width icon_height item_height item_padding item_icon_space item_spacing menu_pixmap_style item_pixmap_style selected_item_pixmap_style scrollbar scrollbar_frame scrollbar_thumb scrollbar_thumb_overlay scrollbar_slice scrollbar_left_pad scrollbar_right_pad scrollbar_top_pad scrollbar_bottom_pad visible
+canvas: id left top width height
+hbox:
+vbox:
+__timeout__ id值为这个将由grub更新
+cmd颜色名称：black，blue，green，cyan，red，magenta，brown，light-gray，dark-gray，light-blue，light-green，light-cyan，light-red，light-magenta，yellow，white
+对grub.cfg脚本的简单分析：
+
+操作环境块grubenv
+定义函数：加载视频模块
+用uuid搜索字体文件/usr/share/grub/unicode.pf2, 设置gfxpayload=auto，加载视频，加载字体，加载gfxterm图形终端，设置terminal
+_output gfxterm终端输出.
+设置菜单显示时间 ，颜色。然后进入实际菜单项
+linux菜单项：加载视频，加载解压缩gzio，判断是否xen模式，加载part_gpt分区模块，加载ext2文件系统，根据uuid搜索设置root位置，加载linux内核，内核参数root= ro quiet；加载linux启动映像盘initrd。
+其他模式的linux系统项就内核参数不同，root= ro single 或 recovery
+uefi系统安装菜单项：fwsetup
+windows菜单项：加载 part_gpt，加载fat文件系统，用uuid搜索设置root，用chainloader 链式加载 efi/microsoft/boot/bootmgfw.efi微软系统启动管理器。

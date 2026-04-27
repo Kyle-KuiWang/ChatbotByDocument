@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/03_%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8_%E6%96%87%E4%BB%B6%E5%AF%B9%E6%AF%94%E4%B8%8E%E5%90%88%E5%B9%B6/%E6%96%87%E4%BB%B6%E5%AF%B9%E6%AF%94%E4%B8%8E%E5%90%88%E5%B9%B6/SmartSynchronize
+简介
+SmartSynchronize是一款检查文件与目录比较的工具，可以帮助对比两个文件或者两个文件夹的不同之处，文件比较能够检测内部行着色的变化、比较目录并显示每个文件的添加，删除和修改的行数。同时可以帮助您合并一个基本文件的两个独立的变化。
+
+安装
+sudo apt-get install smartsynchronize
+
+卸载
+sudo apt-get remove smartsynchronize
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/s/smartsynchronize/

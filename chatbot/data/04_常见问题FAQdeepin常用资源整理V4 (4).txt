@@ -1,0 +1,132 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/deepin%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86V4
+DeepinWiki
+deepin 常用资源整理 · V4.1.4
+4.1.8 其他应用
+分享几个脚本工具：https://bbs.deepin.org/zh/post/221680
+几款国产软件的设置：https://bbs.deepin.org/zh/post/222707
+deepin20.2.3 安装win版招商证券 V7.09的方法：https://bbs.deepin.org/zh/post/226419
+星火商店柚子重构版尝鲜下载：https://bbs.deepin.org/zh/post/228515
+[二次开发]星火应用商店第三方Web前端 ：https://bbs.deepin.org/post/242817
+deepin如何寻找、安装非商店软件(Linux通用)：https://bbs.deepin.org/post/157341
+Deepin20.6上用wine安装文华财经（赢顺6）教程（含wine安装）：https://bbs.deepin.org/zh/post/239051
+[东方财富(eastmoney)炒股软件Linux版DEB包(64位版本)：https://bbs.deepin.org/post/250039
+羽云十六进制编辑器 v1.5.2 发布：https://bbs.deepin.org/post/245200
+羽云 GIF 编辑器 正式上架应用商店：https://bbs.deepin.org/post/245929
+一个在终端中输出类似LED时钟和文字的小脚本：https://bbs.deepin.org/post/240793
+彩色的表情符号：https://bbs.deepin.org/post/241125
+奥维互动地图浏览器出Linux版了：https://bbs.deepin.org/post/241958
+Loginsight —— 程序员的日志分析利器：https://bbs.deepin.org/post/243105
+（开源）强大的图像处理软件，强烈推荐！！！：https://bbs.deepin.org/post/243829
+VSCode 历史项目信息分析工具 - 查看在你电脑上的历史记录吧：https://bbs.deepin.org/post/244174
+Deepin 自用优化：https://bbs.deepin.org/post/245085
+这是一个动态起床时间计算库：https://bbs.deepin.org/post/245167
+尝试john the ripper (john-1.9.0-jumbo-1)破解rar文件密码：https://bbs.deepin.org/post/248454
+john the ripper破解rar加密文件，试验成功：https://bbs.deepin.org/post/248489
+rar2john+hascat破解rar加密文件测试：https://bbs.deepin.org/post/248491
+[deepin-desktop-helper]介绍：https://bbs.deepin.org/zh/post/248840
+高性能数据库软件 linwin DB server1.1 发布：https://bbs.deepin.org/post/250672
+LinwinSoft DB server1.4 Cluste 高性能分布式集群数据库软件发布：https://bbs.deepin.org/post/251546
+思科模拟器（网工的同学看过来）：https://bbs.deepin.org/post/250686
+cloudreve 云盘新方式……：https://bbs.deepin.org/post/253715
+开源的杀毒软件：https://bbs.deepin.org/post/253710
+4.2 运行其他平台应用、虚拟机
+4.2.1 UEngine
+UEngine 用来在 deepin/UOS 上运行安卓应用，应用商店中的手机应用就使用了 UEngine 引擎。同类应用还有 Anbox、xDroid 等。
+
+uengine 使用总结：https://uos.osystem.club/102.html
+Deepin20.2.2运行安卓和自行安装软件：https://bbs.deepin.org/zh/post/222222
+大家快来安装安卓应用：https://bbs.deepin.org/zh/post/222286
+UEngine 运行器 2.0.0：论坛页面 Gitee页面
+APK打包器beta：https://bbs.deepin.org/zh/post/222729
+成功Root Deepin的Android子系统（Uengine）：https://bbs.deepin.org/zh/post/228520
+关于安装未知来源的apk，被禁止安装处理方法：https://bbs.deepin.org/zh/post/237401
+关于uengine导致系统没声音的问题以及（临时）解决办法：https://bbs.deepin.org/post/244795
+4.2.2 Wine
+Wine 用于在 macOS，Linux，BSD 等系统上运行 Windows 应用。应用商店中的 Wine 应用使用了 deepin-wine（deepin 基于 Wine 进行了优化的版本）。
+
+Deepin-Wine适配知识库：https://docs.qq.com/mind/DWFBpbmpjd0RtV2Z0
+deepin-wine5 折腾过程兼新手教程：https://bbs.deepin.org/zh/post/200942
+Wine助手初体验，一款跨平台应用安装兼容工具：https://bbs.deepin.org/zh/post/223564
+**Wine 运行器 **3.1.0：论坛页面 Gitee页面
+注：请不要使用 exePro，该软件已构成对 Wine 运行器的不正当竞争行为。
+
+deepin-wine5 应用打包器：https://bbs.deepin.org/zh/post/214306
+wine自动打包程序：https://bbs.deepin.org/zh/post/221842
+Deepin用wine安装的Windows软件目录在哪：https://bbs.deepin.org/zh/post/227183
+用wine安装官方最新版钉钉：https://bbs.deepin.org/zh/post/189460 (这是旧版系统的教程，但仍可以学习借鉴)
+wine程序添加快捷键：https://bbs.deepin.org/zh/post/219312
+安装wine-gecko 和wine-mono的步骤：https://bbs.deepin.org/zh/post/208082
+CrossOver 17 测试版，解除时间限制：https://bbs.deepin.org/zh/post/231306
+wine工具盘点——linux上运行windows软件必备神器：https://bbs.deepin.org/zh/post/237398
+Deepin Wine6的run_v4脚本探索——启动方式：https://bbs.deepin.org/zh/post/237953
+spark-dwine-helper文档：https://shenmo7192.gitee.io/categories/spark-dwine-helper%E6%96%87%E6%A1%A3/
+安装WineHQ：https://bbs.deepin.org/zh/post/238337
+WineHQ使用时出现中文乱码：https://bbs.deepin.org/zh/post/238339
+wine使用教程4-用wine运行便携式exe程序（绿色软件）的方法：https://bbs.deepin.org/zh/post/239212
+wine版应用双开/多开的方法：https://bbs.deepin.org/post/243222
+Wine运行器和Wine打包器傻瓜式使用教程（小白专用）：https://bbs.deepin.org/post/246837
+使用wine运行器打包无安装包的软件：https://bbs.deepin.org/post/247720
+wine axmath+office安装教程：https://bbs.deepin.org/post/247888
+解决wine安装软件缺少dll的问题---Winetricks：https://blog.csdn.net/zzqhost/article/details/7231563
+使用flatpak安装wine8并完美运行最新版钉钉：https://bbs.deepin.org/post/253522
+i386运行库 For Deepin23（让Deepin23喝上Wine8.4）：https://bbs.deepin.org/post/253902
+4.2.3 虚拟机、容器
+VMware 虚拟机3种安装方法： https://bbs.deepin.org/zh/post/221632
+开箱即用的虚拟机软件——GNOME Boxes，应用商店可下载！：https://bbs.deepin.org/zh/post/220484
+在kde或者gnome实现类 "linux subsystem for windows"体验：https://bbs.deepin.org/zh/post/228448 (可能不适用于deepin)
+一种解决启停docker容器导致VMware虚拟机断网的办法：https://bbs.deepin.org/zh/post/239576
+vmware-workstation安装之后启动报错Before you can run VMware...：https://bbs.deepin.org/zh/post/240759
+Distrobox 在终端里使用您最熟悉喜爱的 Linux 发行版：https://bbs.deepin.org/post/246566
+在deepin20.8最新内测版下安装使用podman及其desktop：https://bbs.deepin.org/post/248165
+4.3 开发程序
+解包/打包deb教程 一周年重置版：https://bbs.deepin.org/zh/post/227931
+简单的deb一键打包脚本：https://bbs.deepin.org/post/245399
+deb打包教程：https://bbs.deepin.org/zh/post/194188
+超级简单打包软件分享：https://bbs.deepin.org/zh/post/194219
+统信软件社区开发培训——打包：https://bbs.deepin.org/zh/post/201183
+这个打包deb的操作特简单，uos/Deepin打包操作方式，供大家参考：https://bbs.deepin.org/zh/post/225931
+UOS/Deepin 中配置 DTK 开发环境：https://bbs.deepin.org/zh/post/209405
+DTK程序简单的开发教程（简易的浏览器）：https://bbs.deepin.org/zh/post/207250
+一个Dtk程序开发的实例，自己做一个deepin风格的程序：https://bbs.deepin.org/zh/post/198578
+linux下如何讲qt程序打包为deb包的过程，从0到1，适合新手：https://bbs.deepin.org/post/233814
+C++太繁琐？快来一起给QtQuick（QML）适配dtk风格的控件！：https://bbs.deepin.org/zh/post/222435
+参考当年王勇做的DTK列表搞了个新的：https://bbs.deepin.org/zh/post/229550
+使用 apt-build 从 deepin 仓库源码构建安装软件包：https://bbs.deepin.org/zh/post/223853
+Oracle %ROWTYPE 在MySQL中的移植：https://bbs.deepin.org/zh/post/224122
+Deepin Learning on Deepin —— 基础环境架设：https://bbs.deepin.org/zh/post/225041
+pyside6开发环境搭建——基于pycharm：https://bbs.deepin.org/zh/post/226994
+从源码编译安装GnuCash-4.8：https://bbs.deepin.org/zh/post/228255
+最近在跟QtQuick教程，想搞Qt的一起来耍呀：https://bbs.deepin.org/zh/post/232135
+微信开发者工具 Linux版 v1.05.2203070 免wine：https://bbs.deepin.org/post/232284
+deepin，做一个开发者友好的发行版：https://bbs.deepin.org/zh/post/234593
+使用go语言重新实现一款软件包管理器：https://bbs.deepin.org/zh/post/233959
+关于preinst等维护者脚本被唤起时可能会获得的参数/状态提示总结：https://bbs.deepin.org/zh/post/237895
+deepin v20搭建lunmp心得体会，别喷我，新手：https://bbs.deepin.org/zh/post/237984
+基于.net 跨平台开源框架 -Avalonia 分享：https://bbs.deepin.org/post/243283
+QDeb822——用于解析和生成deb822格式数据的Qt库：https://bbs.deepin.org/post/244190
+国产服务器软件LinWinHttp重大更新 V1.3社区版发布，更新了什么？：https://bbs.deepin.org/post/244987（GitHub）
+【脚本】简单的deb一键打包脚本：https://bbs.deepin.org/post/245399
+造轮子之-http并发测试工具，deepin可用：https://bbs.deepin.org/post/245514
+【小知识】如何获取DBus的连接名、接口名：https://bbs.deepin.org/post/245825
+系统仓库中 Qt Creator 依赖关系不满足无法安装：https://bbs.deepin.org/post/245634
+安利一个编程专用文本编辑器 helix：https://bbs.deepin.org/post/246371
+【专题-Python教程】1.2编译型语言和解释型语言的区别：https://bbs.deepin.org/post/245906 语雀上阅读
+开源的玲珑 deepin20编译版本 先享版本：https://bbs.deepin.org/post/246491
+Qt-cmake项目：opencascade的源码库OCCT，其链接配置的实现过程：https://bbs.deepin.org/post/246527
+QtQuick-DTK-Style部分重构，通过python轻松使用DTK味儿的控件！：https://bbs.deepin.org/post/246727
+有能力的都推荐试一试这个网页打包的程序：https://bbs.deepin.org/post/247533
+解决20.3以后无法运行JAVA的JWT，APPLET小程序的终极方案：https://bbs.deepin.org/zh/post/248572
+分享一个开发者工具箱——He3：https://bbs.deepin.org/post/248937
+oyo-deepin：从多个镜像源同时下载软件包以快速下载：https://bbs.deepin.org/post/250166
+Nixery: 轻而易举地用 docker 部署 nixpkgs 中的软件：https://bbs.deepin.org/post/253138
+4.4 “玲珑”自研软件包格式
+揭秘deepin 23，从这里开始！：https://bbs.deepin.org/post/241059
+深入探索玲珑 01——玲珑方案的创造！：https://bbs.deepin.org/post/241762
+深入探究玲珑 02——玲珑组件&权限管理机制！：https://bbs.deepin.org/post/242144
+“玲珑”开发文档：https://linglong.dev/guide/start/whatis.html
+“玲珑”在线商店：https://store.linglong.dev/
+随便聊一下玲珑包存放机制：https://bbs.deepin.org/post/242825
+4.5 Unilang 自研编程语言
+生而为创新！我们自研的编程语言Unilang问世！：https://bbs.deepin.org/post/243253
+元编程语言的诞生丨带你深入浅出解读Unilang！：https://bbs.deepin.org/post/243383
+Unilang 官方仓库：https://github.com/linuxdeepin/unilang

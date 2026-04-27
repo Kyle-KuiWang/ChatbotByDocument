@@ -1,0 +1,146 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/03_%E6%8C%89%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86/02_%E6%B7%B1%E5%85%A5/%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86
+软件包管理
+问题五
+
+使用apt-get安装软件,终端提示:
+E: dpkg 被中断,您必须手工运行 sudo dpkg --configure -a解决此问题。
+解决方法,按照提示提示.终端执行:
+sudo dpkg --configure -a
+如果依然不行则执行：
+sudo rm /var/lib/dpkg/updates/*
+sudo apt-get update
+sudo apt-get upgrade
+问题六
+
+终端提示：
+E: Unable to correct problems, you have held broken packages.
+出现此问题一般是依赖出现问题，尝试终端执行：
+sudo apt-get install -f
+如果无效则执行：
+sudo dpkg--configure -a
+或者可以按照终端的完整提示删除导致依赖出现问题的软件包，终端执行：
+sudo apt-get remove xxx ##xxx为导致依赖出现问题的软件包名
+然后终端执行：
+sudo apt-get update
+问题七
+
+终端出现: 'E:Encountered a section with no Package: header, E:Problem with MergeList /var/lib/apt/lists/archive.canonical.com_dists_maverick_partner_binary-i386_Packages, E:无法解析或打开软件包的列表或是状态文件。'
+解决方法,终端执行：
+sudo rm -rf /var/lib/apt/lists/* -vf
+sudo apt-get update
+问题八
+
+为什么不能同时安装一个以上的软件
+首要原因是深度操作系统使用DPKG包管理,统一由DPKG安装软件.(源代码编译软件为例外),并且Linux下的软件有软件依赖这一特殊性,如果同时安装一个以上的软件会让DPKG无法安全的记录软件的依赖包和主程序情况
+如果同时运行两个或者以上的DPKG包管理则会出现: 无法锁定管理目录,并且导致软件依赖出现问题,因此只能一个个的安装软件.
+注释:深度操作系统使用DPKG包管理,因此此文只适合DPKG包管理的Linux发行版本.
+问题九
+
+降级软件包
+在一些时候，我们需要更低版本而非最近版本的软件，而软件包管理器却已为我们升至最新版本，这时，我们就需要降级某个软件包。
+下面以降级 Firefox 为例，说明一下如何降级软件包。在深度操作系统中，Firefox 已升级至 16.0.x 版本，而我们需要更低版本来实现对于某些扩展的兼容。
+首先，我们可以使用下面的命令查看一下软件仓库中有哪些可用的 Firefox 版本：
+apt-cache madison firefox
+得到的输出结果如下：
+firefox | 15.0.1+build1-0ubuntu0.12.04.1 | http://packages.linuxdeepin.com/ubuntu/ precise-security/main i386 Packages
+firefox | 15.0.1+build1-0ubuntu0.12.04.1 | http://packages.linuxdeepin.com/ubuntu/ precise-updates/main i386 Packages
+firefox | 11.0+build1-0ubuntu4 | http://packages.linuxdeepin.com/ubuntu/ precise/main i386 Packages
+firefox | 11.0+build1-0ubuntu4 | http://packages.linuxdeepin.com/ubuntu/ precise/main Sources
+firefox | 15.0.1+build1-0ubuntu0.12.04.1 | http://packages.linuxdeepin.com/ubuntu/ precise-security/main Sources
+firefox | 15.0.1+build1-0ubuntu0.12.04.1 | http://packages.linuxdeepin.com/ubuntu/ precise-updates/main Sources
+假设我们要降至 11.0 版本，这时我们需要像如下这样做：
+sudo apt-get install firefox=11.0+build1-0ubuntu4
+即可降至该版本。
+该命令的格式为：
+sudo apt-get install pkg=version
+其中 pkg 为要降级的软件包名称，version 为要降级到的软件包版本。
+此时，我们还需要阻止软件包管理器升级该软件包：
+sudo echo "firefox hold" | sudo dpkg --set-selections
+至此，软件包的降级过程完成。
+问题十
+
+终端安装wine软件或者其他软件时可能会出现：
+软件包设置--正在设定 ttf-mscorefonts-installer--xxxx--确定的画面。
+只需要按TAB键即可选到确定按钮，然后Enter键入，有<yes or no选择画面，选择yes即可。
+问题十一
+
+添加ppa报错,这段执行:
+sudo add-apt-repository ppa:×××××
+报错信息如下:
+Traceback (most recent call last):
+
+File "/usr/bin/add-apt-repository", line 160, in
+
+sp = SoftwareProperties(options=options)
+
+File "/usr/lib/python3/dist-
+
+packages/softwareproperties/SoftwareProperties.py", line 96, in init
+
+self.reload_sourceslist()
+
+File "/usr/lib/python3/dist-
+
+packages/softwareproperties/SoftwareProperties.py", line 584, in reload_sourceslist
+
+self.distro.get_sources(self.sourceslist)
+
+File "/usr/lib/python3/dist-packages/aptsources/distro.py", line 87, in get_sources
+
+raise NoDistroTemplateException("Error: could not find a "
+
+aptsources.distro.NoDistroTemplateException: Error: could not find a distribution template
+终端执行" sudo gedit/usr/share/python-apt/templates/LinuxDeepin.info
+添加
+Suite: quantal
+
+RepositoryType: deb
+
+BaseURI: http://packages.linuxdeepin.com/deepin/
+
+MatchURI: packages.linuxdeepin.com
+
+MirrorsFile-amd64: LinuxDeepin.mirrors
+
+MirrorsFile-i386: LinuxDeepin.mirrors
+
+Description: Linux Deepin 12.12 'Quantal'
+
+Component: main
+
+CompDescription: Officially supported
+
+CompDescriptionLong: Deepin-supported Open Source Software
+
+Component: non-free
+
+CompDescription: Restricted software
+
+CompDescriptionLong: Software restricted by copyright or legal issues
+然后终端执行:
+sudo add-apt-repository ppa:realender/xxxxx
+sudo apt-get update
+sudo apt-get install xxxx
+问题十二
+
+终端刷新源报错:
+W：无法下载bzip2, Hash 校验和不符
+这个可能是网络网络问题导致的更新时丢包，从而下载的数据不完整或错误。
+运行以下命令，得到更新需要下载的软件包列表文件地址：
+sudo apt-get update --print-uris > apt-get-urls.txt
+用Firefox的downloadthemall插件下载上述列表文件。（用Firefox打开以上txt文件后批量下载）下载时注意： 文件保存位置，比如/home/你的用户名/pool 重命名掩码：填"curl/name.ext" (没有引号）。这意思是将下载的文件，若原链接为http://www.ubuntu.com/folder/subfolder/filename.gz，则保存为/home/你的用户名/pool/www.ubuntu.com/folder/subfolder/filename.gz。
+下载的文件里，有几个文件名为"Release"的文件，若使用downloadthemall默认的或者上述的重命名掩码保存，由于没有文件名后缀，默认保存为"Release.txt"，所以需要设置这些文件的重命名掩码为”curl/name”（没有引号）（在downloadthemall的下载选项中可通过”资源名称“字段排序后，全选文件名为Release的文件后设置重命名掩码） 设置每服务器并发下载1个文件，且关闭分块下载，否则可能会出错。
+上述文件下载完成后，你的pool目录下就会有诸如”archive.canonical.com/ubuntu/dists/raring"等目录和文件。
+备份原/etc/apt/source.list为/etc/apt/source.list.normal，并利用gedit等文本编辑器等的替换功能将/etc/apt/source.list中的
+deb http://
+deb-src http://
+替换为
+deb file:///home/你的用户名/pool/
+deb-src file:///home/你的用户名/pool/
+这样，运行升级命令sudo apt-get update后apt-get将从本地的pool目录获取软件列表文件。
+sudoapt-get update成功后，此时若apt-get upgrade或者安装软件，则apt-get由于在本地找不到deb安装包而报错，此时可用以下方法获取下载链接，用downloadthemall批量下载deb包：
+sudo apt-get upgrade --yes --print-uris > ~/pool/apt-get-upgrade.txt
+需要下载的deb包的链接在apt-get-upgrade.txt文件中，您需要将文件中的"file:///home/你的用户名/pool/”全部替换为“[http://"再下载 http://"再下载]。 你可以将deb包统一下载到pool/deb目录下，然后用
+sudo mount -o bind /home/你的用户名/pool/deb /var/cache/apt/archives
+此时你运行apt-get upgrade之后，apt-get每次都是从本地获取deb包了。
+对于取到的软件包列表的下载地址，只需要获取一次，以后每次升级只需将原pool目录下的几个目录删掉后重新用downloadthemall下载即可，不用每次都重新获取。

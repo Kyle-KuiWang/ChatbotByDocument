@@ -1,0 +1,123 @@
+https://wiki.deepin.org/zh/05_HOW-TO/08_%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/%E8%BD%AF%E4%BB%B6%E6%BA%90.md
+官方软件仓库
+https://community-packages.deepin.com/deepin/
+
+社区软件仓库
+诚挚感谢以下高校、开源社区和公司为深度操作系统提供镜像服务!
+
+logo 中国					
+淡江大学（台湾）	http	ftp			
+华为云	https				
+阿里云	http				
+网易	http				
+搜狐	http				
+清华大学	http				
+浙江大学	http				
+兰州大学	https	ftp			
+中国科学技术大学	http				
+中国互联网络信息中心	https				
+北京外国语大学	http				
+上海交通大学	http	ftp			
+南京大学	http	https			
+哈尔滨工业大学	http	httpv4			
+吉林大学	http	https			
+logo 比利时					
+Belnet	http	ftp			
+logo 巴西					
+Federal University of Parana (UFPR)	http	https			
+Paulista State University (UNESP)	http				
+University of Sao Paulo (USP)	http	ftp			
+logo 保加利亚					
+IPACCT	http	ftp			
+Netix Ltd	http	https	ftp	rsync	
+logo 加拿大					
+GloboTech Communications	http				
+logo 智利					
+Universidad de La Frontera	http	https	rsync		
+logo 古巴					
+FRCuba	http				
+logo 捷克					
+Czech Linux Users' Group	http				
+Faculty of Informatics	http				
+logo 丹麦					
+dotsrc.org	http	ftp			
+logo 厄瓜多尔					
+CEDIA	http	ftp			
+CEDIA1	http				
+france 法国					
+IRCAM	http	https	ftp	rsync	
+logo 德国					
+Alpix	http	https			
+FAU Erlangen-Nürnberg	http	https	ftp	rsync	
+GWDG	http	ftp	rsync		
+Tuxinator	http	ftp			
+University of Erlangen-Nürnberg	http				
+logo 希腊					
+University of Crete	http				
+ 匈牙利					
+Quantum Mirror	http	https			
+logo 意大利					
+GARR/CILEA	http				
+logo 日本					
+JAIST	http				
+KDDI R&D Laboratories Inc.	http	ftp			
+Tsukuba WIDE Public Mirror service	http				
+logo 荷兰					
+NLUUG	http	ftp			
+NLUUG1	http	ftp			
+NLUUG2	http	ftp			
+Rexum.space	https	http			
+Studenten Net Twente	http	ftp			
+logo 菲利宾					
+DOST-ASTI	http	ftp			
+logo 波兰					
+Onet	http	ftp			
+Portugal 葡萄牙					
+University of Porto	http	https	ftp	rsync	
+logo 俄罗斯					
+Truenetwork	http	ftp	rsync		
+Yandex Linux mirror	http	ftp			
+logo 新加坡					
+0x.sg	http				
+logo 斯洛伐克					
+Rainside	http	ftp			
+logo 韩国					
+AniGil Linux Archive	https	http			
+Harukasan(Pukyong National University)	https	http			
+Spain 西班牙					
+DeepinES	https				
+LibrelabUCM	http	https	rsync		
+logo 瑞典					
+Academic Computer Club Umeå University	http				
+c0urier.net		https			
+Lysator ACS	http	https	ftp		
+Zetup AB	http	https			
+logo 瑞士					
+Hostsuisse (ENIDAN Technologies GmbH)	http				
+logo 土耳其					
+DGN Technologies Information Publishing Corparation	http				
+Ukraine 乌克兰					
+IP-Connect	http	https	ftp		
+logo 英国					
+Bytemark Hosting	http	ftp			
+Bytemark Hosting1	http	ftp			
+Bytemark Hosting2	http	ftp			
+University Of Kent	http	ftp			
+logo 美国					
+Georgia Tech	http				
+Linux Kernel Archives	http	ftp	rsync		
+Princeton University	http				
+xTom	https				
+如何提供一个镜像源
+仓库	同步命令	所需大小
+软件仓库	rsync -av --delete-after rsync.deepin.com::deepin/ /var/www/deepin/	400GB
+ISO仓库	rsync -av --delete-after rsync.deepin.com::releases/ /var/www/deepin-cd/	60GB
+※备注：
+
+您可以将以上地址中/var/www/路径移到服务器的根目录下；
+请您添加一个每天运行的 cron 任务，以确保您提供的深度操作系统镜像源长期保持“最新”的可用状态；
+我们建议您优先同步深度操作系统的软件仓库，然后同步深度操作系统的 ISO 仓库；
+请您不要在深度操作系统镜像源相关的目录中存放其他文件（例如非官方的软件包），以避免造成误会；
+如果您有任何建议和意见，请反馈至support@deepin.com。
+可以到 wiki:软件源 添加或提交仓库
+标记灰色的仓库是检查出存在问题的仓库，我们会进行处理，请尽量不要使用。

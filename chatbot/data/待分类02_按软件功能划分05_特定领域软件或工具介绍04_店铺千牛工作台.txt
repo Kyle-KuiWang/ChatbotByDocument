@@ -1,0 +1,11 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/05_%E7%89%B9%E5%AE%9A%E9%A2%86%E5%9F%9F%E8%BD%AF%E4%BB%B6%E6%88%96%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04_%E5%BA%97%E9%93%BA/%E5%8D%83%E7%89%9B%E5%B7%A5%E4%BD%9C%E5%8F%B0
+千牛工作台是阿里巴巴官方出品的卖家一站式店铺管理工具，卖家可以通过它发布经营资讯消息、商业伙伴关系，借此提升卖家的经营效率，促进彼此间的合作共赢，让卖家可以更加便捷和高效的管理店铺，让生意游刃有余。
+
+安装
+sudo apt-get install apps.com.taobao.aliclient.qianniu
+
+卸载
+sudo apt-get remove apps.com.taobao.aliclient.qianniu
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/a/apps.com.taobao.aliclient.qianniu/

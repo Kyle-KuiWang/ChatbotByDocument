@@ -1,0 +1,44 @@
+https://linglong.dev/guide/ll-cli/install.html
+
+安装应用
+ll-cli install命令用来安装玲珑应用。
+
+查看ll-cli install命令的帮助信息：
+
+bash
+ll-cli install --help
+ll-cli install命令的帮助信息如下：
+
+text
+Usage: ll-cli [options] install com.deepin.demo
+
+Options:
+  -h, --help                           Displays help on commandline options.
+  --help-all                           Displays help including Qt specific
+                                       options.
+  --repo-point app                     repo type to use
+  --nodbus                             execute cmd directly, not via dbus(only
+                                       for root user)
+  --channel <--channel=linglong>       the channnel of app
+  --module <--module=runtime>          the module of app
+
+Arguments:
+  install                              install an application
+  appId                                application id
+运行ll-cli install命令安装玲珑应用:
+
+bash
+ll-cli install <org.deepin.calculator>
+ll-cli install命令需要输入应用完整的appid，若仓库有多个版本则会默认安装最高版本。
+
+安装指定版本需在appid后附加对应版本号:
+
+bash
+ll-cli install <org.deepin.calculator/5.1.2>
+ll-cli install org.deepin.calculator输出如下：
+
+text
+install org.deepin.calculator , please wait a few minutes...
+org.deepin.calculator is installing...
+message: install org.deepin.calculator, version:5.7.21.4 success
+应用安装完成后，客户端会显示安装结果信息。

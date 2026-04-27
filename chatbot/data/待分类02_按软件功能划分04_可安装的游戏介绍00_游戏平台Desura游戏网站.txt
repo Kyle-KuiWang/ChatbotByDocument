@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/04_%E5%8F%AF%E5%AE%89%E8%A3%85%E7%9A%84%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D/00_%E6%B8%B8%E6%88%8F%E5%B9%B3%E5%8F%B0/Desura%E6%B8%B8%E6%88%8F%E7%BD%91%E7%AB%99
+简介
+Desura是一个正版游戏网站，游戏玩家只要登录，即可实现在任何PC上的即时游戏下载和购买。除此之外，Desura还提供游戏玩家社区和开发者社区的交流平台，为游戏开发者提供新闻分享、论坛及图片视频分享服务等。
+
+安装
+sudo apt-get install desura
+
+卸载
+sudo apt-get remove desura
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/d/desura/

@@ -1,0 +1,223 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93
+DeepinWiki
+Linux基础知识点总结
+Linux 进阶
+
+文本操作
+
+grep
+
+全局搜索一个正则表达式，并且打印到屏幕。简单来说就是，在文件中查找关键字，并显示关键字所在行。
+
+基础语法
+
+grep text file # text代表要搜索的文本，file代表供搜索的文件
+
+# 实例
+[root@lion ~]# grep path /etc/profile
+pathmunge () {
+    pathmunge /usr/sbin
+    pathmunge /usr/local/sbin
+    pathmunge /usr/local/sbin after
+    pathmunge /usr/sbin after
+unset -f pathmunge
+常用参数
+
+-i忽略大小写，grep -i path /etc/profile
+-n显示行号，grep -i path /etc/profile
+-v只显示搜索文本不在的那些行，grep -v path /etc/profile
+-r递归查找，grep -r hello /etc，Linux 中还有一个 rgrep 命令，作用相当于grep -r
+高级用法
+
+grep可以配合正则表达式使用。
+
+grep -E path /etc/profile --> 完全匹配path
+grep -E ^path /etc/profile --> 匹配path开头的字符串
+grep -E [Pp]ath /etc/profile --> 匹配path或Path
+sort
+
+对文件的行进行排序。
+
+基础语法
+
+sort name.txt # 对name.txt文件进行排序
+实例用法
+
+为了演示方便，我们首先创建一个文件 name.txt ，放入以下内容：
+
+Christopher
+Shawn
+Ted
+Rock
+Noah
+Zachary
+Bella
+执行sort name.txt命令，会对文本内容进行排序。
+
+常用参数
+
+-o将排序后的文件写入新文件，sort -o name_sorted.txt name.txt；
+-r倒序排序，sort -r name.txt ；
+-R随机排序，sort -R name.txt ；
+-n对数字进行排序，默认是把数字识别成字符串的，因此 138 会排在 25 前面，如果添加了 -n 数字排序的话，则 25 会在 138 前面。
+wc
+
+word count的缩写，用于文件的统计。它可以统计单词数目、行数、字符数，字节数等。
+
+基础语法
+
+wc name.txt # 统计name.txt
+实例用法
+
+[root@lion ~]# wc name.txt
+- 13 13 91 name.txt
+第一个 13，表示行数；
+第二个 13，表示单词数；
+第三个 91，表示字节数。
+常用参数
+
+-l只统计行数， wc -l name.txt；
+-w只统计单词数，wc -w name.txt；
+-c只统计字节数，wc -c name.txt；
+-m只统计字符数，wc -m name.txt。
+uniq
+
+删除文件中的重复内容。
+
+基础语法
+
+uniq name.txt # 去除name.txt重复的行数，并打印到屏幕上
+uniq name.txt uniq_name.txt # 把去除重复后的文件保存为 uniq_name.txt
+【注意】它只能去除连续重复的行数。
+
+常用参数
+
+-c统计重复行数， uniq -c name.txt；
+-d只显示重复的行数，uniq -d name.txt。
+cut
+
+剪切文件的一部分内容。
+
+基础语法
+
+cut -c 2-4 name.txt # 剪切每一行第二到第四个字符
+常用参数
+
+-d用于指定用什么分隔符（比如逗号、分号、双引号等等）cut -d , name.txt；
+-f表示剪切下用分隔符分割的哪一块或哪几块区域，cut -d , -f 1 name.txt。
+重定向 管道 流
+
+在 Linux 中一个命令的去向可以有 3 个地方：终端、文件、作为另外一个命令的入参。
+
+命令一般都是通过键盘输入，然后输出到终端、文件等地方，它的标准用语是 stdin 、 stdout 以及 stderr 。
+
+标准输入stdin，终端接收键盘输入的命令，会产生两种输出；
+标准输出stdout，终端输出的信息（不包含错误信息）；
+标准错误输出stderr ，终端输出的错误信息。
+
+重定向
+
+把本来要显示在终端的命令结果，输送到别的地方（到文件中或者作为其他命令的输入）。
+
+输出重定向 >
+
+>表示重定向到新的文件，cut -d , -f 1 notes.csv > name.csv，它表示通过逗号剪切notes.csv文件（剪切完有 3 个部分）获取第一个部分，重定向到name.csv文件。
+
+我们来看一个具体示例，学习它的使用，假设我们有一个文件notes.csv，文件内容如下：
+
+Mark1,951/100,很不错1
+Mark2,952/100,很不错2
+Mark3,953/100,很不错3
+Mark4,954/100,很不错4
+Mark5,955/100,很不错5
+Mark6,956/100,很不错6
+执行命令：cut -d , -f 1 notes.csv > name.csv 最后输出如下内容：
+
+Mark1
+Mark2
+Mark3
+Mark4
+Mark5
+Mark6
+【注意】使用>要注意，如果输出的文件不存在它会新建一个，如果输出的文件已经存在，则会覆盖。因此执行这个操作要非常小心，以免覆盖其它重要文件。
+
+输出重定向 >>
+
+表示重定向到文件末尾，因此它不会像 > 命令这么危险，它是追加到文件的末尾（当然如果文件不存在，也会被创建）。
+
+再次执行cut -d , -f 1 notes.csv >> name.csv，则会把名字追加到 name.csv里面。
+
+Mark1
+Mark2
+Mark3
+Mark4
+Mark5
+Mark6
+Mark1
+Mark2
+Mark3
+Mark4
+Mark5
+Mark6
+我们平时读的 log 日志文件其实都是用这个命令输出的。
+
+输出重定向 2>
+
+标准错误输出
+
+cat not_exist_file.csv > res.txt 2> errors.log
+当我们cat一个文件时，会把文件内容打印到屏幕上，这个是标准输出；
+当使用了> res.txt时，则不会打印到屏幕，会把标准输出写入文件 res.txt文件中；
+2> errors.log当发生错误时会写入errors.log文件中。
+输出重定向 2>>
+
+标准错误输出（追加到文件末尾）同 >> 相似。
+
+输出重定向 2>&1
+
+标准输出和标准错误输出都重定向都一个地方
+
+cat not_exist_file.csv > res.txt 2>&1  # 覆盖输出
+cat not_exist_file.csv >> res.txt 2>&1 # 追加输出
+目前为止，我们接触的命令的输入都来自命令的参数，其实命令的输入还可以来自文件或者键盘的输入。
+
+输入重定向 <
+
+<符号用于指定命令的输入。
+
+cat < name.csv # 指定命令的输入为 name.csv
+虽然它的运行结果与cat name.csv一样，但是它们的原理却完全不同。
+
+cat name.csv表示cat命令接收的输入是notes.csv文件名，那么要先打开这个文件，然后打印出文件内容。
+cat < name.csv 表示cat命令接收的输入直接是notes.csv这个文件的内容，cat命令只负责将其内容打印，打开文件并将文件内容传递给 cat命令的工作则交给终端完成。
+输入重定向 <<
+
+将键盘的输入重定向为某个命令的输入。
+
+sort -n << END # 输入这个命令之后，按下回车，终端就进入键盘输入模式，其中END为结束命令（这个可以自定义）
+
+wc -m << END # 统计输入的单词
+管道|
+
+把两个命令连起来使用，一个命令的输出作为另外一个命令的输入，英文是 pipeline，可以想象一个个水管连接起来，管道算是重定向流的一种。
+
+举几个实际用法案例：
+
+cut -d , -f 1 name.csv | sort > sorted_name.txt
+# 第一步获取到的 name 列表，通过管道符再进行排序，最后输出到sorted_name.txt
+
+du | sort -nr | head
+# du 表示列举目录大小信息
+# sort 进行排序,-n 表示按数字排序，-r 表示倒序
+# head 前10行文件
+
+grep log -Ir /var/log | cut -d : -f 1 | sort | uniq
+# grep log -Ir /var/log 表示在log文件夹下搜索 /var/log 文本，-r 表示递归，-I 用于排除二进制文件
+# cut -d : -f 1 表示通过冒号进行剪切，获取剪切的第一部分
+# sort 进行排序
+# uniq 进行去重
+流
+
+流并非一个命令，在计算机科学中，流 stream 的含义是比较难理解的，记住一点即可：流就是读一点数据, 处理一点点数据。其中数据一般就是二进制格式。上面提及的重定向或管道，就是把数据当做流去运转的。
+
+到此我们就接触了，流、重定向、管道等 Linux 高级概念及指令。其实你会发现关于流和管道在其它语言中也有广泛的应用。Angular 中的模板语法中可以使用管道。Node.js 中也有 stream 流的概念。

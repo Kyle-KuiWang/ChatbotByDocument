@@ -1,0 +1,19 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/DDE/%E7%94%B5%E9%87%8F%E4%B8%8D%E8%B6%B3%E8%AF%B7%E6%8E%A5%E5%85%A5%E7%94%B5%E6%BA%90
+DeepinWiki
+搜索...
+
+/
+/
+/
+电量不足,请接入电源
+电量不足,请接入电源。但插入电源后无法恢复正常
+电量不足,请接入电源。但插入电源后无法恢复正常
+这个时候可能需要手动关闭dde-lowpower进程。
+按下Ctrl Alt F2切换到tty2
+输入用户名回车，密码回车，登录成功后执行。
+pkill dde-lowpower
+最后按Ctrl Alt F1返回桌面环境即可恢复正常。
+
+评论
+暂时没有评论。
+提供者 Wiki.js

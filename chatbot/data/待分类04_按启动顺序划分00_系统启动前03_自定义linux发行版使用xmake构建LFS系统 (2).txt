@@ -1,0 +1,254 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/04_%E6%8C%89%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%E5%88%92%E5%88%86/00_%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%89%8D/03_%E8%87%AA%E5%AE%9A%E4%B9%89linux%E5%8F%91%E8%A1%8C%E7%89%88/%E4%BD%BF%E7%94%A8xmake%E6%9E%84%E5%BB%BALFS%E7%B3%BB%E7%BB%9F
+使用 xmake 构建 LFS 系统
+shell
+bash 的启动方式：
+
+登录模式： /bin/login 读取 /etc/passwd 登录，并读取 /etc/profile 和 ~/.bash_profile 或 ~/.profile，退出时读取 ~/.bash_logout
+/etc/issue : 登录时的欢迎信息
+交互模式： /bin/bash 或 /bin/su 启动交互式 shell，复制父环境，读取 ~/.bashrc
+非交互式（脚本）： 复制父环境
+LSB 标准
+核心包：bash、bc、binutils、coreutils、diffutils、file、findutils、gawk、grep、gzip、m4、man-db、ncurses、procps、psmisc、sed、shadow、tar、util-linux、zlib；扩展：at、batch、cpio、ed、fcrontab、lsb-tools、nspr、nss、pam、pax、sendmail、time
+
+运行时： perl；扩展：python、libxml2、libxslt
+
+桌面：alsa、atk、cairo、desktop-file-utils、freetype、fontconfig、gdk-pixbuf、glib2、gtk+2、icon-naming-utils、libjpeg-turbo、libpng、libtiff、libxml2、mesalib、pango、xdg-utils、xrog；扩展：qt5、gtk+3
+
+成像：cups、cups-filters、chostscript、sane
+
+包简介
+acl ：管理访问控制列表，即文件的权限
+attr：扩展权限
+autoconf：配置构建
+automake：配置构建
+bash：通用 shell
+bc：计算器
+binutils：二进制实用工具包
+bison：yacc 编译器
+bzip2： bzip 压缩
+check： 测试
+coreutils：操作文件和目录的基本工具
+dejagnu： 测试
+diffutils：显示文件差异
+e2fsprogs：ext4 系列文件系统工具
+eudev：设备管理器
+expat：xml 解析库
+file： 文件类型信息
+findutils：查找文件
+flex：lex 词法分析器
+gawk：awk 文本处理
+gcc：编译器
+gdbm：数据库
+gettext：文本本地化
+glibc：c 标准库
+gmp：数学库
+gperf：生成散列程序
+grep：搜索文件内容
+groff：格式化文本
+grub：引导系统
+gzip：gzip 压缩
+lana-etc：网络服务
+inetutils：网络管理
+intitool：源文件提取翻译字符串
+iproute2：网络工具包
+kbd：键盘键位映射
+kmod：内核模块
+less：文本阅读
+libcap：用户权限
+libelf：elf 库
+libffi： 解释器接口
+libpipeline：子进程管道
+libtool：通用库脚本
+linux kernel：linux 系统内核
+m4：文本宏处理器
+make：构建工具
+man-db：帮助手册工具
+man-pages：手册文档
+meson：构建工具
+mpc：复数库
+mpfr：多精度算术库
+ninja：构建工具
+ncurses：终端字符屏幕库
+openssl：密码学工具
+patch：打补丁工具
+perl：perl 语言解释器
+pkg-config：包配置
+procps-ng：监视进程
+psmisc：进程信息
+python3：python 语言解释器
+readline：命令行编辑和历史
+sed：文本处理程序
+shadow：管理用户密码
+sysklogd：系统日志
+sysvinit：后台管理系统
+tar：打包文件
+tcl：测试工具
+texinfo：信息转换
+util-linux：linux 工具包
+vim：文本编辑器
+xmlparser：perl xml 解析接口
+xzutils：xz 压缩
+zlib： z 压缩
+zstd： 压缩
+开始
+首先构建交叉编译器和相关库。
+
+环境变量定义：
+
+P1 = x86_64-pc-linux-gun ：本机
+P2 = x86_64-lfs-linux-gun ：中间平台
+LFS = ~/lfs/rootfs : 新系统的根目录
+P2ROOT = ~/lfs/crosstools : 中间平台根目录
+和交叉编译系统有关的包：
+
+binutils : 汇编器，链接器等二进制工具
+gcc: 编译器
+mpfr：多精度算术库
+gmp：数学库
+glibc： c 库
+glibc++: c++ 库
+binutils
+xmake 支持调用第三方构建系统来构建，这样的好处就是最大的兼容现有的项目，同时可以有效的利用 xmake 的设置系统，这比第三方的设置要简易不少。
+
+参数解析：
+
+f ： xmake 的设置系统
+--trybuild : 表示使用的第三方构建器，autotools 是 binutils 项目配置好脚本的工具。
+--tryconfigs: 表示要传递给第三方构建器的参数，它的值就是接受 lfs 指南的相关参数。
+--prefix: 是安装目录
+--with-sysroot: 是系统目录，这会指导 binutils 的工具在该目录下搜索相关资源。（而不会在本机上搜索）
+--target： 即之前概念 build、host、target中的target。因为 binutils 也属于编译器的范畴，它也支持交叉编译。
+disable-nls: 关闭本地化
+disabel-werror: 关闭警告
+# binutils
+curl -O https://ftp.gnu.org/gnu/binutils/binutils-2.36.1.tar.xz
+tar -xavf binutils-2.36.1.tar.xz
+cd binutils-2.36.1
+xmake f --trybuild=autotools --tryconfigs="--prefix=$P2ROOT/usr/       \
+             --with-sysroot=$P2ROOT        \
+             --target=$P2          \
+             --disable-nls              \
+             --disable-werror"
+xmake
+下载相关包的香港镜像： https://mirror-hk.koddos.net/lfs/lfs-packages/10.1/
+
+后续就不介绍下载和解压缩了，直接从编译开始。
+
+gcc
+gcc 依赖 mpfr 和 mpc，需要在 gcc 目录下创建两个符号链接 mpfr 和 mpc 指向他们的源代码（或者也可直接复制到这个目录）。
+
+需要注意，gcc 需要在源文件ls目录外部构建，这种模式叫源外构建，lfs 大多数项目都应该采用源外构建的方式进行。
+
+在此回顾交叉编译的细节：
+
+我们想要的效果是建立一个独立的编译系统 C2，它运行在 P2 平台，然后通过 C2 交叉编译在 P1 平台运行的编译系统 C3。
+
+那么首先得用本机 P1 上的已有编译器 C0 来构造 C2.
+
+构造详细的流程是：
+
+C0 -> C1 (build=P1, host=P1, target=P2)
+C1 是 p1->p2 的交叉编译器
+C1 -> C2 (build=P1, host=P2, target=P1)
+C2 是 p2->p1 的交叉编译器
+C2 -> C3 (build=P2, host=P1, target=P1)
+C3 是 p1->p1 的普通编译器
+C3 -> C4 (build=P1, host=P1, target=P1)
+C4 是在新平台上重构的普通编译器
+注意 C1 这个中间的编译器是需要的，因为本机上没有 p1 -> p2 的交叉编译器，因此你不能直接从 C0 -> C2，这是交叉编译。
+
+C4 和 C3 都能正常工作，但是构建 C3 时，没有在构建时验证 C3，因为它是交叉编译的。它的验证工作要在目标机上执行。
+
+# 创建符号链接
+ln -s ../mpfr-4.1.0/ mpfr
+ln -s ../gmp-6.2.1/ gmp
+
+cd .. # 退出 gcc 的源文件目录
+xmake f --trybuild=autotools --tryconfigs="--target=$P2                              \
+    --prefix=$P2ROOT/usr                            \
+    --with-glibc-version=2.11                      \
+    --with-sysroot=$P2ROOT                            \
+    --with-newlib                                  \
+    --without-headers                              \
+    --enable-initfini-array                        \
+    --disable-nls                                  \
+    --disable-shared                               \
+    --disable-multilib                             \
+    --disable-decimal-float                        \
+    --disable-threads                              \
+    --disable-libatomic                            \
+    --disable-libgomp                              \
+    --disable-libquadmath                          \
+    --disable-libssp                               \
+    --disable-libvtv                               \
+    --disable-libstdcxx                            \
+    --enable-languages=c,c++"
+linux header
+glibc 依赖 linux header（系统头文件）。
+
+make headers
+make headers_install INSTALL_HDR_PATH=$P2ROOT/usr
+glibc
+注意 glibc 不是编译器，它是库，也就是目标程序的一部分。所以它的 host 不是 P1 ，而是 P2。
+
+glibc 的路径是相对 P2 根目录的。
+
+因为这将进行一次交叉编译，即 p1->p2，所以路径里面要提供我们新构造的 C1 编译器。
+
+PATH=$PATH:$P2ROOT/usr/bin ../glibc-2.33/configure                             \
+      --prefix=$P2ROOT/usr                      \
+      --host=$P2                   \
+      --build=$P1 \
+      --enable-kernel=3.2                \
+      --with-headers=$P2ROOT/usr/include
+PATH=$PATH:$P2ROOT/usr/bin make
+PATH=$PATH:$P2ROOT/usr/bin make install # 安装到相对位置DESTDIR=$P2ROOT
+
+# 修复头文件
+$P2ROOT/usr/libexec/gcc/x86_64-lfs-linux-gnu/10.2.0/install-tools/mkheaders
+libstdc++
+c++ 标准库。类似 c 库的做法。
+
+libstdc++ 属于 gcc 源码包的一部分，在里面找到 libstdc++-v3 目录。
+
+PATH=$PATH:$P2ROOT/usr/bin ../gcc-10.2.0/libstdc++-v3/configure \
+          --host=$P2                 \
+          --build=$P1      \
+          --prefix=$P2ROOT/usr                   \
+          --disable-multilib              \
+          --disable-nls                   \
+          --disable-libstdcxx-pch         \
+          --with-gxx-include-dir=$P2ROOT/usr/$P2/include/c++/10.2.0
+PATH=$PATH:$P2ROOT/usr/bin make
+PATH=$PATH:$P2ROOT/usr/bin make install
+至此，完成了交叉编译器 C1 （build=P1, host=P1, target=P2)。
+
+完成 C2
+C1 是一个简化版编译器。
+
+它其实还没能脱离宿主机（即本机 P1），构建要用到的工具，也还是本机上的，我们想构建完全独立的 P2 环境，就要使用 C1 交叉编译这些基本的工具。
+
+基本工具包：M4、Ncurses、bash、coreutils、diffutils、file、findutils、gawk、grep、gzip、make、patch、sed、tar、xz。
+
+准备好之后，构建 C2 （build=P1, host=P2, target=P1) 的编译器包：binutils、gcc、glibc、stdc++。
+
+M4
+todo： gcc pass 1 没有完成结尾的修复头文件任务。。
+https://www.linuxfromscratch.org/lfs/view/stable/chapter06/m4.html
+宏处理器。
+
+# 修复和 glibc 2.28 以上版本的兼容性
+sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+
+PATH=$P2ROOT/usr/bin:$PATH ../m4-1.4.18/configure \
+            --prefix=$P2ROOT/usr   \
+            --host=$P2 \
+            --build=$P1
+PATH=$P2ROOT/usr/bin:$PATH make
+PATH=$P2ROOT/usr/bin:$PATH make install
+参考
+为 Linux 构建和安装软件包: https://tldp.org/HOWTO/Software-Building-HOWTO.html
+从源代码安装的初学者指南: http://moi.vonos.net/linux/beginners-installing-from-source/
+源码包的香港镜像： https://mirror-hk.koddos.net/lfs/lfs-packages/10.1/
+源码包的官方地址： https://www.linuxfromscratch.org/lfs/view/stable/chapter03/packages.html

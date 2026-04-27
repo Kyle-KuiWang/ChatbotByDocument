@@ -1,0 +1,32 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/DBeaver
+
+DeepinWiki
+搜索...
+
+/
+/
+/
+/
+/
+/
+DBeaver
+页面内容
+讨论
+最后编辑
+blue_whale
+02/22/2023
+简介
+DBeaver是一个通用的数据库管理工具和SQL客户端，支持 MySQL、PostgreSQL、Oracle、 DB2、MSSQL、 Sybase、 Mime、 HSQLDB、Derby以及其他兼容 JDBC 的数据库。DBeaver 提供一个图形界面用来查看数据库结构、执行SQL查询和脚本，浏览和导出数据，处理BLOB/CLOB数据，修改数据库结构等。
+
+安装
+sudo apt-get install dbeaver-ce
+
+卸载
+sudo apt-get remove dbeaver-ce
+
+仓库地址
+http://packages.deepin.com/deepin/pool/non-free/d/dbeaver-ce
+
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

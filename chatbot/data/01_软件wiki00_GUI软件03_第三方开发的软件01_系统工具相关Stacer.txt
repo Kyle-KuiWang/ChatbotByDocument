@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/01_%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/Stacer
+简介
+Stacer 是一款开源的系统优化、应用程序监视软件，能从各方面管理整个系统，拥有管理启动项、清理垃圾、服务管理、进程管理、卸载软件、资源管理等功能。
+dashboard.png
+
+安装
+sudo apt install com.github.stacer
+卸载
+sudo apt remove --purge com.github.stacer
+仓库地址
+http://packages.deepin.com/deepin/pool/main/s/stacer/
+
+常见问题
+相关链接
+Stacer 官方网站：https://oguzhaninan.github.io/Stacer-Web/

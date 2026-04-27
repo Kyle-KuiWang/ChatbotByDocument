@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_Office_%E7%BC%96%E8%BE%91%E5%99%A8_%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB%E7%AE%A1%E7%90%86/%E5%90%84%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E7%8C%AE%E8%AF%BB%E5%8F%96/ChmSee
+简介
+ChmSee是一个在Linux下阅读CHM格式帮助文件的软件，对中文支持良好，目前支持简体和英文编码的CHM文件。chmsee具有与Firefox类似的分页浏览标签，能够自动检测编码，可以收藏书签，以及设置字体等。
+
+安装
+sudo apt-get install chmsee
+
+卸载
+sudo apt-get remove chmsee
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/c/chmsee/

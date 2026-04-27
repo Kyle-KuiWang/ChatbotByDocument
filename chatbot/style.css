@@ -1,0 +1,175 @@
+/* style.css */
+
+/* 全局样式 */
+body {
+    font-size: 15px; /* 设定基础字体大小 */
+    background-color: rgb(243, 230, 230)
+}
+
+textarea {
+    font-size: 17px;
+    padding: 10px;
+    max-width: 90%;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    /* 控制文本区是否可调整大小 */
+    resize: none;
+}
+
+button {
+    background: url('send.png') no-repeat; /* 使用图像作为背景 */
+    border: none; /* 移除边框 */
+    width: 40px; /* 设置图像的宽度 */
+    height: 40px; /* 设置图像的高度 */
+    cursor: pointer; /* 设置鼠标光标样式 */
+    margin-left: 2%;
+    margin-top: 1%;
+}
+
+
+/* class  */
+.container {
+    width: 20vw;
+    height: 90vh;
+    max-width: 25vw;
+    margin-top: 4em;
+    margin-bottom: 4em;
+    margin-left: 0em;
+    font-family: Arial, sans-serif;
+}
+
+
+
+
+
+.chat-box {
+    display: flex; /* 启用Flexbox */
+    position: fixed; /* 使聊天框固定在底部 */
+    bottom: 0; /* 将聊天框放在底部 */
+    right: 15vm;
+    margin-left: 10vw;
+    margin-bottom: 1vh;
+    margin-right: 3vw;
+    /*transform: translateX(-50%); /* 使其真正居中 */
+    width: 72vw; /* 使聊天框宽度与页面相同 */
+    background-color: rgba(242, 251, 237, 0.79); /* 背景颜色 */
+    padding: 15px; /* 一些内边距 */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 上方阴影 */
+    border-radius: 5px;
+    /* border: 1px solid #cfb7b7;
+    padding: 10px;
+    margin-top: 20px; */
+}
+
+.top-bar {
+    position: fixed; /* 使顶部栏固定 */
+    top: 0; /* 将顶部栏放在页面顶部 */
+    width: 110%; /* 使顶部栏宽度与页面相同 */
+    background-color: rgba(241, 241, 241, 0); /* 背景颜色 */
+    padding: 10px; /* 一些内边距 */
+    text-align: center; /* 文本居中 */
+    font-weight: bold; /* 粗体字 */
+    box-shadow: 0 2px 10px rgb(0, 0, 0); /* 下方阴影 */
+
+    margin-left: -5em;
+}
+
+
+/* new */
+.message {
+    display: flex;
+    align-items: flex-start; /* 上部对齐 */
+    margin-bottom: 10px;
+}
+
+.message.bot {
+    justify-content: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.user .avatar {
+    background-image: url('user.png'); /* 用户头像 */
+    margin-left: 8px;
+}
+
+.avatar {
+    width: 35px; /* 调整为合适的大小 */
+    height: 35px;
+    background-image: url('bot.png'); /* 机器人头像 */
+    background-size: cover;
+}
+
+
+.bubble {
+    max-width: 70%; /* 限制宽度，让文本自动换行 */
+    padding: 15px;
+    border-radius: 10px;
+    margin: 0 10px;
+    overflow-wrap: break-word; /* 添加这一行来实现自动换行 */
+    word-wrap: break-word; /* 同上，用于一些旧版浏览器 */
+}
+
+.message.user .bubble {
+    background-color: #0ce10c; /* 用户气泡颜色 */
+}
+
+.message.bot .bubble {
+    background-color: rgb(255, 255, 255); /* 机器人气泡颜色 */
+}
+
+
+/* id */
+
+
+#conversation {
+    max-width: 72vw;
+    margin-left: 10vw;
+    margin-top: -95vh;
+    display: none;
+    max-height: 65vh; /* 使用视口高度的百分比 */
+    overflow-y: scroll;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    /* 滚动条 */
+    scrollbar-width: thin; /* 用于 Firefox */
+    scrollbar-color: #ccc transparent; /* 用于 Firefox */
+
+    background-color: rgba(244, 242, 246, 0.959);
+
+}
+
+/* 自定义滚动条样式 */
+#conversation::-webkit-scrollbar {
+    width: 15px;
+}
+
+#conversation::-webkit-scrollbar-track {
+    background: transparent; /* 背景颜色 */
+}
+
+#conversation::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* 滑块颜色 */
+    border-radius: 5px; /* 滑块边框圆角 */
+}
+
+#user-input {
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+
+
+
+
+
+
+
+

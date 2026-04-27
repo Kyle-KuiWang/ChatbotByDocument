@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/01_%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/%E7%B3%BB%E7%BB%9F%E7%9B%91%E8%A7%86%E5%99%A8
+简介
+系统监视器（gnome-system-monitor）是一个开源的应用程序，为用户提供一个监控整个Linux的操作系统的程序，包括运行的进程、资源和文件系统。
+
+安装
+sudo apt-get install gnome-system-monitor
+
+卸载
+sudo apt-get remove gnome-system-monitor
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/g/gnome-system-monitor/
+
+¶常见问题
+相关链接

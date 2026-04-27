@@ -1,0 +1,160 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/02_XDG%E8%A7%84%E8%8C%83/%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%BD%95%E7%9A%84Dbus%E6%8E%A5%E5%8F%A3
+方法
+Terminate()和ActivateSession()的工作与Manager对象上的TerminateSeat()、ActivationSessionOnSeat()相似。
+
+SwitchTo()切换到虚拟终端vtnr上的会话。 SwitchToNext()和SwitchToPrevious()按照虚拟终端的顺序，分别切换到seat上的下一个和上一个会话。如果没有活动的会话，它们分别切换到seat上的第一个和最后一个会话。
+
+信号
+每当ActiveSession、Sessions、CanGraphical、CanTTY或空闲状态发生变化时，propertyChanged信号就会被发送出去，客户端可以监听这个信号。
+
+属性
+Id属性对seat的ID进行编码。
+
+ActiveSession编码当前的活动会话（如果有的话）。它是一个由会话ID和对象路径组成的结构。
+
+CanTTY编码会话是否适用于文本登录，CanGraphical编码是否适用于图形会话。
+
+Sessions属性是这个seat的所有当前会话的数组，每个会话都被编码为由ID和对象路径组成的结构。
+
+IdleHint、IdleSinceHint和 IdleSinceHintMonotonic属性对空闲状态进行编码，与 Manager对象上暴露的属性类似，但对这个seat来说是特定的
+
+用户对象
+node /org/freedesktop/login1/user/_1000 {
+  interface org.freedesktop.login1.User {
+    methods:
+      Terminate();
+      Kill(in  i signal_number);
+    properties:
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly u UID = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly u GID = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Name = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly t Timestamp = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly t TimestampMonotonic = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s RuntimePath = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Service = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Slice = '...';
+      readonly (so) Display = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("false")
+      readonly s State = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("false")
+      readonly a(so) Sessions = [...];
+      readonly b IdleHint = ...;
+      readonly t IdleSinceHint = ...;
+      readonly t IdleSinceHintMonotonic = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("false")
+      readonly b Linger = ...;
+  };
+  interface org.freedesktop.DBus.Peer { ... };
+  interface org.freedesktop.DBus.Introspectable { ... };
+  interface org.freedesktop.DBus.Properties { ... };
+};
+方法
+Terminate() 和Kill() 工作方式类似 在manager上的TerminateUser() 和 KillUser() 方法
+
+信号
+每当Sessions 或者idle 状态 发生变化时，propertyChanged信号就会被发送出去，客户端可以监听这个信号。
+
+属性
+UID和GID属性对用户的Unix UID 和主 GID 进行编码。
+Name属性对用户名进行编码。
+Timestamp和TimestampMonotonic分别在CLOCK_REALTIME和CLOCK_MONOTONIC时钟中以UNIX时间戳微秒为单位编码用户的登录时间。
+RuntimePath对用户的运行时路径进行编码，即$XDG_RUNTIME_DIR. 有关详细信息，请参阅 XDG Basedir 规范 。
+Service包含此用户的用户 systemd 服务的单元名称。每个登录的用户都被分配了一个运行用户 systemd 实例的用户服务。这通常是user@.service.
+Slice包含此用户的用户 systemd 切片的单元名称。每个登录用户都会获得一个私有切片。
+Display编码应将哪个图形会话用作用户的主要 UI 显示。它是一个编码会话 ID 和要使用的会话的对象路径的结构。
+State对用户状态进行编码，是“ offline”、“ lingering”、“ online”、“ active”或“ closing”之一。有关状态的更多信息，请参见 sd_uid_get_state (3) 。
+Sessions是编码用户所有当前会话的结构数组。每个结构都由 ID 和对象路径组成。
+IdleHint、IdleSinceHint 和 IdleSinceHintMonotonic属性对用户的空闲提示状态进行编码，类似于Manager的属性，但特定于该用户。
+Linger属性显示是否为此用户启用了延迟。
+会话对象
+node /org/freedesktop/login1/session/1 {
+  interface org.freedesktop.login1.Session {
+    methods:
+      Terminate();
+      Activate();
+      Lock();
+      Unlock();
+      SetIdleHint(in  b idle);
+      SetLockedHint(in  b locked);
+      Kill(in  s who,
+           in  i signal_number);
+      TakeControl(in  b force);
+      ReleaseControl();
+      SetType(in  s type);
+      TakeDevice(in  u major,
+                 in  u minor,
+                 out h fd,
+                 out b inactive);
+      ReleaseDevice(in  u major,
+                    in  u minor);
+      PauseDeviceComplete(in  u major,
+                          in  u minor);
+      SetBrightness(in  s subsystem,
+                    in  s name,
+                    in  u brightness);
+    signals:
+      PauseDevice(u major,
+                  u minor,
+                  s type);
+      ResumeDevice(u major,
+                   u minor,
+                   h fd);
+      Lock();
+      Unlock();
+    properties:
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Id = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly (uo) User = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Name = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly t Timestamp = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly t TimestampMonotonic = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly u VTNr = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly (so) Seat = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s TTY = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Display = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly b Remote = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s RemoteHost = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s RemoteUser = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Service = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Desktop = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Scope = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly u Leader = ...;
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly u Audit = ...;
+      readonly s Type = '...';
+      @org.freedesktop.DBus.Property.EmitsChangedSignal("const")
+      readonly s Class = '...';
+      readonly b Active = ...;
+      readonly s State = '...';
+      readonly b IdleHint = ...;
+      readonly t IdleSinceHint = ...;
+      readonly t IdleSinceHintMonotonic = ...;
+      readonly b LockedHint = ...;
+  };
+  interface org.freedesktop.DBus.Peer { ... };
+  interface org.freedesktop.DBus.Introspectable { ... };
+  interface org.freedesktop.DBus.Properties { ... };
+};

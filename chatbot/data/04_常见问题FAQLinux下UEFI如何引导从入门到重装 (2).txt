@@ -1,0 +1,219 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/Linux%E4%B8%8BUEFI%E5%A6%82%E4%BD%95%E5%BC%95%E5%AF%BC%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E9%87%8D%E8%A3%85
+DeepinWiki
+7.4 引导命令行
+默认的启动过程是：
+
+normal.mod 模块
+$prefix/grub.cfg 应先设置set root/set prefix变量
+引导进入grub命令行，即出现grub>可以输入grub 命令行工具，来修复引导。类似bash，可以使用TAB补全和上下按键寻找历史命令。
+
+ls 列出分区。
+ls (hd2,gpt1) 显示分区类型
+ls (hd2,gpt1)/ 显示分区内容
+set pager=1 设置信息滚动一屏暂停
+set 显示环境变量，重要信息
+set root=(hd2,gpt1) 设置根目录位置
+insmod 路径 装载模块，模块一般在/boot/grub/x86_64-efi/目录下，如果没有装载模块，很多命令都不能正常使用
+minicmd.mod 很多命令在这个模块
+normal.mod 基本模块，增加normal命令，进入正常模式。
+linux.mod linux内核装载模块
+congfigfile 路径 装载grub目录文件，确保首先正确加载了相关mod，否则启动菜单也无法引导系统
+linux 路径 装载linux内核
+linux16 路径 旧款linux内核
+initrd 路径 装载系统映像
+initrd16 路径 配合linux16使用
+set prefix=(hd2,gpt1)/boot/grub/ 设置grub目录位置
+boot 启动linux系统映像，多重引导规范
+chainloader (hd2,gpt2) +1 调到下一个引导管理器，链式引导
+chainloader /efi/microsoft/boot/bootmgfw.efi 启动gpt模式的windows引导管理器。
+drivemap -s (hd0) (hd1) 安装dos需要在第一个设备，drivemap交换映射
+parttool 隐藏分区，安装dos用
+可用命令列表：
+
+$? 返回值，0为true，非0为false
+[ : 检查表达式，[ -d 目录是否存在；[ -e 是否存在；[ -f 文件是否存在；[ -s 非空文件；[ -n 非空字符串；[ -z 空字符串；[ (布尔表达式)； -a 与； -o或； ==； !=； <; <=; >; >=； -eq 整数等；-ge 整数大于等于； -gt 整数大于； -le 整数小于等于； -lt整数小于； -ne 整数不等；-pgt; -plt; -nt;-ot
+acpi: 加载acpi表
+authenticate: 检查用户是否在用户列表中
+background_color: 设置活动终端背景颜色
+background_image: 活动终端的背景图
+badram: 过滤掉内存坏区
+blocklist: 块表
+boot: 启动
+cat: 显示内容 --dos
+chainloader: 链式加载引导管理器
+clear: 清屏
+cmosclean: 清CMOS
+cmosdump: 转储CMOS内容
+cmostest: CMOS测试
+cmp: 比较两文件不同
+configfile: 加载配置菜单文件
+cpuid: 检查cpu功能
+crc: 计算crc32校验和
+cryptomount: 挂载加密设备，luks.mod,geli.mod
+date: 时间
+devicetree: 加载设备树
+distrust: 不信任的公钥
+drivemap: 驱动器映射
+echo: 回显
+eval: 执行参数表示的命令
+export: 导出环境变量
+false: 假
+gettext: 翻译字符串,locale_dir/*.mod
+gptsync: 根据GPT填充MBR
+halt: 关机
+hashsum: 计算哈希校验和 --hash --keep-going --uncompress --check --prefix
+help: 显示帮助信息
+initrd: 加载linux映像包
+initrd16:
+insmod: 加载模块
+keystatus: 检查按键状态
+linux: 加载linux内核，其余参数作为内核参数添加
+linux16:
+list_env: 列出环境块中的变量
+list_trusted: 列出可信公钥
+load_env: 加载环境储存块
+loadfont: 加载字体
+loopback: 从映像中创建设备，-d删除设备
+ls: 列出设备或文件
+lsfonts: 列出加载的字体
+lsmod: 列出加载的模块
+md5sum: 计算md5哈希
+module: 多引导内核加载模块
+multiboot: 加载多引导兼容内核
+nativedisk: 本机磁盘驱动
+normal: 进入正常模式，自动执行脚本，装载模块
+normal_exit: 退出正常模式
+parttool: 修改分区表条目
+password: 密码
+password_pbkdf2: 哈希密码
+play: 播放曲子
+probe: 检索设备信息
+pxe_unload: 卸载PXE环境
+read: 读入用户输入
+reboot: 重启
+regexp: 测试正则表达式
+rmmod: 删除模块
+save_env: 保存变量到储存块
+search: 搜索设备，--file|--label|--fs-uuid --set --no-floppy
+sendkey: 模拟按键
+set: 设置环境变量
+sha1sum: 计算sha1哈希
+sha256sum: 计算sha256哈希
+sha512sum: 计算sha512哈希
+sleep: 暂停指定秒,--verbose 显示倒计时
+source: 读取配置文件
+test: 检查文件类型并比较值
+true: 真
+trust: 可信秘钥
+unset: 取消环境变量
+uppermem: 高端内存大小
+verify_detached: 验证分离的数字签名
+videoinfo: 列出可用的视频模式
+xen_hypervisor: 加载xen
+xen_linux: 加载xen
+xen_initrd: 加载xen
+xen_xsm: 加载xen
+特殊环境变量：
+
+biosnum: bios启动设备号
+check_signatures: 数字签名验证
+chosen: 选择的菜单项
+cmdpath: 定位于引导映像启动的路径
+color_highlight: 高亮时前景色/背景色
+color_normal: 前景色/背景色
+config_directory: 配置文件目录
+config_file: 配置文件
+debug: 启用调试信息输出
+default: 默认菜单项,参考grub-set-default/grub-reboot
+fallback: 备用菜单项
+gfxmode: 使用gfxterm图形终端
+gfxpayload: linux内核视频模式
+gfxterm_font: gfxterm字体
+grub_cpu: 构建的cpu类型
+grub_platform: pc/efi
+icondir: 图标目录
+lang: zh_CN
+locale_dir: 本地化目录/boot/grub/locale
+menu_color_highlight: 菜单项高亮模式前景色/背景色
+menu_color_normal: 菜单项前景色/背景色
+net_<interface>_boot_file:
+net_<interface>_dhcp_server_name:
+net_<interface>_domain:
+net_<interface>_extensionspath:
+net_<interface>_hostname:
+net_<interface>_ip:
+net_<interface>_mac:
+net_<interface>_next_server:
+net_<interface>_rootpath:
+net_default_interface:
+net_default_ip:
+net_default_mac:
+net_default_server:
+pager: 显示信息长度（/页）暂停
+prefix: /boot/grub
+pxe_blksize:
+pxe_default_gateway:
+pxe_default_server:
+root: 根目录所在位置
+superusers: 超级用户
+theme: 主题
+timeout: 倒计时
+timeout_style: 倒计时显示方式
+环境储存块：
+
+/boot/grub/grubenv 1k,load_env,save_env
+7.5 busyBox
+busyBox 是一个微型linux系统，一般用在救援系统。
+7.6 演练
+grub的内容相当杂乱，庞大而复杂，所以整理起来也是非常艰难。如果实在看不懂，那么就照以下步骤进行即可（所有步骤皆实际操作）：
+
+#系统默认已经安装grub，uefi环境下，也就是我推荐的方式，安装的grub组件包括：grub-common、grub-efi-amd64、grub-efi-amd64-bin、grub2-common
+# 首先切换到root 管理账号，得到管理权限
+sudo passwd root
+su
+
+apt list grub* #列出grub相关包，可以看出已经安装的grub包，确认是否uefi环境，然后继续
+
+#1. 简单安装
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=mygrub #x86_64-efi就是grub 的uefi引导框架，--efi-directory这个指示了esp挂载的根在哪里。因为我的esp分区挂载在/boot/efi目录，所以选择在哪里，因此你也可以根据自己的实际情况设置esp分区的根。--bootloader-id 这个参数会在esp分区的/efi/目录下生成对应的文件夹。和mircosoft，ubuntu等文件夹平级。这个命令并不会生成esp分区的/efi/boot/bootx64.efi 默认启动器，只会生成对应文件夹的/efi/mygrub/grubx64.efi启动器，这个时候就没有默认的启动器，如果你想要,可以复制：
+
+mkdir /boot/efi/efi/boot
+mv /boot/efi/efi/mygrub/grubx64.efi /boot/efi/efi/boot
+
+
+#2. 定制安装
+# 自动生成的启动器，符合大多数要求，为了演示，接下来对其中某些过程进行定制
+# 首先要理解grub-install干了什么，它首先调用了grub-mkconfig生成了菜单，然后调用grub-mkimage生成启动映像
+
+#2.1 生成菜单，会自动调用os-prober搜索磁盘的其他系统，生成菜单
+mkdir -p /boot/efi/efi/grub2
+grub-mkconfig -o /boot/efi/efi/grub2/grub.cfg
+
+# 自动生成的菜单是根据/etc/grub.d/ 下的脚本，和/etc/default/grub来生成的。因为要定制，所以可以对这个生成后的脚本直接进行编辑。
+
+cd /boot/efi/efi/grub2
+nano grub.cfg
+#一般只需要增加或删减菜单项即可
+
+
+#2.2 生成启动映像
+grub-mkimage -o grub2.efi --prefix=/efi/grub2 --format=x86_64-efi fat.mod part_gpt.mod #必须要带这俩个模块，否则无法读取gpt分区和fat文件系统的内容，映像必须要读取菜单文件grub.cfg，--prefix指明grub目录位置，另外，菜单用的命令模块也在x86_64-efi目录下面。
+
+cp grub2.efi /boot/efi/efi/boot/bootx64.efi #这个是磁盘默认启动的efi
+cp grub2.efi /boot/efi/efi/grub2 #我自定义的grub目录，即现在这个目录已经有grub2.efi 和grub.cfg ,注意grub.cfg的名字是不能改的，已经被固定了，grub2.efi会在设定的目录自动找这个文件。
+cp /usr/lib/grub/x86_64-efi /boot/efi/efi/grub2 -r #复制所有模块到目录下面
+#重启即可使用自定义菜单启动系统。
+cp /boot/vmlinuzxxx /boot/efi/efi/debian/vmlinuz
+cp /boot/initrd.imgxxx /boot/efi/efi/debian/initrd.img
+#复制默认在/boot目录下的内核和映像盘到我想要的目录下，因为我在grub.cfg新增了一个测试菜单项，路径就指向那里，演示的是debian系统，所以里面已经有debian目录，就复制到那里即可。
+
+#2.3 修改主板菜单
+# 最好是从主板菜单启动，因为bootx64.efi会被其他系统抢用。
+efibootmgr -c -d /dev/sda -p 1 -l /efi/grub2/grub2.efi -L grub2-debian -g #-c新建，-d 磁盘；-p 分区；-l 启动路径；-L 菜单标题； -g gpt分区。
+
+efibootmgr -b 0005 -B #删除编号0005的菜单项
+
+#以上在debian虚拟机中测试通过，但是这里是手写的，所以也许有纰漏。
+评论
+评论加载中...
+提供者 Wiki.js

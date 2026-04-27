@@ -1,0 +1,33 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9/topic%E4%BB%93%E5%BA%93%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E
+
+DeepinWiki
+topic仓库机制说明
+仓库
+讨论
+最后编辑
+zeno
+02/22/2023
+简介
+
+为方便可持续开发集成等需求，启动topic的管理机制，对代码变更进行标签化的分类，可以很方便的选择提交PR时自动构建的产物存放的仓库，方便进行rc（release-candidate）阶段的多源码包相关性项目进行联调测试，简化集成流程，提高集成准确率、自动化率，方便后期的主题相关的代码、软件包仓库的回溯。
+
+使用方式
+
+从deepin-comunity fork 项目到个人账户下
+从个人账户下clone项目到本地
+添加upstream相关信息
+git remote add upstream "urlxxxx"
+git checkout upstream/master #切到upstream的游离分支
+git checkout -b topic-grep-test #切出本地分支,若需要使用topic机制需采用topic-开头的形式命名分支
+修复代码，推送topic开头命令的分支到个人账户下的仓库中
+提交PR，从topic分支合入到upstream的master分支
+构建通过后的deb包自动推送到topic仓库中
+仓库地址：https://ci.deepin.com/repo/topics/beige/ #合并之后自动在ci仓库下创建grep-test的仓库
+仓库使用方式
+echo "deb [trusted=yes] https://ci.deepin.com/repo/topics/beige/grep-test/ unstable main
+" >> /etc/apt/source.list
+参考样例
+https://github.com/deepin-community/grep/pull/5
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

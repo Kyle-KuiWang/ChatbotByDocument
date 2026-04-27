@@ -1,0 +1,18 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_deepin%E6%B7%B1%E5%85%A5/01_DTK%E7%9B%B8%E5%85%B3/00_Dock/Cairo-Dock
+Cairo-Dock
+页面内容
+讨论
+最后编辑
+Administrator
+02/22/2023
+简介
+Cairo-Dock是一个Dock类软件，它支持OpenGL、提供动画及视觉效果的插件、新的Applet、重写配置面板、新增主题等功能。
+
+安装
+sudo apt-get install cairo-dock
+
+卸载
+sudo apt-get remove cairo-dock
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/c/cairo-dock/

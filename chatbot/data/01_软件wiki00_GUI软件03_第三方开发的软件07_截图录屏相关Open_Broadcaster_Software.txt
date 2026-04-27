@@ -1,0 +1,15 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/07_%E6%88%AA%E5%9B%BE%E5%BD%95%E5%B1%8F%E7%9B%B8%E5%85%B3/Open_Broadcaster_Software
+简介
+Open Broadcaster Software是一款视频录制和直播的应用，可以捕捉游戏、窗口、视频、音频、摄像头、麦克风等内容来源，其中还内置了不少可以进行流媒体直播的服务，例如YouTube、Twitch、hitbox等，还支持自定义流媒体服务。
+
+安装
+sudo apt-get install obs-studio
+
+卸载
+sudo apt-get remove obs-studio
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/o/obs-studio/
+
+常见问题
+相关链接

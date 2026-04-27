@@ -1,0 +1,32 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/07_%E6%B8%97%E9%80%8F%E5%BC%80%E5%8F%91_%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E6%B8%97%E9%80%8F%E5%BC%80%E5%8F%91/%E5%A6%82%E4%BD%95%E5%9C%A8deepin%E4%B8%8A%E5%AE%89%E8%A3%85kali%E8%BD%AF%E4%BB%B6
+简介
+本经验由深度用户(geange)分享，原文地址
+由deepin用户ExplosiveBattery补充
+
+正文
+相必有些人会知道一个项目，专门为debian或者ubuntu安装来自于kali的软件katoolin（ExplosiveBattery推荐使用katoolin，https://github.com/LionSec/katoolin，因为这个项目会有人维持着更新）
+
+我也有尝试过使用这个软件，但是用python写的一个小脚本让我觉得它的界面实在是不太好看，所以参考了katoolin项目的代码后，我用bash重写这个项目。加上了bash中whiptail，让界面更加好看（话说好不好看也是看个人吧）
+
+先贴katoolin一下项目的地址吧 https://github.com/geange/kaliTools
+这个项目是deepin linux上进行的（不得不说deepin这个国产linux在图形界面做的相当不错，以至于我都抛弃了习惯的ubuntu）。
+
+如何使用
+
+git clone git@github.com</a>:geange/kaliTools.git
+cd kaliTools/
+chmod +x index.sh
+sudo ./index.sh
+你将会看到初始界面
+
+选择第一个，按下Enter键，kaliTools将会添加kali的源到你本机的系统中。
+
+第二个选项是删除kali的源，建议更新系统时删除kali的源，以免出现依赖冲突的问题
+第三个选项是批量安装kali分类的软件，按下enter键进入后会出现选项，可以选择单选或者多选（按下空格键可以勾选或者取消勾选）
+第四个选项是按需要安装kali的软件，需要哪一个就安装哪一个
+第五个选项退出软件（我对bash还不太熟悉，不知道怎么按下cancel键退出。。。） （进入第三或者第四个选项时，如果需要退出，按下ESC键即可）
+如果觉得不错，请帮我在github点个星，谢谢了-。有BUG也可以联系我，邮箱geange@outlook.com
+
+我的项目地址
+
+https://github.com/geange/kaliTools

@@ -1,0 +1,43 @@
+https://linglong.dev/guide/ll-builder/build.html
+
+构建应用
+ll-builder build命令用来构建玲珑应用。
+
+查看ll-builder build命令的帮助信息：
+
+bash
+ll-builder build --help
+ll-builder build命令的帮助信息如下：
+
+text
+Usage: ll-builder [options] build
+
+Options:
+  -v, --verbose  show detail log
+  -h, --help     Displays help on commandline options.
+  --help-all     Displays help including Qt specific options.
+  --exec <exec>  run exec than build script
+
+Arguments:
+  build          build project
+ll-builder build命令必须运行在工程的根目录，即linglong.yaml文件所在位置。
+
+以玲珑项目org.deepin.demo为例，构建玲珑应用主要步骤如下：
+
+进入到org.deepin.demo项目工程目录：
+
+bash
+cd org.deepin.demo
+执行ll-builder build命令将开始构建玲珑应用:
+
+bash
+ll-builder build
+构建完成后，构建内容将自动提交到本地ostree缓存中。导出构建内容见 ll-builder export。
+
+使用--exec参数可在构建脚本执行前进入玲珑容器：
+
+bash
+ll-builder build --exec /bin/bash
+进入容器后，可执行shell命令，如gdb、strace 等。
+
+玲珑应用debug版本更多调试信息请参考：DEBUG。

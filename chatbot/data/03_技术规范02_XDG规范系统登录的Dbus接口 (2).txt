@@ -1,0 +1,74 @@
+https://wiki.deepin.org/zh/03_%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83/02_XDG%E8%A7%84%E8%8C%83/%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%BD%95%E7%9A%84Dbus%E6%8E%A5%E5%8F%A3
+方法
+Terminate(), Activate(), Lock(), Unlock()和 Kill()的工作类似于对 Manager对象的调用。
+SetIdleHint()由会话对象调用，以便在会话的空闲状态发生变化时更新它的状态。
+TakeControl()允许一个进程对该会话进行独家管理设备访问控制。在任何时候，只有一个D-Bus连接可以成为一个特定会话的控制器。如果设置了force参数（仅适用于root），现有的控制器将被踢出并替换。否则，如果已经有一个控制器，这个方法就会失效。注意，这个方法仅限于D-Bus用户，其有效UID设置为会话的用户或根用户。
+ReleaseControl()放弃了对一个给定会话的控制。关闭D-Bus连接也会隐式释放控制权。更多信息见TakeControl()。这个方法也释放了控制器通过TakeDevice()请求所有权的所有设备。
+SetType()允许动态地改变会话的类型。它只能由会话的当前控制器调用。如果TakeControl()没有被调用，这个方法将失效。此外，一旦控制权被释放，会话类型将被重置为原来的值，无论是通过调用ReleaseControl()还是关闭D-Bus连接。这应该有助于防止会话进入不一致的状态，例如在控制器崩溃的时候。唯一的参数type是新的会话类型。
+TakeDevice()允许会话控制器获得一个特定设备的文件描述符。输入字符设备的大号和小号，systemd-logind将返回该设备的文件描述符。目前只支持有限的设备类型（但可能会被扩展）。如果会话处于非活动状态，
+ystemd-logind会自动关闭文件描述符，一旦会话被激活，就会恢复。这保证了会话只能在会话激活时访问会话设备。注意，这种撤销/恢复机制是异步的，可能在任何时候发生。这只对附属于给定会话的seat的设备起作用。一个进程不需要直接访问设备节点。systemd-logind只要求你是活动的会话控制器（见TakeControl()）。还要注意，任何设备只能被请求一次。只要你不释放它，进一步调用TakeDevice()就会失败。
+ReleaseDevice()再次释放一个设备（见TakeDevice()）。这也是由ReleaseControl()或关闭D-Bus连接时隐含地完成的。
+PauseDeviceComplete()允许会话控制器在收到PauseDevice("pause")信号后同步暂停一个设备。强制信号（或内部超时后）由systemd-logind异步自动完成。
+SetLockedHint()可以用来设置 "锁定提示 "为locked，即会话是否被锁定的信息。这是为了让桌面环境用来告诉systemd-logind会话何时被锁定和解锁。
+SetBrightness()可以用来设置显示亮度。这是给桌面环境使用的，允许非特权程序以受控方式访问硬件设置。参数subsystem指定了一个内核子系统，可以是"backlight"或"leds"。参数name指定了指定子系统下的设备名称。亮度 "参数指定了亮度。范围由各个驱动定义，见/sys/class/subsystem/name/max_brightness。
+信号
+活动的会话控制器专门为它通过TakeDevice()请求的任何设备获得PauseDevice和ResumeDevice事件。每当一个设备被暂停或恢复时，它们都会通知控制器。如果一个设备的会话处于非活动状态，它就不会被恢复。还要注意PauseDevice信号在Active状态的PropertyChanged信号之前发送。反之则是ResumeDevice。即使 "会话 "处于活动状态，设备可能由于未知的原因而保持暂停状态。
+一个PauseDevice信号携带主要和次要数字以及描述类型的字符串作为参数。force表示设备已经被systemd-logind暂停，该信号只是一个异步通知。pause表示systemd-logind给予你有限的时间来暂停设备。你必须通过PauseDeviceComplete()来回应。这种同步暂停机制是为了向后兼容VT，systemd-logind可以不使用它。如果你没有及时响应（或出于其他原因），它也可以自由地发送一个强制的PauseDevice。gone意味着该设备被从系统中拔出，你将不再收到任何关于它的通知。不需要调用ReleaseDevice()。如果有一个新的设备被分配到主要+次要组合，你可以再次调用TakeDevice()。
+ResumeDevice在会话激活和设备恢复时被发送。它携带主/次数字作为参数，并提供一个新的开放文件描述符。你应该切换到新的描述符并关闭旧的描述符。它们在内核中不保证有相同的底层开放文件描述符（除了一组有限的设备类型）。
+每当 Active或空闲状态改变时，PropertyChanged信号就会发出，客户端可以监听。
+当会话被要求锁定/解锁屏幕时，Lock/Unlock被发送。会话的会话管理器应该监听这个信号并采取相应的行动。这个信号是作为Lock()和Unlock()方法的结果而分别发送的。
+属性
+Id编码会话的ID。
+User编码这个会话所属用户的用户ID。这是一个由Unix UID和对象路径组成的结构。
+Name对用户名进行编码。
+Timestamp和TimestampMonotonic分别以CLOCK_REALTIME或CLOCK_MONOTONIC编码创建会话时以微秒表示的UNIX时间戳。
+VTNr编码会话的虚拟终端号，如果有的话，否则为0。
+Seat编码这个会话所属的seat（如果有）。这是一个由ID和seat对象路径组成的结构。
+TTY编码会话的内核TTY路径，如果这是一个文本登录。如果不是的话，这是一个空字符串。
+Display编码X11显示名称，如果这是一个图形登录。如果不是，这就是一个空字符串。
+Remote编码会话是本地还是远程。
+RemoteHost和RemoteUser编码远程主机和用户，如果这是一个远程会话，则为空字符串。
+Service编码注册该会话的PAM服务名称。
+Desktop描述会话中运行的桌面环境（如果已知）。
+Scope包含这个会话的systemd范围单位名称。
+Leader编码了注册会话的进程的PID。
+Audit编码该会话的内核审计会话ID（如果有审计的话）。
+Type 编码会话类型。它是"unspecified"（用于cron PAM会话等）、"tty"（用于文本登录）或"x11"/"mir"/"wayland"（用于图形登录）之一。
+Class 编码会话类别。它是"user"（用于普通用户会话）、"greeter"（用于显示管理器伪会话）或"lock-screen"（用于显示锁定屏幕）中的一个。
+Active是一个布尔值，如果会话处于激活状态，即当前处于前台，则为真。由于State的存在，这个字段是半冗余的。
+State编码会话状态，是 "在线"、"活动 "或 "关闭 "之一。参见sd_session_get_state(3)了解更多关于状态的信息。
+IdleHint, IdleSinceHint, 和IdleSinceHintMonotonic封装了这个会话的空闲提示状态，类似于Manager对象上的各自属性对整个系统的作用。
+LockedHint显示这个会话的锁定提示状态，如上面描述的SetLockedHint()方法所设置。
+当会话被要求锁定/解锁屏幕时，Lock/Unlock被发送。会话的会话管理器应该监听这个信号并采取相应的行动。这个信号是作为Lock()和Unlock()方法的结果而分别发送的。
+例子
+Example 1. Introspect the logind manager on the bus
+
+$ gdbus introspect --system --dest org.freedesktop.login1 \
+  --object-path /org/freedesktop/login1
+or
+
+$ busctl introspect org.freedesktop.login1 /org/freedesktop/login1
+Example 2. Introspect the default seat on the bus
+
+$ gdbus introspect --system --dest org.freedesktop.login1 \
+  --object-path /org/freedesktop/login1/seat/seat0
+or
+
+$ busctl introspect org.freedesktop.login1 /org/freedesktop/login1/seat/seat0
+Seat "seat0" is the default seat, so it'll be present unless local configuration is made to reassign all devices to a different seat. The list of seats and users can be acquired with loginctl list-sessions.
+
+Example 3. Introspect a single user on the bus
+
+$ gdbus introspect --system --dest org.freedesktop.login1 \
+  --object-path /org/freedesktop/login1/user/_1000
+or
+
+$ busctl introspect org.freedesktop.login1 /org/freedesktop/login1/user/_1000
+Example 4. Introspect org.freedesktop.login1.Session on the bus
+
+$ gdbus introspect --system --dest org.freedesktop.login1 \
+  --object-path /org/freedesktop/login1/session/45
+or
+
+$ busctl introspect org.freedesktop.login1 /org/freedesktop/login1/session/45
+seat由分配给特定工作场所的所有硬件设备组成。它由至少一个图形设备组成，通常还包括键盘、鼠标。它还可以包括摄像机、声卡等。seat由seat名称标识，这些字符串是字符串（<= 255 个字符），以四个字符 " seat" 开头，后跟至少一个 [a-zA-Z0-9]、" _" 和 " -" 范围内的字符。它们适合用作文件名。seat名称可能稳定，也可能不稳定，如果seat再次可用，则可能会重复使用。

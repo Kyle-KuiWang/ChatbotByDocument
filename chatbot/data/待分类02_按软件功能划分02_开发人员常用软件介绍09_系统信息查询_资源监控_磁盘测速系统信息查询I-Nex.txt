@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/09_%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2_%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7_%E7%A3%81%E7%9B%98%E6%B5%8B%E9%80%9F/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2/I-Nex
+简介
+I-Nex是一款系统信息查询工具，其窗口界面由多个标签面板组成，显示的信息包括驱动，内核，RAM，网络，USB，CPU，GPU，主板，音频等计算机和操作系统信息。
+
+安装
+sudo apt-get install i-nex
+
+卸载
+sudo apt-get remove i-nex
+
+仓库地址
+http://packages.deepin.com/deepin/pool/contrib/i/i-nex/

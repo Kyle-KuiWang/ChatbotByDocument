@@ -1,0 +1,24 @@
+方法
+GetSession()可用于获取具有指定 ID 的会话的会话对象路径。同样，GetUser() GetSeat()分别获取用户和Seat对象。GetSessionByPID()并 GetUserByPID()获取指定 PID 所属的会话/用户对象（如果有）。
+ListSessions()返回所有当前会话的数组。数组中的结构由以下字段组成：会话 ID、用户 ID、用户名、Seat ID、会话对象路径。如果会话没有附加Seat，则Seat ID 字段将为空字符串。
+ListUsers()返回所有当前登录用户的数组。数组中的结构由以下字段组成：用户 ID、用户名、用户对象路径。
+ListSeats()返回所有当前可用Seat的数组。数组中的结构由以下字段组成：seat id、seat对象路径。
+ListInhibitors()列出所有当前有效的抑制剂。它返回一个由what、who、why、 mode、uid（用户 ID）和pid（进程 ID）组成的结构数组。
+CreateSession()并可ReleaseSession()用于打开或关闭登录会话。这些调用绝不能由客户端直接调用。创建/关闭会话完全是 PAM 及其 pam_systemd (8) 模块的工作。
+ActivateSession()将具有指定 ID 的会话带到前台。ActivateSessionOnSeat()做同样的事情，但前提是seat ID 匹配。
+LockSession()要求具有指定 ID 的会话激活屏幕锁定。UnlockSession()要求具有指定 ID 的会话解除活动的屏幕锁定（如果有）。这是通过从会话管理器应该监听的相应会话对象发送 Lock() 和 Unlock()信号来实现的。
+LockSessions()要求所有会话激活其屏幕锁定。这可用于在一个操作中锁定对整个机器的访问。同样，UnlockSessions() 要求所有会话停用其屏幕锁定。
+KillSession()可用于向会话的一个或所有进程发送 Unix 信号。作为参数，它接受会话 id、字符串“ leader”或“ all”和一个信号编号。如果“ leader”通过，则只有会话“ leader”被终止。如果“ all”通过，则会话的所有进程都将被终止。
+KillUser()可用于向用户的所有进程发送 Unix 信号。作为参数，它需要用户 ID 和信号编号。
+TerminateSession(), TerminateUser(), TerminateSeat()可用于分别强制终止一个特定会话、用户的所有进程以及附加到特定seat的所有会话。会话、用户和seat由它们各自的 ID 标识。
+SetUserLinger()启用或禁用用户延迟。如果启用，将保留用户的运行时目录，并且他们可以在注销时继续运行进程。如果禁用，运行时目录会在他们注销后立即消失。SetUserLinger() 需要三个参数：UID、一个是否启用/禁用的布尔值和一个控制 polkit 授权交互性的布尔值（见下文）。请注意，用户逗留状态永久存储在磁盘上。
+AttachDevice()可用于将特定设备分配给特定seat。该设备由其/sys/路径标识，并且必须符合分配seat的条件。AttachDevice()接受三个参数：seat ID、sysfs 路径和用于控制 polkit 交互性的布尔值（见下文）。设备分配永久存储在磁盘上。要创建新seat，只需指定以前未使用的seat ID。有关seat分配逻辑的更多信息，请参阅 sd-login (3)。
+FlushDevices()删除设备的所有显式seat分配，将所有分配重置为自动默认值。它需要的唯一参数是 polkit 交互性布尔值（见下文）。
+PowerOff(), Reboot(), Halt(), Suspend(), 并Hibernate()导致系统关机、重启、暂停（不关闭电源关闭）、挂起（系统状态保存到 RAM 并关闭 CPU）或休眠（将内存中数据保存到磁盘并将机器关闭）。HybridSleep()导致系统进入混合睡眠模式，即系统既休眠又挂起。SuspendThenHibernate()导致系统被暂停，随后使用RTC定时器唤醒并休眠。唯一的参数是polkit交互性布尔值interactive（见下文）。这些调用的主要目的是执行polkit政策，因此允许非特权用户关闭/重启/暂停/休眠。它们还为非特权用户执行抑制锁。UIs应该将这些调用作为关闭/重启/暂停/休眠机器的主要机制来公开。方法PowerOffWithFlags(), RebootWithFlags(), HaltWithFlags(), SuspendWithFlags(), HibernateWithFlags(), HybridSleepWithFlags()和SuspendThenHibernateWithFlags()添加flag以允许扩展，定义如下。 #define SD_LOGIND_ROOT_CHECK_INHIBITORS (UINT64_C(1) << 0)
+#define SD_LOGIND_KEXEC_REBOOT (UINT64_C(1) << 1) 当flags为 0 时，这些方法的行为就像没有flag的版本一样。设置 (0x01)时SD_LOGIND_ROOT_CHECK_INHIBITORS，特权用户也可以使用活动抑制器。当SD_LOGIND_KEXEC_REBOOT 设置 (0x02)时，RebootWithFlags()如果加载了 kexec 内核，则执行 kexec reboot。
+SetRebootParameter()为后续重新启动操作设置参数。有关详细信息，请参见systemctl (1)和 reboot (2)中 的reboot描述 。
+SetRebootToFirmwareSetup(), SetRebootToBootLoaderMenu(), 和SetRebootToBootLoaderEntry() 配置重启后从引导加载程序执行的操作：分别进入固件设置模式、引导加载程序菜单或特定引导加载程序条目。对应的命令行界面见 systemctl (1)。
+CanPowerOff(), CanReboot(), CanHalt(), CanSuspend(), CanHibernate(), CanHybridSleep(), CanSuspendThenHibernate(), CanRebootParameter(), CanRebootToFirmwareSetup(), CanRebootToBootLoaderMenu(), CanRebootToBootLoaderEntry()测试系统是否支持相应的操作，是否允许调用用户执行。返回“ na”、“ yes”、“ no”和“ challenge”之一。如果返回“na”，则该操作不可用，因为硬件、内核或驱动程序不支持它。如果yes返回“ ”，则表示支持该操作，用户无需进一步认证即可执行该操作。如果no返回“”，则表示该操作可用，但不允许用户执行该操作。如果 ”challenge"返回，操作可用，但必须经过授权。
+ScheduleShutdown()在自UNIX纪元以来的微秒时间usec安排一个关机操作类型。类型可以是 "poweroff"、"dry-poweroff"、"reboot"、"dry-reboot"、"halt "和 "dry-halt "之一。CancelScheduledShutdown()取消一个预定的关机。如果计划了关机操作，输出参数cancelled为真。
+SetWallMessage()设置墙消息（关机瀑布流）。（将发送到所有终端并存储在 utmp (5)记录中的消息）以进行后续计划的关闭操作。该参数wall_message指定将包含在关闭消息中的关闭原因（并且可能为空）。该参数 enable指定是否在关机时打印墙消息。
+Inhibit()创建一个抑制锁。它有四个参数： what、who、why和 mode:

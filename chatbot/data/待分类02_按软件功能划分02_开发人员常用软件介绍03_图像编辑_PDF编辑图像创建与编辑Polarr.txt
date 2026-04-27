@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/03_%E5%9B%BE%E5%83%8F%E7%BC%96%E8%BE%91_PDF%E7%BC%96%E8%BE%91/%E5%9B%BE%E5%83%8F%E5%88%9B%E5%BB%BA%E4%B8%8E%E7%BC%96%E8%BE%91/Polarr
+简介
+Polarr（泼辣修图）是一个智能图片处理工具，具有色温调整、区域色调系数、饱和度，动态清晰度、色道调整、色彩曲线和倾向等功能，其目的是打造专业级的图片处理引擎，通过该工具来创作最佳的图片效果，让你拍摄的图片拥有独特的艺术风格。
+
+安装
+sudo apt-get install polarr
+
+卸载
+sudo apt-get remove polarr
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/p/polarr/

@@ -1,0 +1,35 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%8D%8E%E4%B8%BAAMD%E7%AC%94%E8%AE%B0%E6%9C%AC%EF%BC%8C%E6%97%A0%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95
+DeepinWiki
+搜索...
+
+/
+/
+华为AMD笔记本，无显卡驱动解决方法
+华为AMD笔记本，无显卡驱动解决方法
+无显卡驱动的现象
+遇到一个用户情况如下：
+
+用户反馈显卡驱动看不到，且待机唤醒有问题，显示适配器无内容。
+
+设备管理器中无法展示具体显卡信息：
+设备管理器无显卡信息.png
+可以看到显卡是无驱动信息的：
+无驱动.png
+
+解决过程
+用户安装的时候选择的是5.15版本内核，然后切换回5.10版本内核仍旧没有作用。
+最后通过如下方式解决了该问题：
+AMD 核显驱动支持
+
+编辑 grub 启动目录
+sudo vi /etc/default/grub
+在 GRUB_CMDLINE_LINUX_DEFAULT=一行双引号内的末尾，添加 amdgpu.exp_hw_support=1，修改后如下
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amdgpu.exp_hw_support=1"
+保存退出，并更新 grub
+sudo update-grub
+重启
+参考连接可点击这里
+
+评论
+评论加载中...
+提供者 Wiki.js

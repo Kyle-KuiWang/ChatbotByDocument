@@ -1,0 +1,197 @@
+https://wiki.deepin.org/zh/04_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8/Linux%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E6%96%87%E4%BB%B6%E7%BC%93%E5%AD%98%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86
+DeepinWiki
+Linux中的文件缓存
+ext4文件系统层
+
+对于ext4文件系统来讲，内核定义了一个ext4_file_operations。
+
+const struct file_operations ext4_file_operations = {
+......
+  .read_iter  = ext4_file_read_iter,
+  .write_iter  = ext4_file_write_iter,
+......
+}
+ext4_file_read_iter会调用generic_file_read_iter，ext4_file_write_iter会调用__generic_file_write_iter。
+
+ssize_t
+generic_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
+{
+......
+    if (iocb->ki_flags & IOCB_DIRECT) {
+......
+        struct address_space *mapping = file->f_mapping;
+......
+        retval = mapping->a_ops->direct_IO(iocb, iter);
+    }
+......
+    retval = generic_file_buffered_read(iocb, iter, retval);
+}
+
+
+ssize_t __generic_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+{
+......
+    if (iocb->ki_flags & IOCB_DIRECT) {
+......
+        written = generic_file_direct_write(iocb, from);
+......
+    } else {
+......
+    written = generic_perform_write(file, from, iocb->ki_pos);
+......
+    }
+}generic_file_read_iter和__generic_file_write_iter有相似的逻辑，就是要区分是否用缓存。因此，根据是否使用内存做缓存，我们可以把文件的I/O操作分为两种类型。
+第一种类型是缓存I/O。大多数文件系统的默认I/O操作都是缓存I/O。对于读操作来讲，操作系统会先检查，内核的缓冲区有没有需要的数据。如果已经缓存了，那就直接从缓存中返回；否则从磁盘中读取，然后缓存在操作系统的缓存中。对于写操作来讲，操作系统会先将数据从用户空间复制到内核空间的缓存中。这时对用户程序来说，写操作就已经完成。至于什么时候再写到磁盘中由操作系统决定，除非显式地调用了sync同步命令。
+Linux的文件系统及文件缓存知识点整理
+第二种类型是直接IO，就是应用程序直接访问磁盘数据，而不经过内核缓冲区，从而减少了在内核缓存和用户程序之间数据复制。
+
+如果在写的逻辑__generic_file_write_iter里面，发现设置了IOCB_DIRECT，则调用generic_file_direct_write，里面同样会调用address_space的direct_IO的函数，将数据直接写入硬盘。
+
+带缓存的写入操作
+
+我们先来看带缓存写入的函数generic_perform_write。
+
+ssize_t generic_perform_write(struct file *file,
+        struct iov_iter *i, loff_t pos)
+{
+  struct address_space *mapping = file->f_mapping;
+  const struct address_space_operations *a_ops = mapping->a_ops;
+  do {
+    struct page *page;
+    unsigned long offset;  /* Offset into pagecache page */
+    unsigned long bytes;  /* Bytes to write to page */
+    status = a_ops->write_begin(file, mapping, pos, bytes, flags,
+            &page, &fsdata);
+    copied = iov_iter_copy_from_user_atomic(page, i, offset, bytes);
+    flush_dcache_page(page);
+    status = a_ops->write_end(file, mapping, pos, bytes, copied,
+            page, fsdata);
+    pos += copied;
+    written += copied;
+
+
+    balance_dirty_pages_ratelimited(mapping);
+  } while (iov_iter_count(i));
+}
+循环中主要做了这几件事：
+
+对于每一页，先调用address_space的write_begin做一些准备；
+调用iov_iter_copy_from_user_atomic，将写入的内容从用户态拷贝到内核态的页中；
+调用address_space的write_end完成写操作；
+调用balance_dirty_pages_ratelimited，看脏页是否太多，需要写回硬盘。所谓脏页，就是写入到缓存，但是还没有写入到硬盘的页面。
+对于第一步，调用的是ext4_write_begin来说，主要做两件事：
+
+第一做日志相关的工作。
+
+ext4是一种日志文件系统，是为了防止突然断电的时候的数据丢失，引入了日志（Journal）模式。日志文件系统比非日志文件系统多了一个Journal区域。文件在ext4中分两部分存储，一部分是文件的元数据，另一部分是数据。元数据和数据的操作日志Journal也是分开管理的。你可以在挂载ext4的时候，选择Journal模式。这种模式在将数据写入文件系统前，必须等待元数据和数据的日志已经落盘才能发挥作用。这样性能比较差，但是最安全。
+
+另一种模式是order模式。这个模式不记录数据的日志，只记录元数据的日志，但是在写元数据的日志前，必须先确保数据已经落盘。这个折中，是默认模式。
+
+还有一种模式是writeback，不记录数据的日志，仅记录元数据的日志，并且不保证数据比元数据先落盘。这个性能最好，但是最不安全。
+
+第二调用grab_cache_page_write_begin来，得到应该写入的缓存页。
+
+struct page *grab_cache_page_write_begin(struct address_space *mapping,
+          pgoff_t index, unsigned flags)
+{
+  struct page *page;
+  int fgp_flags = FGP_LOCK|FGP_WRITE|FGP_CREAT;
+  page = pagecache_get_page(mapping, index, fgp_flags,
+      mapping_gfp_mask(mapping));
+  if (page)
+    wait_for_stable_page(page);
+  return page;
+}
+在内核中，缓存以页为单位放在内存里面，每一个打开的文件都有一个struct file结构，每个struct file结构都有一个struct address_space用于关联文件和内存，就是在这个结构里面，有一棵树，用于保存所有与这个文件相关的的缓存页。
+
+对于第二步，调用iov_iter_copy_from_user_atomic。先将分配好的页面调用kmap_atomic映射到内核里面的一个虚拟地址，然后将用户态的数据拷贝到内核态的页面的虚拟地址中，调用kunmap_atomic把内核里面的映射删除。
+
+size_t iov_iter_copy_from_user_atomic(struct page *page,
+    struct iov_iter *i, unsigned long offset, size_t bytes)
+{
+  char *kaddr = kmap_atomic(page), *p = kaddr + offset;
+  iterate_all_kinds(i, bytes, v,
+    copyin((p += v.iov_len) - v.iov_len, v.iov_base, v.iov_len),
+    memcpy_from_page((p += v.bv_len) - v.bv_len, v.bv_page,
+         v.bv_offset, v.bv_len),
+    memcpy((p += v.iov_len) - v.iov_len, v.iov_base, v.iov_len)
+  )
+  kunmap_atomic(kaddr);
+  return bytes;
+}
+第三步中，调用ext4_write_end完成写入。这里面会调用ext4_journal_stop完成日志的写入，会调用block_write_end->__block_commit_write->mark_buffer_dirty，将修改过的缓存标记为脏页。可以看出，其实所谓的完成写入，并没有真正写入硬盘，仅仅是写入缓存后，标记为脏页。
+
+第四步，调用 balance_dirty_pages_ratelimited，是回写脏页。
+
+/**
+ * balance_dirty_pages_ratelimited - balance dirty memory state
+ * @mapping: address_space which was dirtied
+ *
+ * Processes which are dirtying memory should call in here once for each page
+ * which was newly dirtied.  The function will periodically check the system's
+ * dirty state and will initiate writeback if needed.
+  */
+void balance_dirty_pages_ratelimited(struct address_space *mapping)
+{
+  struct inode *inode = mapping->host;
+  struct backing_dev_info *bdi = inode_to_bdi(inode);
+  struct bdi_writeback *wb = NULL;
+  int ratelimit;
+......
+  if (unlikely(current->nr_dirtied >= ratelimit))
+    balance_dirty_pages(mapping, wb, current->nr_dirtied);
+......
+}
+在balance_dirty_pages_ratelimited里面，发现脏页的数目超过了规定的数目，就调用balance_dirty_pages->wb_start_background_writeback，启动一个背后线程开始回写。
+
+另外还有几种场景也会触发回写：
+
+用户主动调用sync，将缓存刷到硬盘上去，最终会调用wakeup_flusher_threads，同步脏页；
+当内存十分紧张，以至于无法分配页面的时候，会调用free_more_memory，最终会调用wakeup_flusher_threads，释放脏页；
+脏页已经更新了较长时间，时间上超过了设定时间，需要及时回写，保持内存和磁盘上数据一致性。
+带缓存的读操作
+
+看带缓存的读，对应的是函数generic_file_buffered_read。
+
+static ssize_t generic_file_buffered_read(struct kiocb *iocb,
+    struct iov_iter *iter, ssize_t written)
+{
+  struct file *filp = iocb->ki_filp;
+  struct address_space *mapping = filp->f_mapping;
+  struct inode *inode = mapping->host;
+  for (;;) {
+    struct page *page;
+    pgoff_t end_index;
+    loff_t isize;
+    page = find_get_page(mapping, index);
+    if (!page) {
+      if (iocb->ki_flags & IOCB_NOWAIT)
+        goto would_block;
+      page_cache_sync_readahead(mapping,
+          ra, filp,
+          index, last_index - index);
+      page = find_get_page(mapping, index);
+      if (unlikely(page == NULL))
+        goto no_cached_page;
+    }
+    if (PageReadahead(page)) {
+      page_cache_async_readahead(mapping,
+          ra, filp, page,
+          index, last_index - index);
+    }
+    /*
+     * Ok, we have the page, and it's up-to-date, so
+     * now we can copy it to user space...
+     */
+    ret = copy_page_to_iter(page, offset, nr, iter);
+    }
+}
+在generic_file_buffered_read函数中，我们需要先找到page cache里面是否有缓存页。如果没有找到，不但读取这一页，还要进行预读，这需要在page_cache_sync_readahead函数中实现。预读完了以后，再试一把查找缓存页。
+
+如果第一次找缓存页就找到了，我们还是要判断，是不是应该继续预读；如果需要，就调用page_cache_async_readahead发起一个异步预读。
+
+最后，copy_page_to_iter会将内容从内核缓存页拷贝到用户内存空间。
+
+评论
+评论加载中...
+提供者 Wiki.js

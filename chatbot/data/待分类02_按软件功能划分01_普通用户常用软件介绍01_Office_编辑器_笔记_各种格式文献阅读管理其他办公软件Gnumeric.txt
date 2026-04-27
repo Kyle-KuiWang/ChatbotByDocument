@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/01_%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_Office_%E7%BC%96%E8%BE%91%E5%99%A8_%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB%E7%AE%A1%E7%90%86/%E5%85%B6%E4%BB%96%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/Gnumeric
+简介
+Gnumeric是一款电子表格处理软件，操作方式与Excel非常相似。Gnumeric能够导入导出多种数据格式，支持包括中文在内的多种语言，并且可以自定义扩展行列数。
+
+安装
+sudo apt-get install gnumeric
+
+卸载
+sudo apt-get remove gnumeric
+
+仓库地址
+http://packages.deepin.com/deepin/pool/main/g/gnumeric/

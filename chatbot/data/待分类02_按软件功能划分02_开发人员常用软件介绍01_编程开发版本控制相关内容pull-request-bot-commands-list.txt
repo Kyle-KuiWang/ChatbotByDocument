@@ -1,0 +1,33 @@
+https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9/pull-request-bot-commands-list
+
+DeepinWiki
+Pull Request 机器人命令列表
+介绍关于 GitHub 相关组织下所配置的辅助工具机器人的命令用法
+页面内容
+讨论
+最后编辑
+BLumia
+02/22/2023
+¶可用命令总览
+命令	说明
+/check	重新触发所有 CI 检查
+/check jobname	重新触发 jobname 检查
+/assign @username	指派 @username 处理 PR
+/review @username	添加 @username 为代码评审人员
+/merge	在满足所有合并要求时，执行合并
+/+1 or /approve	添加一个 approve 标签（限维护者使用）
+/check jobname 用法
+假定你要重新触发一个显示为 build-distribution / check_job / archlinux-build 的任务，那么你需要使用 /check archlinux-build 或 /check check_job/archlinux-build 任一方式进行触发。
+
+使用油候脚本简化命令操作
+在浏览器安装 Tampermonkey 插件
+在 Tampermonkey 插件打开管理面板 - 实用工具，找到“从 URL 安装”，输入 https://raw.githubusercontent.com/deepin-community/deepin-chatopt-script/main/chatopt.js
+安装成功后，在 GitHub 的 Pull Request页面评论框下放会自动添加 /merge 和 /check 相关操作按钮。
+合并要求
+至少有一个有效的 Approval（加分/合并许可）
+所有 CI 检查通过
+请注意: /approve 仅为添加标记的目的，对于实际的代码评审，请使用 GitHub 的代码评审流程。
+
+评论
+评论加载中...
+© 2011-2022 Wuhan Deepin Technology Co., Ltd. 鄂ICP备14003693号-3 | Powered by Wiki.js

@@ -1,0 +1,8 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/00_GUI%E8%BD%AF%E4%BB%B6/03_%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%AF%E4%BB%B6/02_%E5%BD%B1%E9%9F%B3%E5%A8%B1%E4%B9%90%E7%9B%B8%E5%85%B3/Pavucontrol
+Pulseaudio的可视化管理工具
+可以单独调节每个软件的音量大小
+
+sudo apt install pavucontrol
+在命令行中输入 pavucontrol 即可启动
+
+2022-12-28_98791.png

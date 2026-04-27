@@ -1,0 +1,12 @@
+https://wiki.deepin.org/zh/01_%E8%BD%AF%E4%BB%B6wiki/01_%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BD%AF%E4%BB%B6/earlyoom
+earlyoom 让系统再也不会因为内存不足而卡死
+默认情况下剩余可用物理内存小于 10% 和剩余交换内存小于 10% 时，就会触发早期OOM
+
+安装代码
+# 直接 apt 安装
+apt install earlyoom
+
+# 设定为开机启动，并且马上启动 earlyoom 服务
+systemctl enable --now earlyoom
+项目地址: https://github.com/rfjakob/earlyoom
+参考博客: CSDN 链接
